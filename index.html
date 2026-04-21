@@ -3,9 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ajay Hunter</title>
+<title>Ajay Hunter — Digital Artist & Illustrator</title>
 <meta name="description" content="Character art, digital illustration, and graphic design by Ajay Hunter.">
 <link rel="stylesheet" href="site.css">
+<script>
+(async()=>{
+  try{
+    const r=await fetch("/api/theme");
+    if(!r.ok) return;
+    const t=await r.json();
+    const root=document.documentElement.style;
+    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
+  }catch(e){}
+})();
+</script>
 </head>
 <body>
 <header class="site-header">
@@ -23,6 +34,7 @@
       <a href="portfolio.html" class="nav-link">Portfolio</a>
       <a href="services.html" class="nav-link">Services</a>
       <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
     </nav>
   </div>
 </header>
@@ -210,6 +222,13 @@
 const reveals = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold:0.1});
 reveals.forEach(el => obs.observe(el));
+</script>
+<script>
+// Show "My Portal" link if logged in
+if (localStorage.getItem('client_token')) {
+  const el = document.getElementById('portal-link');
+  if (el) el.style.display = 'inline';
+}
 </script>
 </body>
 </html>
