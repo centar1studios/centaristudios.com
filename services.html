@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Ajay Hunter</title>
+<link rel="stylesheet" href="site.css">
+<script>
+(async()=>{
+  try{
+    const r=await fetch("/api/theme");
+    if(!r.ok) return;
+    const t=await r.json();
+    const root=document.documentElement.style;
+    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">AH</div>
+      <div class="logo-text-wrap"><div class="name">Ajay Hunter</div><div class="sub">Digital Artist</div></div>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="services.html" class="nav-link active">Services</a>
+      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="site-container">
+    <span class="eyebrow">What I Offer</span>
+    <h1 style="margin-top:0.4rem;">Services</h1>
+    <p style="margin-top:0.75rem; max-width:500px;">A focused range of art and design services — approached with care, created for you specifically, and finished to a standard I'm proud of.</p>
+  </div>
+</div>
+
+<div class="site-container" style="padding-top:3.5rem; padding-bottom:4rem;">
+  <div style="display:flex; flex-direction:column; gap:1.5rem;">
+
+    <!-- Service 1 -->
+    <article style="display:grid; grid-template-columns:200px 1fr; border:1px solid var(--border); background:#fff; overflow:hidden; transition:transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 32px rgba(80,50,160,0.09)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+      <div style="background:var(--lavender-pale); border-right:1px solid var(--lavender-light); display:flex; align-items:center; justify-content:center; padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--lavender); opacity:0.35; line-height:1;">01</div>
+      </div>
+      <div style="padding:2rem;">
+        <h2 style="font-size:1.75rem;">Character Art</h2>
+        <p style="margin-top:0.6rem;">Full custom character illustrations — original characters, fanart, reference sheets, and portraits. I take time to understand your character before I start drawing, so the result actually feels like them.</p>
+        <div style="margin-top:1rem;">
+          <div style="font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--lavender); margin-bottom:0.6rem;">What's Included</div>
+          <div style="display:flex; flex-direction:column; gap:0.35rem;">
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>Full colour digital illustration</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>1–2 rounds of revisions</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>High-res PNG file</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>Personal use rights</span></div>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem; margin-top:1.25rem;">
+          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--ink); font-weight:500;">Starting at £30</span>
+          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--muted);">1–2 weeks turnaround</span>
+          <a href="contact.html?service=Character+Art" class="btn btn-lavender btn-sm">Inquire</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Service 2 -->
+    <article style="display:grid; grid-template-columns:200px 1fr; border:1px solid var(--border); background:#fff; overflow:hidden; transition:transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 32px rgba(80,50,160,0.09)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+      <div style="background:var(--periwinkle-pale); border-right:1px solid var(--periwinkle-light); display:flex; align-items:center; justify-content:center; padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--periwinkle); opacity:0.4; line-height:1;">02</div>
+      </div>
+      <div style="padding:2rem;">
+        <h2 style="font-size:1.75rem;">Digital Illustration</h2>
+        <p style="margin-top:0.6rem;">Scene illustrations, story pieces, and atmospheric concept work. I love working on pieces that tell a story — whether it's a quiet moment or something epic. Bring me your ideas and we'll build something together.</p>
+        <div style="margin-top:1rem;">
+          <div style="font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--periwinkle); margin-bottom:0.6rem;">What's Included</div>
+          <div style="display:flex; flex-direction:column; gap:0.35rem;">
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>Fully rendered scene or composition</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>Sketch approval before rendering</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>2 rounds of revisions</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>High-res PNG + layered PSD on request</span></div>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem; margin-top:1.25rem;">
+          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--ink); font-weight:500;">Starting at £50</span>
+          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--muted);">2–3 weeks turnaround</span>
+          <a href="contact.html?service=Digital+Illustration" class="btn btn-lavender btn-sm">Inquire</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Service 3 -->
+    <article style="display:grid; grid-template-columns:200px 1fr; border:1px solid var(--border); background:#fff; overflow:hidden; transition:transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 32px rgba(80,50,160,0.09)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+      <div style="background:#f5f0ff; border-right:1px solid rgba(170,140,220,0.2); display:flex; align-items:center; justify-content:center; padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--lilac); opacity:0.5; line-height:1;">03</div>
+      </div>
+      <div style="padding:2rem;">
+        <h2 style="font-size:1.75rem;">Graphic Design</h2>
+        <p style="margin-top:0.6rem;">Logos, stream overlays, emotes, badges, social media graphics, and brand assets. If you need something that looks cohesive and professional, this is the service for you.</p>
+        <div style="margin-top:1rem;">
+          <div style="font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--lilac); margin-bottom:0.6rem;">What's Included</div>
+          <div style="display:flex; flex-direction:column; gap:0.35rem;">
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>Custom designed to your brief</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>Multiple format exports (PNG, SVG where applicable)</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>1–2 rounds of revisions</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>Commercial use rights available on request</span></div>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem; margin-top:1.25rem;">
+          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--ink); font-weight:500;">Starting at £20</span>
+          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--muted);">3–5 days turnaround</span>
+          <a href="contact.html?service=Graphic+Design" class="btn btn-lavender btn-sm">Inquire</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<!-- Process -->
+<div style="background:var(--ink); padding:4rem 0;">
+  <div class="site-container">
+    <span class="eyebrow" style="color:var(--lilac);">How It Works</span>
+    <h2 style="color:var(--ivory); margin-top:0.3rem; margin-bottom:2.5rem;">My Process</h2>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2rem;">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">01</div>
+        <h3 style="color:var(--ivory); font-size:1.1rem;">Inquiry</h3>
+        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">Fill out the contact form with as much or as little as you have. I'll get back to you within 1–2 days.</p>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">02</div>
+        <h3 style="color:var(--ivory); font-size:1.1rem;">Discussion</h3>
+        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">We chat about your project — references, mood, details. The more I know, the better the result.</p>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">03</div>
+        <h3 style="color:var(--ivory); font-size:1.1rem;">Creation</h3>
+        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">I sketch, share for approval, then render. You'll see a WIP before it's fully finished.</p>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">04</div>
+        <h3 style="color:var(--ivory); font-size:1.1rem;">Delivery</h3>
+        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">Final files delivered in full resolution. You'll have everything you need to use and share your piece.</p>
+      </div>
+    </div>
+    <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid rgba(244,240,255,0.08); text-align:center;">
+      <a href="contact.html" class="btn btn-lavender">Start Your Project</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div>
+      <div class="footer-name">Ajay Hunter</div>
+      <div class="footer-tag">Digital Artist & Illustrator</div>
+      <p class="footer-bio">Character art, digital illustration, and graphic design made with warmth and intention.</p>
+    </div>
+    <div>
+      <div class="footer-head">Navigation</div>
+      <div class="footer-links">
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="about.html" class="footer-link">About Ajay</a>
+        <a href="portfolio.html" class="footer-link">Portfolio</a>
+        <a href="services.html" class="footer-link">Services</a>
+        <a href="contact.html" class="footer-link">Inquiries</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-head">Connect</div>
+      <div class="footer-links">
+        <a href="https://github.com/centarl1studios" target="_blank" class="footer-link">GitHub</a>
+        <a href="#" class="footer-link">Discord</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ajay Hunter — All rights reserved.</span>
+    <a href="login.html">Admin</a>
+  </div>
+</footer>
+<script>
+// Show "My Portal" link if logged in
+if (localStorage.getItem('client_token')) {
+  const el = document.getElementById('portal-link');
+  if (el) el.style.display = 'inline';
+}
+</script>
+</body>
+</html>
