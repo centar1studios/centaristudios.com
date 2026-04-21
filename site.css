@@ -312,4 +312,3 @@ select.input-field { background: var(--ivory); cursor: pointer; }
   .site-footer .inner { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bio { max-width: 100%; }
 }
- 
