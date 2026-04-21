@@ -105,6 +105,27 @@ export async function onRequest(context) {
   if (path === 'auth/me'       && method === 'GET')  return authMe(request, env);
  
  
+ 
+  // ── PORTFOLIO ──
+  if (path === 'portfolio'              && method === 'GET')    return getPortfolio(env, url);
+  if (path === 'portfolio'              && method === 'POST')   return postPortfolio(env, request);
+  if (path === 'portfolio'              && method === 'PUT')    return putPortfolio(env, request);
+  if (path === 'portfolio'              && method === 'DELETE') return deletePortfolio(env, url);
+  // ── LORE ──
+  if (path === 'lore'                   && method === 'GET')    return getLore(env);
+  if (path === 'lore'                   && method === 'POST')   return postLore(env, request);
+  if (path === 'lore'                   && method === 'PUT')    return putLore(env, request);
+  if (path === 'lore'                   && method === 'DELETE') return deleteLore(env, url);
+  // ── COMMISSIONS ──
+  if (path === 'commissions'            && method === 'GET')    return getCommissions(env);
+  if (path === 'commissions'            && method === 'POST')   return postCommission(env, request);
+  if (path === 'commissions'            && method === 'PUT')    return putCommission(env, request);
+  if (path === 'commissions'            && method === 'DELETE') return deleteCommission(env, url);
+  if (path === 'commissions/status'     && method === 'PUT')    return updateCommissionStatus(env, request);
+  // ── SITE CONTENT ──
+  if (path === 'content'                && method === 'GET')    return getSiteContent(env);
+  if (path === 'content'                && method === 'POST')   return postSiteContent(env, request);
+ 
   // ── CLIENT AUTH ──
   if (path === 'auth/client-signup'  && method === 'POST') return clientSignup(env, request);
   if (path === 'auth/client-signin'  && method === 'POST') return clientSignin(env, request);
@@ -119,6 +140,26 @@ export async function onRequest(context) {
   if (path === 'portal/files'        && method === 'DELETE') return portalDeleteFile(env, url);
   if (path === 'portal/status'       && method === 'PUT')  return updateProjectStatus(request, env);
   if (path === 'portal/admin-inquiries' && method === 'GET') return adminInquiries(request, env);
+ 
+  // ── PORTFOLIO ──
+  if (path === 'portfolio'          && method === 'GET')    return getPortfolio(env, url);
+  if (path === 'portfolio'          && method === 'POST')   return postPortfolio(env, request);
+  if (path === 'portfolio'          && method === 'PUT')    return putPortfolio(env, request);
+  if (path === 'portfolio'          && method === 'DELETE') return deletePortfolio(env, url);
+  // ── LORE ──
+  if (path === 'lore'               && method === 'GET')    return getLore(env);
+  if (path === 'lore'               && method === 'POST')   return postLore(env, request);
+  if (path === 'lore'               && method === 'PUT')    return putLore(env, request);
+  if (path === 'lore'               && method === 'DELETE') return deleteLore(env, url);
+  // ── COMMISSIONS CMS ──
+  if (path === 'commissions'        && method === 'GET')    return getCommissions(env);
+  if (path === 'commissions'        && method === 'POST')   return postCommission(env, request);
+  if (path === 'commissions'        && method === 'PUT')    return putCommission(env, request);
+  if (path === 'commissions'        && method === 'DELETE') return deleteCommission(env, url);
+  if (path === 'commissions/status' && method === 'PUT')    return updateCommissionStatus(env, request);
+  // ── SITE CONTENT ──
+  if (path === 'content'            && method === 'GET')    return getSiteContent(env);
+  if (path === 'content'            && method === 'POST')   return postSiteContent(env, request);
  
   // ── GUILD REGISTRATION (bot posts this when joining a server) ──
   if (path === 'guilds/register' && method === 'POST') {
@@ -989,4 +1030,164 @@ async function adminInquiries(request, env) {
      ORDER BY i.submitted_at DESC`
   ).all();
   return json({ inquiries: results||[] });
+}
+ 
+// ─────────────────────────────────────────────
+// PORTFOLIO
+// ─────────────────────────────────────────────
+async function getPortfolio(env, url) {
+  const featured = url.searchParams.get('featured');
+  const category = url.searchParams.get('category');
+  let query = `SELECT * FROM portfolio_items`;
+  const conditions = [];
+  if (featured) conditions.push(`featured = 1`);
+  if (category) conditions.push(`category = '${category.replace(/'/g,"''")}'`);
+  if (conditions.length) query += ` WHERE ` + conditions.join(' AND ');
+  query += ` ORDER BY sort_order ASC, created_at DESC`;
+  const { results } = await env.DB.prepare(query).all();
+  return json({ items: results || [] });
+}
+ 
+async function postPortfolio(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const { title, category, description, image_url, featured, sort_order } = await request.json();
+  if (!title || !image_url) return err('title and image_url required');
+  await env.DB.prepare(
+    `INSERT INTO portfolio_items (title, category, description, image_url, featured, sort_order)
+     VALUES (?,?,?,?,?,?)`
+  ).bind(title, category||'character', description||null, image_url, featured?1:0, sort_order||0).run();
+  return json({ ok: true });
+}
+ 
+async function putPortfolio(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const { id, title, category, description, image_url, featured, sort_order } = await request.json();
+  if (!id) return err('id required');
+  await env.DB.prepare(
+    `UPDATE portfolio_items SET title=?, category=?, description=?, image_url=?, featured=?, sort_order=? WHERE id=?`
+  ).bind(title, category||'character', description||null, image_url, featured?1:0, sort_order||0, id).run();
+  return json({ ok: true });
+}
+ 
+async function deletePortfolio(env, url) {
+  const id = url.searchParams.get('id');
+  if (!id) return err('id required');
+  await env.DB.prepare(`DELETE FROM portfolio_items WHERE id=?`).bind(id).run();
+  return json({ ok: true });
+}
+ 
+// ─────────────────────────────────────────────
+// LORE
+// ─────────────────────────────────────────────
+async function getLore(env) {
+  const { results } = await env.DB.prepare(
+    `SELECT * FROM lore_entries ORDER BY sort_order ASC, created_at ASC`
+  ).all();
+  return json({ entries: results || [] });
+}
+ 
+async function postLore(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const { tag, title, content, sort_order } = await request.json();
+  if (!tag || !title || !content) return err('tag, title, content required');
+  await env.DB.prepare(
+    `INSERT INTO lore_entries (tag, title, content, sort_order) VALUES (?,?,?,?)`
+  ).bind(tag, title, content, sort_order||0).run();
+  return json({ ok: true });
+}
+ 
+async function putLore(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const { id, tag, title, content, sort_order } = await request.json();
+  if (!id) return err('id required');
+  await env.DB.prepare(
+    `UPDATE lore_entries SET tag=?, title=?, content=?, sort_order=? WHERE id=?`
+  ).bind(tag, title, content, sort_order||0, id).run();
+  return json({ ok: true });
+}
+ 
+async function deleteLore(env, url) {
+  const id = url.searchParams.get('id');
+  if (!id) return err('id required');
+  await env.DB.prepare(`DELETE FROM lore_entries WHERE id=?`).bind(id).run();
+  return json({ ok: true });
+}
+ 
+// ─────────────────────────────────────────────
+// COMMISSIONS
+// ─────────────────────────────────────────────
+async function getCommissions(env) {
+  const { results } = await env.DB.prepare(
+    `SELECT * FROM commission_types ORDER BY sort_order ASC`
+  ).all();
+  const status = await env.DB.prepare(`SELECT * FROM commission_status WHERE id=1`).first();
+  return json({ types: results || [], status: status || { status:'open', message:'Currently open!' } });
+}
+ 
+async function postCommission(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const { name, description, starting_price, currency, turnaround, included_items, number, sort_order } = await request.json();
+  if (!name) return err('name required');
+  await env.DB.prepare(
+    `INSERT INTO commission_types (name, description, starting_price, currency, turnaround, included_items, number, sort_order)
+     VALUES (?,?,?,?,?,?,?,?)`
+  ).bind(name, description||null, starting_price||null, currency||'GBP', turnaround||null, included_items||null, number||1, sort_order||0).run();
+  return json({ ok: true });
+}
+ 
+async function putCommission(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const { id, name, description, starting_price, currency, turnaround, included_items, enabled, sort_order } = await request.json();
+  if (!id) return err('id required');
+  await env.DB.prepare(
+    `UPDATE commission_types SET name=?, description=?, starting_price=?, currency=?, turnaround=?, included_items=?, enabled=?, sort_order=? WHERE id=?`
+  ).bind(name, description||null, starting_price||null, currency||'GBP', turnaround||null, included_items||null, enabled!==false?1:0, sort_order||0, id).run();
+  return json({ ok: true });
+}
+ 
+async function deleteCommission(env, url) {
+  const id = url.searchParams.get('id');
+  if (!id) return err('id required');
+  await env.DB.prepare(`DELETE FROM commission_types WHERE id=?`).bind(id).run();
+  return json({ ok: true });
+}
+ 
+async function updateCommissionStatus(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const { status, message } = await request.json();
+  await env.DB.prepare(
+    `INSERT INTO commission_status (id, status, message) VALUES (1,?,?)
+     ON CONFLICT(id) DO UPDATE SET status=excluded.status, message=excluded.message`
+  ).bind(status||'open', message||'Currently open!').run();
+  return json({ ok: true });
+}
+ 
+// ─────────────────────────────────────────────
+// SITE CONTENT
+// ─────────────────────────────────────────────
+async function getSiteContent(env) {
+  const { results } = await env.DB.prepare(`SELECT key, value FROM site_content`).all();
+  const content = {};
+  (results||[]).forEach(r => content[r.key] = r.value);
+  return json(content);
+}
+ 
+async function postSiteContent(env, request) {
+  const auth = await getSession(request, env);
+  if (!auth) return err('Admin only', 403);
+  const body = await request.json();
+  const stmt = env.DB.prepare(
+    `INSERT INTO site_content (key, value) VALUES (?,?)
+     ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated_at=datetime('now')`
+  );
+  const batch = Object.entries(body).map(([k,v]) => stmt.bind(k, v));
+  if (batch.length) await env.DB.batch(batch);
+  return json({ ok: true });
 }
