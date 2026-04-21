@@ -3,1440 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dei Dashboard</title>
+<title>About — Ajay Hunter</title>
 <link rel="stylesheet" href="site.css">
-<style>
-/* ── DASHBOARD OVERRIDES ── */
-body { overflow:hidden; background:var(--ink); color:var(--text); }
-body { --ink:#0d0a1a; --ink2:#1a1530; --ivory:#f4f0ff; --cream:#ede8f8; --text:#e8e2f8; --muted:#9b90c0; --border:rgba(196,176,245,0.12); --border-lit:rgba(196,176,245,0.28); --lavender:#c4b0f5; --lavender-pale:rgba(196,176,245,0.06); --lavender-light:rgba(196,176,245,0.2); --periwinkle:#a8bff0; --periwinkle-pale:rgba(168,191,240,0.06); --periwinkle-light:rgba(168,191,240,0.2); --lilac:#ddc8ff; --card:rgba(196,176,245,0.04); --card-hover:rgba(196,176,245,0.08); --shadow:0 20px 60px rgba(0,0,0,0.5); }
-
-.admin-wrap { display:flex; height:100vh; overflow:hidden; }
-
-/* Sidebar */
-.sidebar { width:260px; min-height:100vh; background:rgba(13,10,26,0.95); border-right:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; overflow-y:auto; }
-.sb-logo { padding:24px 24px 20px; border-bottom:1px solid var(--border); }
-.sb-logo .name { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:300; color:var(--lilac); }
-.sb-logo .sub  { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-top:2px; }
-
-.guild-row { padding:14px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
-.guild-icon { width:30px; height:30px; border-radius:50%; background:var(--lavender-pale); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:var(--muted); flex-shrink:0; overflow:hidden; }
-.guild-select { flex:1; font-size:0.78rem; padding:6px 8px; background:var(--card); border:1px solid var(--border); border-radius:3px; color:var(--text); font-family:'Jost',sans-serif; outline:none; }
-
-.sb-nav { flex:1; padding:12px 0; }
-.sb-section { font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); padding:14px 20px 6px; display:block; }
-.sb-link { display:flex; align-items:center; gap:10px; padding:10px 20px; font-size:0.8rem; color:var(--muted); transition:all 0.2s; border-left:2px solid transparent; cursor:pointer; }
-.sb-link:hover { color:var(--text); background:var(--card); }
-.sb-link.active { color:var(--lavender); background:rgba(196,176,245,0.07); border-left-color:var(--lavender); }
-.sb-icon { font-size:0.85rem; width:16px; text-align:center; flex-shrink:0; }
-
-.user-bar { padding:16px 20px; border-top:1px solid var(--border); display:none; align-items:center; gap:10px; }
-.user-avatar { width:30px; height:30px; border-radius:50%; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
-.user-name { font-size:0.8rem; color:var(--text); flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.sign-out { font-size:0.65rem; color:var(--muted); background:none; border:1px solid var(--border); border-radius:3px; padding:3px 8px; cursor:pointer; font-family:'Jost',sans-serif; transition:all 0.2s; flex-shrink:0; }
-.sign-out:hover { color:var(--lavender); border-color:var(--lavender); }
-
-/* Main */
-.admin-main { flex:1; overflow-y:auto; padding:36px 44px; }
-
-/* Page header */
-.pg-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; padding-bottom:20px; border-bottom:1px solid var(--border); }
-.pg-head h1 { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; color:var(--text); }
-.pg-head .sub { font-size:0.78rem; color:var(--muted); margin-top:3px; }
-
-/* Grid */
-.g2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
-.ga { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:20px; }
-
-/* Panel */
-.panel { background:var(--card); border:1px solid var(--border); border-radius:4px; overflow:hidden; }
-.panel-head { padding:18px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
-.panel-title { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:300; color:var(--text); }
-.panel-body { padding:24px; }
-
-/* Stat */
-.stat { background:var(--card); border:1px solid var(--border); border-radius:4px; padding:24px; transition:all 0.3s; }
-.stat:hover { border-color:var(--border-lit); transform:translateY(-2px); }
-.stat-label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:10px; }
-.stat-value { font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:300; color:var(--lavender); line-height:1; }
-.stat-sub { font-size:0.72rem; color:var(--muted); margin-top:6px; }
-
-/* Form */
-.field { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
-.field label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); }
-.field input, .field textarea, .field select {
-  background:var(--card); border:1px solid var(--border); border-radius:2px;
-  padding:11px 14px; color:var(--text); font-family:'Jost',sans-serif;
-  font-size:0.88rem; font-weight:300; outline:none; transition:border-color 0.2s;
-  width:100%;
-}
-.field input:focus, .field textarea:focus, .field select:focus { border-color:rgba(196,176,245,0.4); background:rgba(196,176,245,0.05); }
-.field textarea { resize:vertical; min-height:80px; }
-.field select option { background:var(--ink2); }
-
-/* Rows */
-.log-row { display:flex; align-items:flex-start; gap:14px; padding:12px 0; border-bottom:1px solid var(--border); }
-.log-row:last-child { border-bottom:none; }
-.log-icon { font-size:0.95rem; margin-top:2px; width:18px; text-align:center; }
-.log-body { flex:1; }
-.log-action { font-size:0.84rem; color:var(--text); margin-bottom:2px; }
-.log-meta { font-size:0.7rem; color:var(--muted); }
-.log-time { font-size:0.65rem; color:var(--muted); white-space:nowrap; }
-
-.ch-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border); }
-.ch-row:last-child { border-bottom:none; }
-.ch-name { font-size:0.86rem; color:var(--text); }
-.ch-id { font-size:0.68rem; color:var(--muted); font-family:monospace; }
-.badge { font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; padding:3px 9px; border-radius:2px; }
-.badge-on  { background:rgba(168,224,168,0.1); color:#a0d8a0; border:1px solid rgba(168,224,168,0.2); }
-.badge-off { background:var(--card); color:var(--muted); border:1px solid var(--border); }
-
-/* Toggle */
-.toggle { position:relative; display:inline-block; width:38px; height:20px; }
-.toggle input { opacity:0; width:0; height:0; }
-.toggle-track { position:absolute; cursor:pointer; inset:0; background:var(--border); border-radius:20px; transition:0.3s; }
-.toggle-track::before { content:''; position:absolute; width:14px; height:14px; border-radius:50%; background:var(--muted); bottom:3px; left:3px; transition:0.3s; }
-.toggle input:checked + .toggle-track { background:rgba(196,176,245,0.3); }
-.toggle input:checked + .toggle-track::before { transform:translateX(18px); background:var(--lavender); }
-
-/* Btns */
-.btn { display:inline-block; padding:10px 24px; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; border:none; transition:all 0.25s; border-radius:2px; }
-.btn-pri  { background:linear-gradient(135deg,var(--lavender),var(--periwinkle)); color:#07050f; font-weight:500; }
-.btn-pri:hover  { transform:translateY(-2px); box-shadow:0 8px 24px rgba(168,191,240,0.3); }
-.btn-ghost { background:transparent; color:var(--lavender); border:1px solid var(--border); }
-.btn-ghost:hover { border-color:var(--lavender); background:var(--card); }
-.btn-sm   { padding:7px 16px; font-size:0.66rem; }
-.btn-danger { background:rgba(245,128,128,0.1); color:#f58080; border:1px solid rgba(245,128,128,0.25); }
-.btn-danger:hover { background:rgba(245,128,128,0.2); }
-
-/* Rule card */
-.rule-card { background:var(--card); border:1px solid var(--border); border-radius:4px; padding:18px; margin-bottom:10px; transition:border-color 0.2s; }
-.rule-card:hover { border-color:var(--border-lit); }
-.rule-cat { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; padding:2px 9px; border-radius:2px; background:rgba(196,176,245,0.1); color:var(--lavender); border:1px solid rgba(196,176,245,0.2); }
-.kw-tag { font-size:0.66rem; font-family:monospace; padding:2px 8px; border:1px solid var(--border); border-radius:2px; color:var(--muted); }
-.resp-item { font-size:0.82rem; color:var(--text); background:rgba(196,176,245,0.04); border-radius:3px; padding:7px 10px; line-height:1.5; margin-top:4px; }
-
-/* Tag input */
-.tag-wrap { background:var(--card); border:1px solid var(--border); border-radius:2px; padding:7px 10px; display:flex; flex-wrap:wrap; gap:5px; cursor:text; min-height:40px; }
-.tag-wrap:focus-within { border-color:rgba(196,176,245,0.4); }
-.tag-pill { display:flex; align-items:center; gap:5px; font-size:0.7rem; padding:2px 9px; background:rgba(196,176,245,0.1); border:1px solid rgba(196,176,245,0.2); border-radius:20px; color:var(--lavender); }
-.tag-pill button { background:none; border:none; cursor:pointer; color:var(--muted); font-size:0.75rem; padding:0; line-height:1; }
-.tag-input { background:none; border:none; outline:none; color:var(--text); font-family:'Jost',sans-serif; font-size:0.84rem; min-width:80px; flex:1; }
-
-/* Theme swatches */
-.swatch-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
-.swatch-row label { font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); min-width:140px; }
-.swatch-row input[type=color] { width:40px; height:36px; padding:2px; border:1px solid var(--border); border-radius:3px; background:none; cursor:pointer; }
-.swatch-row input[type=text] { flex:1; background:var(--card); border:1px solid var(--border); padding:8px 12px; color:var(--text); font-family:monospace; font-size:0.82rem; outline:none; border-radius:2px; }
-.swatch-row input[type=text]:focus { border-color:rgba(196,176,245,0.4); }
-
-/* Theme preview */
-.theme-preview { border-radius:4px; overflow:hidden; border:1px solid var(--border); }
-.prev-nav  { padding:12px 16px; display:flex; align-items:center; justify-content:space-between; }
-.prev-hero { padding:28px 20px; }
-.prev-btn  { padding:8px 18px; border-radius:2px; font-size:0.7rem; font-weight:500; letter-spacing:0.1em; border:none; cursor:default; }
-
-/* Giveaway card */
-.gw-card { background:var(--card); border:1px solid var(--border); border-radius:4px; padding:18px; margin-bottom:10px; }
-.gw-prize { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:300; color:var(--lavender); }
-.gw-meta { font-size:0.75rem; color:var(--muted); margin-top:4px; }
-.gw-status { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; padding:2px 8px; border-radius:2px; }
-.gw-active { background:rgba(168,224,168,0.1); color:#a0d8a0; border:1px solid rgba(168,224,168,0.2); }
-.gw-ended  { background:var(--card); color:var(--muted); border:1px solid var(--border); }
-
-/* Level bar */
-.level-role-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); }
-.level-num { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; color:var(--lavender); min-width:36px; }
-
-/* Toast */
-.toast { position:fixed; bottom:24px; right:24px; z-index:999; background:rgba(13,10,26,0.95); border:1px solid var(--border-lit); border-radius:4px; padding:12px 20px; font-size:0.8rem; color:var(--text); box-shadow:var(--shadow); transform:translateY(60px); opacity:0; transition:all 0.4s cubic-bezier(.34,1.56,.64,1); }
-.toast.show { transform:translateY(0); opacity:1; }
-
-@media (max-width:900px) {
-  .sidebar { width:220px; }
-  .admin-main { padding:24px 20px; }
-  .g2,.g3 { grid-template-columns:1fr; }
-}
-</style>
+<script>
+(async()=>{
+  try{
+    const r=await fetch("/api/theme");
+    if(!r.ok) return;
+    const t=await r.json();
+    const root=document.documentElement.style;
+    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
+  }catch(e){}
+})();
+</script>
 </head>
 <body>
-
-<div class="admin-wrap">
-
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sb-logo">
-    <div class="name">Dei Dashboard</div>
-    <div class="sub">Bot Admin Panel</div>
+<header class="site-header">
+  <div class="inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">AH</div>
+      <div class="logo-text-wrap"><div class="name">Ajay Hunter</div><div class="sub">Digital Artist</div></div>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
+    </nav>
   </div>
+</header>
 
-  <div class="guild-row">
-    <div class="guild-icon" id="g-icon">⊹</div>
-    <select class="guild-select" id="guild-select" onchange="switchGuild(this.value)">
-      <option value="">Select a server...</option>
-    </select>
+<div class="page-hero">
+  <div class="site-container">
+    <span class="eyebrow">Meet the Artist</span>
+    <h1 style="margin-top:0.4rem;">About Ajay</h1>
   </div>
-
-  <nav class="sb-nav">
-    <span class="sb-section">Overview</span>
-    <div class="sb-link active" onclick="showPage('overview',this)"><span class="sb-icon">◈</span> Overview</div>
-
-    <span class="sb-section">Dei</span>
-    <div class="sb-link" onclick="showPage('dei',this)"><span class="sb-icon">⊹</span> Identity</div>
-    <div class="sb-link" onclick="showPage('responses',this)"><span class="sb-icon">💬</span> Responses</div>
-
-    <span class="sb-section">Bot Config</span>
-    <div class="sb-link" onclick="showPage('channels',this)"><span class="sb-icon">#</span> Channels</div>
-    <div class="sb-link" onclick="showPage('filters',this)"><span class="sb-icon">⊘</span> Filters</div>
-    <div class="sb-link" onclick="showPage('embeds',this)"><span class="sb-icon">◻</span> Embeds</div>
-    <div class="sb-link" onclick="showPage('rr',this)"><span class="sb-icon">◎</span> Reaction Roles</div>
-
-    <span class="sb-section">Engagement</span>
-    <div class="sb-link" onclick="showPage('leveling',this)"><span class="sb-icon">⬆</span> Leveling / XP</div>
-    <div class="sb-link" onclick="showPage('giveaways',this)"><span class="sb-icon">🎉</span> Giveaways</div>
-    <div class="sb-link" onclick="showPage('announce',this)"><span class="sb-icon">📢</span> Announcements</div>
-
-    <span class="sb-section">Clients</span>
-    <div class="sb-link" onclick="showPage('clients',this)"><span class="sb-icon">👤</span> Client Portal</div>
-
-    <span class="sb-section">Members</span>
-    <div class="sb-link" onclick="showPage('warnings',this)"><span class="sb-icon">⚠</span> Warnings</div>
-    <div class="sb-link" onclick="showPage('birthdays',this)"><span class="sb-icon">🎂</span> Birthdays</div>
-
-    <span class="sb-section">Logs</span>
-    <div class="sb-link" onclick="showPage('logs',this)"><span class="sb-icon">≡</span> Mod Logs</div>
-
-    <span class="sb-section">Social Alerts</span>
-    <div class="sb-link" onclick="showPage('social',this)"><span class="sb-icon">📡</span> Social Alerts</div>
-
-    <span class="sb-section">Site</span>
-    <div class="sb-link" onclick="showPage('theme',this)"><span class="sb-icon">🎨</span> Theme Editor</div>
-  </nav>
-
-  <div class="user-bar" id="user-bar">
-    <img class="user-avatar" id="u-avatar" src="" alt="">
-    <div class="user-name" id="u-name"></div>
-    <button class="sign-out" onclick="logout()">Sign out</button>
-  </div>
-</aside>
-
-<!-- MAIN -->
-<main class="admin-main">
-
-  <!-- OVERVIEW -->
-  <div class="page" id="page-overview">
-    <div class="pg-head">
-      <div><h1>Overview</h1><p class="sub" id="guild-sub">Select a server to get started.</p></div>
-      <button class="btn btn-ghost btn-sm" onclick="loadAll()">↺ Refresh</button>
-    </div>
-    <div class="g3" style="margin-bottom:20px;">
-      <div class="stat"><span class="stat-label">Members</span><div class="stat-value" id="s-members">—</div></div>
-      <div class="stat"><span class="stat-label">Actions Today</span><div class="stat-value" id="s-actions">—</div></div>
-      <div class="stat"><span class="stat-label">Total Warnings</span><div class="stat-value" id="s-warnings">—</div></div>
-    </div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Recent Mod Actions</span></div>
-        <div class="panel-body" id="ov-logs"><p style="font-size:0.82rem;color:var(--muted)">Select a server to see logs.</p></div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Channel Config</span></div>
-        <div class="panel-body" id="ov-channels"><p style="font-size:0.82rem;color:var(--muted)">Select a server to see channels.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEI IDENTITY -->
-  <div class="page" id="page-dei" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Dei Identity</h1><p class="sub">Customise how Dei presents herself on this server.</p></div>
-      <button class="btn btn-pri btn-sm" onclick="saveDei()">Save Changes</button>
-    </div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Identity</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Display Name</label><input id="d-name" placeholder="Dei" oninput="prevDei()"></div>
-          <div class="field"><label>Full Name</label><input id="d-fullname" placeholder="Deivon Talvyrvei" oninput="prevDei()"></div>
-          <div class="field"><label>Avatar URL</label><input id="d-avatar" placeholder="https://..." oninput="prevDei()"></div>
-          <div class="field">
-            <label>Accent Color</label>
-            <div style="display:flex;gap:10px;align-items:center;">
-              <input type="text" id="d-color" placeholder="c4b0f5" style="flex:1;" oninput="prevDei()">
-              <input type="color" id="d-picker" value="#c4b0f5" style="width:40px;height:38px;padding:2px;border:1px solid var(--border);border-radius:3px;background:none;cursor:pointer;" oninput="syncPicker()">
-            </div>
-          </div>
-          <div class="field"><label>Bio</label><textarea id="d-bio" oninput="prevDei()"></textarea></div>
-          <div class="field">
-            <label>Response Style</label>
-            <select id="d-style">
-              <option value="default">Default — dry, warm, complicated</option>
-              <option value="warm">Warmer — more openly caring</option>
-              <option value="distant">Distant — more reserved and quiet</option>
-              <option value="humorous">Humorous — dryer, more observational</option>
-            </select>
-          </div>
-          <div class="field"><label>Personality Notes</label><textarea id="d-notes" placeholder="Extra context for this server..."></textarea></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Preview</span></div>
-        <div class="panel-body">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
-            <div id="prev-av" style="width:48px;height:48px;border-radius:50%;background:var(--card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;overflow:hidden;">⊹</div>
-            <div>
-              <div id="prev-name" style="font-size:0.95rem;font-weight:500;color:var(--text);">Dei</div>
-              <div id="prev-fn" style="font-size:0.72rem;color:var(--muted);">Deivon Talvyrvei</div>
-            </div>
-          </div>
-          <div id="prev-embed" style="border-left:3px solid #c4b0f5;background:rgba(196,176,245,0.04);border-radius:0 4px 4px 0;padding:12px 16px;">
-            <div id="prev-et" style="font-size:0.86rem;font-weight:500;color:#c4b0f5;margin-bottom:4px;">Welcome.</div>
-            <div id="prev-bio" style="font-size:0.78rem;color:var(--muted);">An alien woman living on Earth, doing her best.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RESPONSES -->
-  <div class="page" id="page-responses" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Response Rules</h1><p class="sub">Every response Dei gives is controlled here.</p></div>
-      <button class="btn btn-pri btn-sm" onclick="showRuleForm()">+ New Rule</button>
-    </div>
-    <div class="panel" id="rule-form-panel" style="display:none;margin-bottom:20px;">
-      <div class="panel-head">
-        <span class="panel-title" id="rf-title">New Response Rule</span>
-        <button class="btn btn-ghost btn-sm" onclick="hideRuleForm()">Cancel</button>
-      </div>
-      <div class="panel-body">
-        <input type="hidden" id="rf-id">
-        <div class="g2">
-          <div>
-            <div class="field"><label>Category</label>
-              <select id="rf-cat">
-                <option value="general">General</option><option value="lore">Lore</option>
-                <option value="emotions">Emotions</option><option value="greetings">Greetings</option>
-                <option value="farewell">Farewell</option><option value="vent">Vent Support</option>
-                <option value="fun">Fun</option><option value="custom">Custom</option>
-              </select>
-            </div>
-            <div class="field" style="flex-direction:row;align-items:center;gap:10px;">
-              <label class="toggle"><input type="checkbox" id="rf-vent"><span class="toggle-track"></span></label>
-              <span style="font-size:0.8rem;color:var(--muted);">Vent channel only</span>
-            </div>
-            <div class="field">
-              <label>Keywords <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);">(Enter or comma to add)</span></label>
-              <div class="tag-wrap" id="kw-wrap" onclick="document.getElementById('kw-in').focus()">
-                <input class="tag-input" id="kw-in" placeholder="Type a keyword...">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="field">
-              <label>Responses <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);">(Dei picks one at random)</span></label>
-              <div id="resp-lines"></div>
-              <button class="btn btn-ghost btn-sm" style="margin-top:8px;" onclick="addRespLine()">+ Add Response</button>
-            </div>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:8px;">
-          <button class="btn btn-pri btn-sm" onclick="saveRule()">Save Rule</button>
-          <button class="btn btn-ghost btn-sm" onclick="hideRuleForm()">Cancel</button>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
-      <select id="rf-filter" style="font-size:0.76rem;padding:7px 10px;background:var(--card);border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;" onchange="renderRules()">
-        <option value="">All categories</option>
-        <option value="general">General</option><option value="lore">Lore</option>
-        <option value="emotions">Emotions</option><option value="greetings">Greetings</option>
-        <option value="farewell">Farewell</option><option value="vent">Vent</option>
-        <option value="fun">Fun</option><option value="custom">Custom</option>
-      </select>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <label class="toggle"><input type="checkbox" id="rf-ventonly" onchange="renderRules()"><span class="toggle-track"></span></label>
-        <span style="font-size:0.76rem;color:var(--muted);">Vent only</span>
-      </div>
-      <span id="rule-count" style="font-size:0.75rem;color:var(--muted);margin-left:auto;"></span>
-    </div>
-    <div id="rules-list"></div>
-  </div>
-
-  <!-- CHANNELS -->
-  <div class="page" id="page-channels" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Channels</h1><p class="sub">Configure where Dei posts and listens.</p></div>
-      <button class="btn btn-pri btn-sm" onclick="saveChannels()">Save Changes</button>
-    </div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Single Channels</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Log Channel ID</label><input id="ch-log" placeholder="Channel ID"></div>
-          <div class="field"><label>Welcome Channel ID</label><input id="ch-welcome" placeholder="Channel ID"></div>
-          <div class="field"><label>Birthday Channel ID</label><input id="ch-bday" placeholder="Channel ID"></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Multi Channels</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Active Channels (one per line)</label><textarea id="ch-active" style="min-height:90px;"></textarea></div>
-          <div class="field"><label>Vent Channels (one per line)</label><textarea id="ch-vent" style="min-height:70px;"></textarea></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FILTERS -->
-  <div class="page" id="page-filters" style="display:none;">
-    <div class="pg-head"><div><h1>Filters</h1><p class="sub">Custom filter keywords added via the dashboard.</p></div></div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Add Keyword</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Category</label>
-            <select id="f-cat"><option>Hate Speech/Slurs</option><option>NSFW Content</option><option>Threats of Violence</option><option>Doxxing / Personal Info</option><option>Discrimination</option><option>Illegal Activity</option><option>Server Advertisement</option></select>
-          </div>
-          <div class="field"><label>Keyword</label><input id="f-kw" placeholder="keyword to filter"></div>
-          <button class="btn btn-pri btn-sm" onclick="addFilter()">Add Keyword</button>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Custom Keywords</span></div>
-        <div class="panel-body" id="filters-list"><p style="font-size:0.82rem;color:var(--muted)">No custom filters yet.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- EMBEDS -->
-  <div class="page" id="page-embeds" style="display:none;">
-    <div class="pg-head"><div><h1>Embeds</h1><p class="sub">Save and manage embed templates.</p></div></div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">New Embed</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Template Name</label><input id="e-name"></div>
-          <div class="field"><label>Title</label><input id="e-title" oninput="updEmbedPrev()"></div>
-          <div class="field"><label>Description</label><textarea id="e-desc" oninput="updEmbedPrev()"></textarea></div>
-          <div class="g2">
-            <div class="field"><label>Color</label>
-              <select id="e-color"><option value="blurple">Blurple</option><option value="lavender">Lavender</option><option value="gold">Gold</option><option value="red">Red</option><option value="green">Green</option></select>
-            </div>
-            <div class="field"><label>Footer</label><input id="e-footer"></div>
-          </div>
-          <div id="e-prev" style="border-left:3px solid var(--lavender);background:rgba(196,176,245,0.04);padding:12px 16px;margin-top:12px;border-radius:0 4px 4px 0;">
-            <div id="e-pt" style="font-size:0.86rem;font-weight:500;color:var(--lavender);margin-bottom:4px;">Title</div>
-            <div id="e-pd" style="font-size:0.78rem;color:var(--muted);">Description</div>
-          </div>
-          <button class="btn btn-pri btn-sm" style="margin-top:14px;" onclick="saveEmbed()">Save Template</button>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Saved Embeds</span></div>
-        <div class="panel-body" id="embeds-list"><p style="font-size:0.82rem;color:var(--muted)">No saved embeds yet.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- REACTION ROLES -->
-  <div class="page" id="page-rr" style="display:none;">
-    <div class="pg-head"><div><h1>Reaction Roles</h1><p class="sub">Manage reaction role mappings.</p></div></div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Add Reaction Role</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Message ID</label><input id="rr-mid"></div>
-          <div class="g2">
-            <div class="field"><label>Emoji</label><input id="rr-emoji" placeholder="🎨"></div>
-            <div class="field"><label>Role ID</label><input id="rr-roleid"></div>
-          </div>
-          <div class="field"><label>Role Name (optional)</label><input id="rr-rname"></div>
-          <button class="btn btn-pri btn-sm" onclick="addRR()">Add</button>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Active Reaction Roles</span></div>
-        <div class="panel-body" id="rr-list"><p style="font-size:0.82rem;color:var(--muted)">No reaction roles configured.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LEVELING -->
-  <div class="page" id="page-leveling" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Leveling & XP</h1><p class="sub">Reward members for being active in your server.</p></div>
-      <button class="btn btn-pri btn-sm" onclick="saveLeveling()">Save Config</button>
-    </div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">XP Settings</span></div>
-        <div class="panel-body">
-          <div class="field" style="flex-direction:row;align-items:center;gap:12px;margin-bottom:20px;">
-            <label class="toggle"><input type="checkbox" id="lv-enabled" checked><span class="toggle-track"></span></label>
-            <span style="font-size:0.85rem;color:var(--text);">Leveling system enabled</span>
-          </div>
-          <div class="g2">
-            <div class="field"><label>XP Per Message</label><input type="number" id="lv-xp" value="15" min="1" max="100"></div>
-            <div class="field"><label>Cooldown (seconds)</label><input type="number" id="lv-cd" value="60" min="0"></div>
-          </div>
-          <div class="field"><label>Announce Channel ID</label><input id="lv-ch" placeholder="Leave blank to disable announcements"></div>
-          <div class="field"><label>Level Up Message</label>
-            <input id="lv-msg" value="Congratulations {user}, you reached level {level}!" placeholder="Use {user} and {level} as placeholders">
-          </div>
-          <p style="font-size:0.7rem;color:var(--muted);margin-top:-8px;">Use <code style="background:var(--card);padding:1px 6px;border-radius:2px;">{user}</code> and <code style="background:var(--card);padding:1px 6px;border-radius:2px;">{level}</code> in your message.</p>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Level Roles</span><button class="btn btn-ghost btn-sm" onclick="showLvRoleForm()">+ Add</button></div>
-        <div class="panel-body">
-          <div id="lv-role-form" style="display:none;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);">
-            <div class="g2">
-              <div class="field"><label>Level Required</label><input type="number" id="lv-rlevel" placeholder="5" min="1"></div>
-              <div class="field"><label>Role ID</label><input id="lv-rroleid" placeholder="Role ID"></div>
-            </div>
-            <div class="field"><label>Role Name</label><input id="lv-rname" placeholder="e.g. Active Member"></div>
-            <div style="display:flex;gap:8px;margin-top:4px;">
-              <button class="btn btn-pri btn-sm" onclick="saveLvRole()">Add Role</button>
-              <button class="btn btn-ghost btn-sm" onclick="document.getElementById('lv-role-form').style.display='none'">Cancel</button>
-            </div>
-          </div>
-          <div id="lv-roles-list"><p style="font-size:0.82rem;color:var(--muted)">No level roles set up yet.</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GIVEAWAYS -->
-  <div class="page" id="page-giveaways" style="display:none;">
-    <div class="pg-head"><div><h1>Giveaways</h1><p class="sub">Create and manage server giveaways.</p></div></div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">New Giveaway</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Prize</label><input id="gw-prize" placeholder="e.g. Discord Nitro 1 Month"></div>
-          <div class="field"><label>Channel ID</label><input id="gw-ch" placeholder="Channel to post the giveaway in"></div>
-          <div class="g2">
-            <div class="field"><label>Winners</label><input type="number" id="gw-winners" value="1" min="1"></div>
-            <div class="field"><label>End Date & Time</label><input type="datetime-local" id="gw-ends"></div>
-          </div>
-          <div class="field"><label>Hosted By</label><input id="gw-host" placeholder="Your name or role (optional)"></div>
-          <button class="btn btn-pri btn-sm" onclick="createGiveaway()">Create Giveaway</button>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Active & Past Giveaways</span><button class="btn btn-ghost btn-sm" onclick="loadGiveaways()">↺</button></div>
-        <div class="panel-body" id="gw-list"><p style="font-size:0.82rem;color:var(--muted)">No giveaways yet.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ANNOUNCEMENTS -->
-  <div class="page" id="page-announce" style="display:none;">
-    <div class="pg-head"><div><h1>Announcements</h1><p class="sub">Create announcements for your server.</p></div></div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">New Announcement</span></div>
-        <div class="panel-body">
-          <div class="field"><label>Channel ID</label><input id="an-ch" placeholder="Channel to post in"></div>
-          <div class="field"><label>Title (optional)</label><input id="an-title" placeholder="Announcement title"></div>
-          <div class="field"><label>Message</label><textarea id="an-msg" style="min-height:120px;" placeholder="Your announcement content..."></textarea></div>
-          <div class="g2">
-            <div class="field"><label>Color</label>
-              <select id="an-color">
-                <option value="lavender">Lavender</option><option value="gold">Gold</option>
-                <option value="blue">Blue</option><option value="green">Green</option><option value="red">Red</option>
-              </select>
-            </div>
-            <div class="field" style="justify-content:flex-end;">
-              <div style="display:flex;align-items:center;gap:10px;margin-top:auto;padding-bottom:4px;">
-                <label class="toggle"><input type="checkbox" id="an-ping"><span class="toggle-track"></span></label>
-                <span style="font-size:0.8rem;color:var(--muted);">@everyone</span>
-              </div>
-            </div>
-          </div>
-          <div class="field"><label>Schedule For (optional)</label><input type="datetime-local" id="an-sched"></div>
-          <button class="btn btn-pri btn-sm" onclick="createAnnouncement()">Post Announcement</button>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Recent Announcements</span><button class="btn btn-ghost btn-sm" onclick="loadAnnouncements()">↺</button></div>
-        <div class="panel-body" id="an-list"><p style="font-size:0.82rem;color:var(--muted)">No announcements yet.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WARNINGS -->
-  <div class="page" id="page-warnings" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Warnings</h1><p class="sub">View and manage member warnings.</p></div>
-      <div style="display:flex;gap:10px;">
-        <input id="warn-uid" placeholder="Filter by user ID" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;color:var(--text);font-family:'Jost',sans-serif;font-size:0.8rem;border-radius:2px;outline:none;width:180px;">
-        <button class="btn btn-ghost btn-sm" onclick="loadWarnings()">Search</button>
-      </div>
-    </div>
-    <div class="panel">
-      <div class="panel-head"><span class="panel-title">Warning Records</span><span id="warn-count" style="font-size:0.72rem;color:var(--muted);"></span></div>
-      <div class="panel-body" id="warn-list"><p style="font-size:0.82rem;color:var(--muted)">Select a server to see warnings.</p></div>
-    </div>
-  </div>
-
-  <!-- BIRTHDAYS -->
-  <div class="page" id="page-birthdays" style="display:none;">
-    <div class="pg-head"><div><h1>Birthdays</h1><p class="sub">Members who have registered their birthdays.</p></div></div>
-    <div class="panel">
-      <div class="panel-head"><span class="panel-title">Registered Birthdays</span></div>
-      <div class="panel-body" id="bday-list"><p style="font-size:0.82rem;color:var(--muted)">Select a server to see birthdays.</p></div>
-    </div>
-  </div>
-
-  <!-- MOD LOGS -->
-  <div class="page" id="page-logs" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Mod Logs</h1><p class="sub">All moderation actions recorded by Dei.</p></div>
-      <button class="btn btn-ghost btn-sm" onclick="loadLogs()">↺ Refresh</button>
-    </div>
-    <div class="panel">
-      <div class="panel-head"><span class="panel-title">Action Log</span><span id="log-count" style="font-size:0.72rem;color:var(--muted);"></span></div>
-      <div class="panel-body" id="log-list"><p style="font-size:0.82rem;color:var(--muted)">Select a server to see logs.</p></div>
-    </div>
-  </div>
-
-  <!-- CLIENT PORTAL (admin view) -->
-  <div class="page" id="page-clients" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Client Portal</h1><p class="sub">Manage client projects — update status, send messages, share files.</p></div>
-      <button class="btn btn-ghost btn-sm" onclick="loadClients()">↺ Refresh</button>
-    </div>
-
-    <!-- Client list -->
-    <div id="client-list" style="display:flex;flex-direction:column;gap:14px;"></div>
-  </div>
-
-  <!-- SOCIAL ALERTS -->
-  <div class="page" id="page-social" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Social Alerts</h1><p class="sub">Get Discord notifications when you post on social media.</p></div>
-      <button class="btn btn-pri btn-sm" onclick="showAddAlert()">+ Add Alert</button>
-    </div>
-    <div class="panel" id="alert-form" style="display:none;margin-bottom:20px;">
-      <div class="panel-head"><span class="panel-title">New Social Alert</span><button class="btn btn-ghost btn-sm" onclick="hideAddAlert()">Cancel</button></div>
-      <div class="panel-body">
-        <div class="g2">
-          <div>
-            <div class="field"><label>Platform</label>
-              <select id="sa-platform" onchange="updateAlertForm()">
-                <option value="twitch">Twitch</option>
-                <option value="youtube">YouTube</option>
-                <option value="twitter">Twitter / X</option>
-                <option value="instagram">Instagram</option>
-                <option value="tiktok">TikTok</option>
-              </select>
-            </div>
-            <div class="field"><label>Username / Handle</label><input id="sa-username" placeholder="yourhandle (no @)"></div>
-            <div class="field"><label id="sa-id-label">Channel / User ID</label><input id="sa-id" placeholder="Platform-specific ID"><p id="sa-id-hint" style="font-size:0.68rem;color:var(--muted);margin-top:4px;"></p></div>
-            <div class="field"><label>Discord Channel ID</label><input id="sa-channel" placeholder="The Discord channel to post alerts in"></div>
-          </div>
-          <div>
-            <div class="field"><label>Discord Webhook URL</label><input id="sa-webhook" placeholder="https://discord.com/api/webhooks/..."><p style="font-size:0.68rem;color:var(--muted);margin-top:4px;">Required for Twitch and YouTube. Get from: Channel Settings > Integrations > Webhooks.</p></div>
-            <div class="field"><label>Custom Message (optional)</label><textarea id="sa-msg" style="min-height:70px;" placeholder="e.g. New video alert! Go watch!"></textarea></div>
-            <div class="field" style="flex-direction:row;align-items:center;gap:12px;">
-              <label class="toggle"><input type="checkbox" id="sa-preview" checked><span class="toggle-track"></span></label>
-              <span style="font-size:0.82rem;color:var(--muted);">Include image preview in embed</span>
-            </div>
-            <div id="sa-subscribe-wrap" style="display:none;margin-top:12px;padding:14px;background:rgba(196,176,245,0.05);border:1px solid var(--border);border-radius:4px;">
-              <p id="sa-subscribe-note" style="font-size:0.78rem;color:var(--muted);"></p>
-              <button id="sa-subscribe-btn" class="btn btn-ghost btn-sm" style="margin-top:10px;" onclick="subscribeWebhook()">Subscribe Webhook</button>
-            </div>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:12px;">
-          <button class="btn btn-pri btn-sm" onclick="saveAlert()">Save Alert</button>
-          <button class="btn btn-ghost btn-sm" onclick="hideAddAlert()">Cancel</button>
-        </div>
-      </div>
-    </div>
-    <div style="background:rgba(168,191,240,0.06);border:1px solid rgba(168,191,240,0.15);border-radius:4px;padding:18px 20px;margin-bottom:20px;">
-      <div style="font-size:0.7rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--periwinkle);margin-bottom:10px;">API Keys Required</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:0.76rem;">
-        <div><span style="color:var(--lavender);">Twitch</span><br><span style="color:var(--muted);">Client ID + Secret + TWITCH_SECRET env var. <a href="https://dev.twitch.tv/console" target="_blank" style="color:var(--periwinkle);">dev.twitch.tv</a></span></div>
-        <div><span style="color:var(--lavender);">YouTube</span><br><span style="color:var(--muted);">Only the Channel ID needed — free, no key required.</span></div>
-        <div><span style="color:var(--lavender);">Twitter / X</span><br><span style="color:var(--muted);">Bearer Token — free tier works. <a href="https://developer.twitter.com" target="_blank" style="color:var(--periwinkle);">developer.twitter.com</a></span></div>
-        <div><span style="color:var(--lavender);">Instagram</span><br><span style="color:var(--muted);">Graph API token via Facebook developer account. <a href="https://developers.facebook.com" target="_blank" style="color:var(--periwinkle);">developers.facebook.com</a></span></div>
-        <div><span style="color:var(--lavender);">TikTok</span><br><span style="color:var(--muted);">No official API. Uses public RSS feed — may be unreliable.</span></div>
-        <div><span style="color:var(--lavender);">Discord Webhook URL</span><br><span style="color:var(--muted);">Channel Settings > Integrations > Webhooks. Required for Twitch + YouTube.</span></div>
-      </div>
-    </div>
-    <div id="sa-platforms"></div>
-  </div>
-
-
-  <!-- THEME EDITOR -->
-  <div class="page" id="page-theme" style="display:none;">
-    <div class="pg-head">
-      <div><h1>Theme Editor</h1><p class="sub">Customise the look of your public site. Only you can see this page.</p></div>
-      <div style="display:flex;gap:10px;">
-        <button class="btn btn-ghost btn-sm" onclick="resetTheme()">Reset to Default</button>
-        <button class="btn btn-pri btn-sm" onclick="saveTheme()">Save Theme</button>
-      </div>
-    </div>
-    <div class="g2">
-      <div class="panel">
-        <div class="panel-head"><span class="panel-title">Colors</span></div>
-        <div class="panel-body">
-          <div class="swatch-row"><label>Background</label><input type="color" id="t-bg" value="#f4f0ff" oninput="syncTheme('bg',this.value)"><input type="text" id="t-bg-t" value="f4f0ff" oninput="syncThemeText('bg',this.value)"></div>
-          <div class="swatch-row"><label>Cream / Cards</label><input type="color" id="t-cream" value="#ede8f8" oninput="syncTheme('cream',this.value)"><input type="text" id="t-cream-t" value="ede8f8" oninput="syncThemeText('cream',this.value)"></div>
-          <div class="swatch-row"><label>Primary Color</label><input type="color" id="t-lav" value="#7c5cbf" oninput="syncTheme('lavender',this.value)"><input type="text" id="t-lav-t" value="7c5cbf" oninput="syncThemeText('lavender',this.value)"></div>
-          <div class="swatch-row"><label>Secondary Color</label><input type="color" id="t-peri" value="#5a7fc0" oninput="syncTheme('periwinkle',this.value)"><input type="text" id="t-peri-t" value="5a7fc0" oninput="syncThemeText('periwinkle',this.value)"></div>
-          <div class="swatch-row"><label>Accent / Italic</label><input type="color" id="t-lilac" value="#a98bd6" oninput="syncTheme('lilac',this.value)"><input type="text" id="t-lilac-t" value="a98bd6" oninput="syncThemeText('lilac',this.value)"></div>
-          <div class="swatch-row"><label>Body Text</label><input type="color" id="t-ink" value="#1a1530" oninput="syncTheme('ink',this.value)"><input type="text" id="t-ink-t" value="1a1530" oninput="syncThemeText('ink',this.value)"></div>
-          <div class="swatch-row"><label>Muted Text</label><input type="color" id="t-muted" value="#6b5f90" oninput="syncTheme('muted',this.value)"><input type="text" id="t-muted-t" value="6b5f90" oninput="syncThemeText('muted',this.value)"></div>
-          <div class="swatch-row"><label>Dark / Footer BG</label><input type="color" id="t-dark" value="#0d0a1a" oninput="syncTheme('dark',this.value)"><input type="text" id="t-dark-t" value="0d0a1a" oninput="syncThemeText('dark',this.value)"></div>
-        </div>
-      </div>
-      <div>
-        <div class="panel" style="margin-bottom:20px;">
-          <div class="panel-head"><span class="panel-title">Typography</span></div>
-          <div class="panel-body">
-            <div class="field">
-              <label>Heading Font</label>
-              <select id="t-hfont" onchange="updThemePrev()">
-                <option value="Cormorant Garamond">Cormorant Garamond (current)</option>
-                <option value="Playfair Display">Playfair Display</option>
-                <option value="Libre Baskerville">Libre Baskerville</option>
-                <option value="Merriweather">Merriweather</option>
-                <option value="EB Garamond">EB Garamond</option>
-                <option value="Lora">Lora</option>
-                <option value="DM Serif Display">DM Serif Display</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Body Font</label>
-              <select id="t-bfont" onchange="updThemePrev()">
-                <option value="Jost">Jost (current)</option>
-                <option value="Inter">Inter</option>
-                <option value="DM Sans">DM Sans</option>
-                <option value="Outfit">Outfit</option>
-                <option value="Nunito">Nunito</option>
-                <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="panel-head"><span class="panel-title">Live Preview</span></div>
-          <div class="panel-body" style="padding:0;">
-            <div id="theme-prev" class="theme-preview">
-              <div class="prev-nav" id="pv-nav" style="background:#f4f0ff;border-bottom:1px solid rgba(100,80,180,0.15);">
-                <span id="pv-logo" style="font-size:1.1rem;font-weight:400;color:#1a1530;">Ajay Hunter</span>
-                <div style="display:flex;gap:16px;">
-                  <span style="font-size:0.8rem;color:#6b5f90;">Portfolio</span>
-                  <span id="pv-btn" class="prev-btn" style="background:#7c5cbf;color:#fff;">Work With Me</span>
-                </div>
-              </div>
-              <div class="prev-hero" id="pv-hero" style="background:#ede8f8;">
-                <span id="pv-eye" style="font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:#7c5cbf;display:block;margin-bottom:8px;">Character Art</span>
-                <div id="pv-h1" style="font-size:1.6rem;font-weight:300;line-height:1.2;color:#1a1530;margin-bottom:8px;">Art that brings <em id="pv-em" style="font-style:italic;color:#a98bd6;">characters to life.</em></div>
-                <p id="pv-p" style="font-size:0.85rem;color:#6b5f90;">I'm Ajay — a freelance digital artist.</p>
-                <div style="margin-top:14px;display:flex;gap:10px;">
-                  <span class="prev-btn" id="pv-pri" style="background:#7c5cbf;color:#fff;">View My Work</span>
-                  <span class="prev-btn" id="pv-out" style="background:transparent;color:#7c5cbf;border:1px solid rgba(124,92,191,0.3);">Start a Project</span>
-                </div>
-              </div>
-              <div id="pv-footer" style="background:#0d0a1a;padding:14px 20px;">
-                <div id="pv-fn" style="font-size:1rem;font-weight:300;color:#f4f0ff;">Ajay Hunter</div>
-                <div id="pv-ft" style="font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#a98bd6;margin-top:2px;">Digital Artist</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</main>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="site-container" style="padding-top:4rem; padding-bottom:4rem;">
+  <div style="display:flex; flex-direction:column; gap:4rem;">
+
+    <!-- Bio + photo -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start;">
+      <!-- Photo placeholder -->
+      <div style="background:linear-gradient(135deg,var(--lavender-pale),var(--periwinkle-pale)); aspect-ratio:4/5; max-width:480px; width:100%; display:flex; align-items:center; justify-content:center; border:1px solid var(--lavender-light);">
+        <div style="text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:5rem; font-weight:300; color:var(--lavender); opacity:0.25;">AH</div>
+          <p style="font-size:0.7rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-top:0.5rem;">Ajay Hunter</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <span class="section-line"></span>
+        <h2>Digital Art & Design<br><em>with Soul</em></h2>
+        <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:1rem;">
+          <p>Hi, I'm Ajay — a freelance digital artist based online, specialising in character art, illustration, and graphic design. I've been drawing for as long as I can remember, and turning that love into something I can share with others has been one of the best decisions I've ever made.</p>
+          <p>Every commission I take on is treated like a little world of its own. Whether it's your original character, a scene from your story, or a graphic for your brand, I put real time and heart into understanding what you want — and then making it better than you imagined.</p>
+          <p>Off-screen, you'll find me at the library (it's my favourite place), wearing something from the 1950s, reading fantasy novels, and being supervised by Starla, my black and white cat who has very strong opinions about my workspace.</p>
+        </div>
+        <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:0.75rem;">
+          <a href="contact.html" class="btn btn-primary">Work With Me</a>
+          <a href="portfolio.html" class="btn btn-outline">See My Work</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Values -->
+    <div class="reveal">
+      <span class="eyebrow">What I Believe In</span>
+      <h2 style="margin-top:0.4rem; margin-bottom:2rem;">My Values</h2>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem;">
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:28px; height:2px; background:var(--lavender); margin-bottom:1rem;"></div>
+          <h3>Intentional Art</h3>
+          <p style="margin-top:0.6rem; font-size:0.875rem;">Every line has a reason. I don't rush. I don't mass-produce. I make things that feel considered and personal.</p>
+        </div>
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:28px; height:2px; background:var(--periwinkle); margin-bottom:1rem;"></div>
+          <h3>Client-First Process</h3>
+          <p style="margin-top:0.6rem; font-size:0.875rem;">You know your character better than anyone. I'm here to listen, understand, and translate your vision into something real.</p>
+        </div>
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:28px; height:2px; background:var(--lilac); margin-bottom:1rem;"></div>
+          <h3>Safe & Welcoming</h3>
+          <p style="margin-top:0.6rem; font-size:0.875rem;">This is a space where everyone is welcome. I'm particularly happy to work on diverse characters, queer stories, and creative worlds.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="reveal" style="background:var(--lavender-pale); border:1px solid var(--lavender-light); padding:2.5rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+        <div>
+          <span class="eyebrow">Expertise</span>
+          <h2 style="margin-top:0.4rem;">Skills & Craft</h2>
+          <p style="margin-top:0.75rem; max-width:360px;">Years of practice across character art, illustration, and design — always growing, always learning something new.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; align-content:start;">
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Character Art</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">OC Illustration</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Portrait Art</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Scene Illustration</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Logo Design</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Emotes & Badges</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Stream Assets</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Graphic Design</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Typography</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Color Theory</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="reveal" style="text-align:center; padding:2rem 0;">
+      <span class="eyebrow" style="display:block; margin-bottom:0.5rem;">Currently Accepting New Commissions</span>
+      <h2>Interested in working together?</h2>
+      <p style="margin-top:0.75rem; max-width:360px; margin-left:auto; margin-right:auto;">I'd love to hear about your project. Let's get the conversation started.</p>
+      <a href="contact.html" class="btn btn-lavender" style="margin-top:1.5rem;">Send an Inquiry</a>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div>
+      <div class="footer-name">Ajay Hunter</div>
+      <div class="footer-tag">Digital Artist & Illustrator</div>
+      <p class="footer-bio">Character art, digital illustration, and graphic design made with warmth and intention.</p>
+    </div>
+    <div>
+      <div class="footer-head">Navigation</div>
+      <div class="footer-links">
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="about.html" class="footer-link">About Ajay</a>
+        <a href="portfolio.html" class="footer-link">Portfolio</a>
+        <a href="services.html" class="footer-link">Services</a>
+        <a href="contact.html" class="footer-link">Inquiries</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-head">Connect</div>
+      <div class="footer-links">
+        <a href="https://github.com/centarl1studios" target="_blank" class="footer-link">GitHub</a>
+        <a href="#" class="footer-link">Discord</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ajay Hunter — All rights reserved.</span>
+    <a href="login.html">Admin</a>
+  </div>
+</footer>
 
 <script>
-const API = '/api';
-let SESSION = '', GUILD = '', ALL_RULES = [], KW_TAGS = [], RESP_LINES = [];
-let THEME = { bg:'f4f0ff', cream:'ede8f8', lavender:'7c5cbf', periwinkle:'5a7fc0', lilac:'a98bd6', ink:'1a1530', muted:'6b5f90', dark:'0d0a1a', hfont:'Cormorant Garamond', bfont:'Jost' };
-
-// ── INIT ──
-async function init() {
-  const params = new URLSearchParams(location.search);
-  const t = params.get('session');
-  if (t) { SESSION = t; localStorage.setItem('dei_s', t); history.replaceState({},'',' /admin'); }
-  else SESSION = localStorage.getItem('dei_s') || '';
-  if (!SESSION) { location.href = '/login.html'; return; }
-
-  const me = await api('auth/me','GET',null,true);
-  if (me.error) { location.href = '/login.html'; return; }
-
-  const bar = document.getElementById('user-bar');
-  bar.style.display = 'flex';
-  document.getElementById('u-name').textContent = me.username;
-  if (me.avatar) document.getElementById('u-avatar').src = `https://cdn.discordapp.com/avatars/${me.discord_id}/${me.avatar}.png`;
-
-  const { guilds } = await api('guilds');
-  const sel = document.getElementById('guild-select');
-
-  if (!guilds || guilds.length === 0) {
-    document.getElementById('g-icon').textContent = '!';
-    document.getElementById('g-icon').style.background = 'rgba(245,128,128,0.1)';
-    document.getElementById('g-icon').style.color = '#f58080';
-    document.getElementById('overview-sub').textContent = 'No servers found — add the bot to your server first.';
-    document.getElementById('ov-logs').innerHTML = '<div style="text-align:center;padding:2rem;"><p style="font-size:0.84rem;color:var(--text);margin-bottom:8px;font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;font-weight:300;">No servers found</p><p style="font-size:0.8rem;color:var(--muted);margin-bottom:16px;">Add the Dei bot to your Discord server, then refresh this page.</p><a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_CLIENT_ID&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-pri btn-sm">Add Dei to Your Server</a></div>';
-  } else {
-    guilds.forEach(g => {
-      const o = document.createElement('option');
-      o.value = g.guild_id; o.textContent = g.guild_name || g.guild_id;
-      sel.appendChild(o);
-    });
-    sel.value = guilds[0].guild_id;
-    switchGuild(guilds[0].guild_id);
-  }
-  loadTheme();
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold:0.1});
+reveals.forEach(el => obs.observe(el));
+</script>
+<script>
+// Show "My Portal" link if logged in
+if (localStorage.getItem('client_token')) {
+  const el = document.getElementById('portal-link');
+  if (el) el.style.display = 'inline';
 }
-
-async function logout() {
-  await api('auth/logout','POST');
-  localStorage.removeItem('dei_s');
-  location.href = '/login.html';
-}
-
-async function api(path, method='GET', body=null, skip=false) {
-  const opts = { method, headers: { 'Content-Type':'application/json', 'X-Session-Token': SESSION } };
-  if (body) opts.body = JSON.stringify(body);
-  const r = await fetch(`${API}/${path}`, opts);
-  return r.json();
-}
-
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// ── NAV ──
-function showPage(name, el) {
-  document.querySelectorAll('.page').forEach(p => p.style.display='none');
-  document.querySelectorAll('.sb-link').forEach(a => a.classList.remove('active'));
-  document.getElementById('page-'+name).style.display = 'block';
-  if (el) el.classList.add('active');
-}
-
-// ── GUILD ──
-function switchGuild(gid) {
-  GUILD = gid;
-  if (!gid) return;
-  document.getElementById('guild-sub').textContent = 'Viewing: ' + (document.getElementById('guild-select').selectedOptions[0]?.text || gid);
-  loadAll();
-}
-
-async function loadAll() {
-  if (!GUILD) return;
-  await Promise.all([loadStats(), loadLogs(), loadChannels(), loadWarnings(), loadBirthdays(), loadRR(), loadFilters(), loadEmbeds(), loadDei(), loadRules(), loadGiveaways(), loadAnnouncements(), loadLevelConfig(), loadSocial()]);
-  toast('✦ Server data loaded');
-}
-
-// ── STATS ──
-async function loadStats() {
-  const d = await api(`stats?guild_id=${GUILD}`);
-  document.getElementById('s-members').textContent  = d.member_count  ?? '—';
-  document.getElementById('s-actions').textContent  = d.actions_today ?? '—';
-  document.getElementById('s-warnings').textContent = d.total_warnings ?? '—';
-}
-
-// ── LOGS ──
-async function loadLogs() {
-  const d = await api(`logs?guild_id=${GUILD}&limit=50`);
-  const logs = d.logs||[];
-  document.getElementById('log-count').textContent = `${logs.length} entries`;
-  const icons = {Ban:'🔨',Kick:'👢',Warn:'⚠️',Timeout:'⏱️','Auto-Ban':'💀','DM Sent':'💌',Default:'📋'};
-  const render = (arr,max) => arr.slice(0,max).map(l=>`
-    <div class="log-row">
-      <span class="log-icon">${icons[l.action]||icons.Default}</span>
-      <div class="log-body">
-        <div class="log-action">${l.action}${l.target?` — <span style="color:var(--lavender)">${l.target}</span>`:''}</div>
-        <div class="log-meta">by ${l.moderator}${l.reason?` · ${l.reason}`:''}</div>
-      </div>
-      <div class="log-time">${(l.created_at||'').slice(0,16).replace('T',' ')}</div>
-    </div>`).join('')||'<p style="font-size:0.82rem;color:var(--muted)">No logs yet.</p>';
-  document.getElementById('log-list').innerHTML = render(logs,50);
-  document.getElementById('ov-logs').innerHTML  = render(logs,5);
-}
-
-// ── CHANNELS ──
-async function loadChannels() {
-  const d = await api(`channels?guild_id=${GUILD}`);
-  document.getElementById('ch-log').value    = d.log_channel      || '';
-  document.getElementById('ch-welcome').value= d.welcome_channel  || '';
-  document.getElementById('ch-bday').value   = d.birthday_channel || '';
-  document.getElementById('ch-active').value = (d.active_channels||[]).join('\n');
-  document.getElementById('ch-vent').value   = (d.vent_channels||[]).join('\n');
-  const rows = [['Log',d.log_channel],['Welcome',d.welcome_channel],['Birthday',d.birthday_channel]]
-    .map(([l,v])=>`<div class="ch-row"><div><div class="ch-name">${l} Channel</div><div class="ch-id">${v||'Not set'}</div></div><span class="badge ${v?'badge-on':'badge-off'}">${v?'Set':'Unset'}</span></div>`).join('');
-  document.getElementById('ov-channels').innerHTML = rows;
-}
-async function saveChannels() {
-  await api('channels','POST',{guild_id:GUILD,log_channel:document.getElementById('ch-log').value.trim()||null,welcome_channel:document.getElementById('ch-welcome').value.trim()||null,birthday_channel:document.getElementById('ch-bday').value.trim()||null,active_channels:document.getElementById('ch-active').value.split('\n').map(s=>s.trim()).filter(Boolean),vent_channels:document.getElementById('ch-vent').value.split('\n').map(s=>s.trim()).filter(Boolean)});
-  toast('✦ Channels saved'); loadChannels();
-}
-
-// ── DEI ──
-async function loadDei() {
-  const d = await api(`dei-config?guild_id=${GUILD}`);
-  document.getElementById('d-name').value    = d.name              || 'Dei';
-  document.getElementById('d-fullname').value= d.full_name         || 'Deivon Talvyrvei';
-  document.getElementById('d-avatar').value  = d.avatar_url        || '';
-  document.getElementById('d-color').value   = d.color             || 'c4b0f5';
-  document.getElementById('d-picker').value  = '#'+(d.color||'c4b0f5');
-  document.getElementById('d-bio').value     = d.bio               || '';
-  document.getElementById('d-notes').value   = d.personality_notes || '';
-  document.getElementById('d-style').value   = d.response_style    || 'default';
-  prevDei();
-}
-async function saveDei() {
-  await api('dei-config','POST',{guild_id:GUILD,name:document.getElementById('d-name').value.trim()||'Dei',full_name:document.getElementById('d-fullname').value.trim()||'Deivon Talvyrvei',avatar_url:document.getElementById('d-avatar').value.trim(),color:document.getElementById('d-color').value.replace('#',''),bio:document.getElementById('d-bio').value.trim(),personality_notes:document.getElementById('d-notes').value.trim(),response_style:document.getElementById('d-style').value});
-  toast('✦ Dei config saved');
-}
-function prevDei() {
-  const name=document.getElementById('d-name').value||'Dei';
-  const fn=document.getElementById('d-fullname').value||'Deivon Talvyrvei';
-  const av=document.getElementById('d-avatar').value.trim();
-  const col='#'+(document.getElementById('d-color').value.replace('#','')||'c4b0f5');
-  const bio=document.getElementById('d-bio').value||'An alien woman living on Earth, doing her best.';
-  document.getElementById('prev-name').textContent=name;
-  document.getElementById('prev-fn').textContent=fn;
-  document.getElementById('prev-bio').textContent=bio;
-  document.getElementById('prev-embed').style.borderLeftColor=col;
-  document.getElementById('prev-et').style.color=col;
-  const wrap=document.getElementById('prev-av');
-  wrap.innerHTML=av?`<img src="${av}" style="width:100%;height:100%;object-fit:cover;">`:'⊹';
-}
-function syncPicker(){document.getElementById('d-color').value=document.getElementById('d-picker').value.replace('#','');prevDei();}
-
-// ── RESPONSES ──
-async function loadRules() {
-  const d = await api(`responses?guild_id=${GUILD}`);
-  ALL_RULES = d.rules||[];
-  renderRules();
-}
-function renderRules() {
-  const cat = document.getElementById('rf-filter').value;
-  const vent= document.getElementById('rf-ventonly').checked;
-  let rules = ALL_RULES;
-  if (cat)  rules = rules.filter(r=>r.category===cat);
-  if (vent) rules = rules.filter(r=>r.is_vent);
-  document.getElementById('rule-count').textContent = `${rules.length} rule${rules.length!==1?'s':''}`;
-  document.getElementById('rules-list').innerHTML = rules.length
-    ? rules.map(r=>`
-      <div class="rule-card ${r.enabled?'':'rule-disabled'}">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <span class="rule-cat">${r.category}</span>
-          ${r.is_vent?'<span style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;background:rgba(168,191,240,0.1);color:var(--periwinkle);border:1px solid rgba(168,191,240,0.2);">vent</span>':''}
-          ${!r.enabled?'<span style="font-size:0.62rem;color:var(--muted);margin-left:auto;">disabled</span>':''}
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">${(r.keywords||[]).map(k=>`<span class="kw-tag">${k}</span>`).join('')}</div>
-        <div>${(r.responses||[]).map(t=>`<div class="resp-item">${t}</div>`).join('')}</div>
-        <div style="display:flex;gap:8px;margin-top:12px;">
-          <button class="btn btn-ghost btn-sm" onclick="editRule(${r.id})">Edit</button>
-          <button class="btn btn-ghost btn-sm" onclick="toggleRule(${r.id},${r.enabled?0:1})">${r.enabled?'Disable':'Enable'}</button>
-          <button class="btn btn-danger btn-sm" onclick="delRule(${r.id})">Delete</button>
-        </div>
-      </div>`).join('')
-    : '<p style="font-size:0.82rem;color:var(--muted)">No response rules yet. Click "+ New Rule" to add one.</p>';
-}
-function showRuleForm(){document.getElementById('rf-title').textContent='New Response Rule';document.getElementById('rf-id').value='';document.getElementById('rf-cat').value='general';document.getElementById('rf-vent').checked=false;KW_TAGS=[];renderKwTags();RESP_LINES=[''];renderRespLines();document.getElementById('rule-form-panel').style.display='block';document.getElementById('rule-form-panel').scrollIntoView({behavior:'smooth'});}
-function hideRuleForm(){document.getElementById('rule-form-panel').style.display='none';}
-function editRule(id){const r=ALL_RULES.find(x=>x.id===id);if(!r)return;document.getElementById('rf-title').textContent='Edit Response Rule';document.getElementById('rf-id').value=id;document.getElementById('rf-cat').value=r.category||'general';document.getElementById('rf-vent').checked=!!r.is_vent;KW_TAGS=[...(r.keywords||[])];renderKwTags();RESP_LINES=[...(r.responses||[''])];renderRespLines();document.getElementById('rule-form-panel').style.display='block';document.getElementById('rule-form-panel').scrollIntoView({behavior:'smooth'});}
-async function saveRule(){const id=document.getElementById('rf-id').value;const keywords=KW_TAGS;const responses=RESP_LINES.filter(r=>r.trim());if(!keywords.length||!responses.length){toast('Add at least one keyword and one response.');return;}const payload={guild_id:GUILD,category:document.getElementById('rf-cat').value,is_vent:document.getElementById('rf-vent').checked,keywords,responses,enabled:true};if(id){await api('responses','PUT',{id:parseInt(id),...payload});toast('✦ Rule updated');}else{await api('responses','POST',payload);toast('✦ Rule created');}hideRuleForm();loadRules();}
-async function delRule(id){await api(`responses?id=${id}`,'DELETE');toast('Rule deleted');loadRules();}
-async function toggleRule(id,enabled){const r=ALL_RULES.find(x=>x.id===id);if(!r)return;await api('responses','PUT',{id,category:r.category,keywords:r.keywords,responses:r.responses,is_vent:r.is_vent,enabled});loadRules();}
-function renderKwTags(){const wrap=document.getElementById('kw-wrap');const inp=document.getElementById('kw-in');wrap.innerHTML='';KW_TAGS.forEach((kw,i)=>{const p=document.createElement('span');p.className='tag-pill';p.innerHTML=`${kw}<button onclick="KW_TAGS.splice(${i},1);renderKwTags()">✕</button>`;wrap.appendChild(p);});wrap.appendChild(inp);inp.value='';}
-function renderRespLines(){document.getElementById('resp-lines').innerHTML=RESP_LINES.map((r,i)=>`<div style="display:flex;gap:8px;margin-bottom:8px;"><textarea style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:2px;padding:8px 12px;color:var(--text);font-family:'Jost',sans-serif;font-size:0.82rem;outline:none;resize:vertical;min-height:56px;" placeholder="Dei's response..." oninput="RESP_LINES[${i}]=this.value">${r}</textarea><button onclick="RESP_LINES.splice(${i},1);renderRespLines()" style="background:none;border:1px solid var(--border);border-radius:2px;color:var(--muted);cursor:pointer;padding:6px 10px;">✕</button></div>`).join('');}
-function addRespLine(){RESP_LINES.push('');renderRespLines();}
-document.addEventListener('DOMContentLoaded',()=>{const inp=document.getElementById('kw-in');inp.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===',')&&inp.value.trim()){e.preventDefault();KW_TAGS.push(inp.value.trim().toLowerCase().replace(',',''));renderKwTags();}else if(e.key==='Backspace'&&!inp.value&&KW_TAGS.length){KW_TAGS.pop();renderKwTags();}});});
-
-// ── FILTERS ──
-async function loadFilters(){const d=await api(`filters?guild_id=${GUILD}`);const f=d.filters||[];document.getElementById('filters-list').innerHTML=f.length?f.map(x=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);"><span style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);min-width:150px;">${x.category}</span><span style="font-size:0.72rem;font-family:monospace;color:var(--muted);">${x.keyword}</span><button class="btn btn-ghost btn-sm" onclick="delFilter(${x.id})" style="margin-left:auto;">✕</button></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No custom filters yet.</p>';}
-async function addFilter(){await api('filters','POST',{guild_id:GUILD,category:document.getElementById('f-cat').value,keyword:document.getElementById('f-kw').value.trim()});document.getElementById('f-kw').value='';toast('✦ Filter added');loadFilters();}
-async function delFilter(id){await api(`filters?id=${id}`,'DELETE');toast('Removed');loadFilters();}
-
-// ── EMBEDS ──
-async function loadEmbeds(){const d=await api(`embeds?guild_id=${GUILD}`);const e=d.embeds||[];document.getElementById('embeds-list').innerHTML=e.length?e.map(x=>`<div style="border-left:3px solid var(--lavender);background:var(--card);padding:12px 16px;margin-bottom:10px;border-radius:0 4px 4px 0;"><div style="display:flex;justify-content:space-between;"><div><div style="font-size:0.86rem;font-weight:500;color:var(--lavender);">${x.title||x.name}</div><div style="font-size:0.76rem;color:var(--muted);margin-top:3px;">${x.description||''}</div><div style="font-size:0.64rem;color:var(--muted);margin-top:6px;">${x.name} · ${(x.created_at||'').slice(0,10)}</div></div><button class="btn btn-ghost btn-sm" onclick="delEmbed(${x.id})">✕</button></div></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No saved embeds yet.</p>';}
-async function saveEmbed(){await api('embeds','POST',{guild_id:GUILD,name:document.getElementById('e-name').value.trim(),title:document.getElementById('e-title').value.trim(),description:document.getElementById('e-desc').value.trim(),color:document.getElementById('e-color').value,footer:document.getElementById('e-footer').value.trim()});toast('✦ Embed saved');loadEmbeds();}
-async function delEmbed(id){await api(`embeds?id=${id}`,'DELETE');toast('Removed');loadEmbeds();}
-function updEmbedPrev(){document.getElementById('e-pt').textContent=document.getElementById('e-title').value||'Title';document.getElementById('e-pd').textContent=document.getElementById('e-desc').value||'Description';}
-
-// ── REACTION ROLES ──
-async function loadRR(){const d=await api(`reaction-roles?guild_id=${GUILD}`);const r=d.reaction_roles||[];document.getElementById('rr-list').innerHTML=r.length?r.map(x=>`<div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);"><span style="font-size:1.3rem;">${x.emoji}</span><div style="flex:1;"><div style="font-size:0.84rem;color:var(--lavender);">${x.role_name||x.role_id}</div><div style="font-size:0.68rem;color:var(--muted);font-family:monospace;">Msg: ${x.message_id}</div></div><button class="btn btn-ghost btn-sm" onclick="delRR(${x.id})">Remove</button></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No reaction roles configured.</p>';}
-async function addRR(){await api('reaction-roles','POST',{guild_id:GUILD,message_id:document.getElementById('rr-mid').value.trim(),emoji:document.getElementById('rr-emoji').value.trim(),role_id:document.getElementById('rr-roleid').value.trim(),role_name:document.getElementById('rr-rname').value.trim()});toast('✦ Reaction role added');loadRR();}
-async function delRR(id){await api(`reaction-roles?id=${id}`,'DELETE');toast('Removed');loadRR();}
-
-// ── WARNINGS ──
-async function loadWarnings(){const uid=document.getElementById('warn-uid')?.value.trim()||'';const url=uid?`warnings?guild_id=${GUILD}&user_id=${uid}`:`warnings?guild_id=${GUILD}`;const d=await api(url);const w=d.warnings||[];document.getElementById('warn-count').textContent=`${w.length} records`;document.getElementById('warn-list').innerHTML=w.length?w.map(x=>`<div class="log-row"><span class="log-icon">⚠️</span><div class="log-body"><div class="log-action">${x.username||x.user_id}</div><div class="log-meta">${x.reason}${x.moderator?` · by ${x.moderator}`:''}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span class="log-time">${(x.created_at||'').slice(0,16).replace('T',' ')}</span><button class="btn btn-ghost btn-sm" onclick="clearWarn('${x.user_id}')">Clear</button></div></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No warnings found.</p>';}
-async function clearWarn(uid){await api('warnings/clear','POST',{guild_id:GUILD,user_id:uid});toast('Warnings cleared');loadWarnings();}
-
-// ── BIRTHDAYS ──
-async function loadBirthdays(){const d=await api(`birthdays?guild_id=${GUILD}`);const b=d.birthdays||[];const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];document.getElementById('bday-list').innerHTML=b.length?b.map(x=>`<div class="log-row"><span class="log-icon">🎂</span><div class="log-body"><div class="log-action">${x.username||x.user_id}</div><div class="log-meta">ID: ${x.user_id}</div></div><span class="log-time">${m[x.month-1]} ${x.day}</span></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No birthdays registered yet.</p>';}
-
-// ── LEVELING ──
-async function loadLevelConfig(){const d=await api(`level-config?guild_id=${GUILD}`);document.getElementById('lv-enabled').checked=!!d.enabled;document.getElementById('lv-xp').value=d.xp_per_msg||15;document.getElementById('lv-cd').value=d.xp_cooldown||60;document.getElementById('lv-ch').value=d.announce_channel||'';document.getElementById('lv-msg').value=d.announce_msg||'Congratulations {user}, you reached level {level}!';const roles=d.roles||[];document.getElementById('lv-roles-list').innerHTML=roles.length?roles.map(r=>`<div class="level-role-row"><div class="level-num">${r.level}</div><div style="flex:1;"><div style="font-size:0.84rem;color:var(--lavender);">${r.role_name||r.role_id}</div></div><button class="btn btn-ghost btn-sm" onclick="delLvRole(${r.id})">Remove</button></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No level roles set up yet.</p>';}
-async function saveLeveling(){await api('level-config','POST',{guild_id:GUILD,enabled:document.getElementById('lv-enabled').checked,xp_per_msg:parseInt(document.getElementById('lv-xp').value)||15,xp_cooldown:parseInt(document.getElementById('lv-cd').value)||60,announce_channel:document.getElementById('lv-ch').value.trim()||null,announce_msg:document.getElementById('lv-msg').value.trim()});toast('✦ Leveling config saved');}
-function showLvRoleForm(){document.getElementById('lv-role-form').style.display='block';}
-async function saveLvRole(){await api('level-roles','POST',{guild_id:GUILD,level:parseInt(document.getElementById('lv-rlevel').value),role_id:document.getElementById('lv-rroleid').value.trim(),role_name:document.getElementById('lv-rname').value.trim()});document.getElementById('lv-role-form').style.display='none';toast('✦ Level role added');loadLevelConfig();}
-async function delLvRole(id){await api(`level-roles?id=${id}`,'DELETE');toast('Removed');loadLevelConfig();}
-
-// ── GIVEAWAYS ──
-async function loadGiveaways(){const d=await api(`giveaways?guild_id=${GUILD}`);const g=d.giveaways||[];document.getElementById('gw-list').innerHTML=g.length?g.map(x=>`<div class="gw-card"><div style="display:flex;align-items:start;justify-content:space-between;"><div><div class="gw-prize">🎉 ${x.prize}</div><div class="gw-meta">${x.winners} winner${x.winners!==1?'s':''} · Ends ${new Date(x.ends_at).toLocaleDateString()}${x.host?` · Hosted by ${x.host}`:''}</div></div><div style="display:flex;gap:8px;align-items:center;"><span class="gw-status ${x.status==='active'?'gw-active':'gw-ended'}">${x.status}</span>${x.status==='active'?`<button class="btn btn-ghost btn-sm" onclick="endGW(${x.id})">End</button>`:''}</div></div></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No giveaways yet.</p>';}
-async function createGiveaway(){const prize=document.getElementById('gw-prize').value.trim();const ch=document.getElementById('gw-ch').value.trim();const ends=document.getElementById('gw-ends').value;if(!prize||!ch||!ends){toast('Prize, channel, and end date are required.');return;}await api('giveaways','POST',{guild_id:GUILD,channel_id:ch,prize,winners:parseInt(document.getElementById('gw-winners').value)||1,ends_at:ends,host:document.getElementById('gw-host').value.trim()||null});toast('✦ Giveaway created');loadGiveaways();}
-async function endGW(id){await api(`giveaways?id=${id}`,'DELETE');toast('Giveaway ended');loadGiveaways();}
-
-// ── ANNOUNCEMENTS ──
-async function loadAnnouncements(){const d=await api(`announcements?guild_id=${GUILD}`);const a=d.announcements||[];document.getElementById('an-list').innerHTML=a.length?a.map(x=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:16px;margin-bottom:10px;"><div style="display:flex;align-items:start;justify-content:space-between;"><div><div style="font-size:0.86rem;font-weight:500;color:var(--lavender);">${x.title||'Announcement'}</div><div style="font-size:0.78rem;color:var(--muted);margin-top:3px;">${(x.content||'').slice(0,100)}${x.content&&x.content.length>100?'...':''}</div><div style="font-size:0.65rem;color:var(--muted);margin-top:5px;">Channel: ${x.channel_id} · ${x.status}${x.scheduled_at?' · Scheduled: '+new Date(x.scheduled_at).toLocaleDateString():''}</div></div><button class="btn btn-ghost btn-sm" onclick="delAn(${x.id})">✕</button></div></div>`).join(''):'<p style="font-size:0.82rem;color:var(--muted)">No announcements yet.</p>';}
-async function createAnnouncement(){const ch=document.getElementById('an-ch').value.trim();const msg=document.getElementById('an-msg').value.trim();if(!ch||!msg){toast('Channel and message are required.');return;}await api('announcements','POST',{guild_id:GUILD,channel_id:ch,title:document.getElementById('an-title').value.trim()||null,content:msg,color:document.getElementById('an-color').value,ping_everyone:document.getElementById('an-ping').checked,scheduled_at:document.getElementById('an-sched').value||null});toast('✦ Announcement created');loadAnnouncements();}
-async function delAn(id){await api(`announcements?id=${id}`,'DELETE');toast('Removed');loadAnnouncements();}
-
-// ── THEME ──
-const DEFAULTS = { bg:'f4f0ff', cream:'ede8f8', lavender:'7c5cbf', periwinkle:'5a7fc0', lilac:'a98bd6', ink:'1a1530', muted:'6b5f90', dark:'0d0a1a', hfont:'Cormorant Garamond', bfont:'Jost' };
-
-async function loadTheme(){
-  try {
-    const d = await api('theme');
-    Object.assign(THEME, d);
-    Object.entries(THEME).forEach(([k,v]) => {
-      const col = document.getElementById(`t-${k}`);
-      const txt = document.getElementById(`t-${k}-t`);
-      if (col && col.type==='color') { col.value='#'+v.replace('#',''); }
-      if (txt) txt.value = v.replace('#','');
-      if (k==='hfont' || k==='bfont') { const sel=document.getElementById(`t-${k==='hfont'?'hfont':'bfont'}`); if(sel) sel.value=v; }
-    });
-    updThemePrev();
-  } catch(e) {}
-}
-
-function syncTheme(key, val) {
-  const hex = val.replace('#','');
-  THEME[key] = hex;
-  const txt = document.getElementById(`t-${key}-t`);
-  if (txt) txt.value = hex;
-  updThemePrev();
-}
-
-function syncThemeText(key, val) {
-  const hex = val.replace('#','');
-  THEME[key] = hex;
-  const col = document.getElementById(`t-${key}`);
-  if (col && /^[0-9a-fA-F]{6}$/.test(hex)) col.value = '#'+hex;
-  updThemePrev();
-}
-
-function updThemePrev() {
-  const t = THEME;
-  const nav = document.getElementById('pv-nav');
-  nav.style.background = '#'+t.bg;
-  nav.style.borderBottom = '1px solid rgba(100,80,180,0.15)';
-  document.getElementById('pv-logo').style.color = '#'+t.ink;
-  document.getElementById('pv-logo').style.fontFamily = `'${t.hfont}', serif`;
-  document.getElementById('pv-btn').style.background = '#'+t.lavender;
-  document.getElementById('pv-hero').style.background = '#'+t.cream;
-  document.getElementById('pv-eye').style.color = '#'+t.lavender;
-  document.getElementById('pv-h1').style.color = '#'+t.ink;
-  document.getElementById('pv-h1').style.fontFamily = `'${t.hfont}', serif`;
-  document.getElementById('pv-em').style.color = '#'+t.lilac;
-  document.getElementById('pv-p').style.color = '#'+t.muted;
-  document.getElementById('pv-p').style.fontFamily = `'${t.bfont}', sans-serif`;
-  document.getElementById('pv-pri').style.background = '#'+t.lavender;
-  document.getElementById('pv-out').style.color = '#'+t.lavender;
-  document.getElementById('pv-out').style.borderColor = '#'+t.lavender+'40';
-  document.getElementById('pv-footer').style.background = '#'+t.dark;
-  document.getElementById('pv-fn').style.color = '#'+t.bg;
-  document.getElementById('pv-fn').style.fontFamily = `'${t.hfont}', serif`;
-  document.getElementById('pv-ft').style.color = '#'+t.lilac;
-}
-
-async function saveTheme() {
-  const fonts = { hfont: document.getElementById('t-hfont').value, bfont: document.getElementById('t-bfont').value };
-  THEME.hfont = fonts.hfont; THEME.bfont = fonts.bfont;
-  await api('theme','POST', THEME);
-  toast('✦ Theme saved — changes will appear on your site within seconds');
-}
-
-function resetTheme() {
-  Object.assign(THEME, DEFAULTS);
-  Object.entries(DEFAULTS).forEach(([k,v]) => {
-    const col = document.getElementById(`t-${k}`);
-    const txt = document.getElementById(`t-${k}-t`);
-    if (col && col.type==='color') col.value = '#'+v;
-    if (txt) txt.value = v;
-  });
-  document.getElementById('t-hfont').value = DEFAULTS.hfont;
-  document.getElementById('t-bfont').value = DEFAULTS.bfont;
-  updThemePrev();
-  toast('Theme reset to defaults (not saved yet)');
-}
-
-
-
-// ── CLIENT PORTAL (admin) ──
-const STATUS_OPTS = [
-  { value:'inquiry',     label:'📬 Inquiry' },
-  { value:'in_review',   label:'🔍 In Review' },
-  { value:'in_progress', label:'🎨 In Progress' },
-  { value:'revisions',   label:'✏️ Revisions' },
-  { value:'complete',    label:'✅ Complete' },
-  { value:'archived',    label:'📦 Archived' },
-];
-const FILE_TYPES = ['deliverable','invoice','reference'];
-
-let ALL_CLIENTS = [];
-const openClients = new Set();
-
-async function loadClients() {
-  // Get all inquiries with client info
-  const d = await api('warnings?guild_id=' + GUILD); // placeholder — we use a direct fetch
-  // Actually fetch inquiries differently since they're not in the bot API
-  // We query via admin session against inquiries table
-  try {
-    const r = await fetch('/api/portal/admin-inquiries', {
-      headers: { 'Content-Type':'application/json', 'X-Session-Token': SESSION }
-    });
-    const data = await r.json();
-    ALL_CLIENTS = data.inquiries || [];
-    renderClients();
-  } catch(e) {
-    // Fallback: show message
-    document.getElementById('client-list').innerHTML = '<p style="font-size:0.82rem;color:var(--muted)">Load a server first. Client inquiries are fetched automatically.</p>';
-  }
-}
-
-function renderClients() {
-  const wrap = document.getElementById('client-list');
-  if (!ALL_CLIENTS.length) {
-    wrap.innerHTML = '<p style="font-size:0.82rem;color:var(--muted)">No client inquiries yet.</p>';
-    return;
-  }
-  wrap.innerHTML = ALL_CLIENTS.map(inq => {
-    const status = inq.project_status || 'inquiry';
-    const statusColors = { inquiry:'#c4b0f5', in_review:'#d4a800', in_progress:'#3a9a3a', revisions:'#d06020', complete:'#3050c0', archived:'#888' };
-    const col = statusColors[status] || '#c4b0f5';
-    const linked = !!inq.client_user_id;
-    return `
-      <div class="panel" style="border-left:3px solid ${col};">
-        <div class="panel-head" style="cursor:pointer;" onclick="toggleClient(${inq.inquiry_id})">
-          <div>
-            <span class="panel-title">${inq.name} — ${inq.service_interest||'Commission'}</span>
-            <div style="font-size:0.72rem;color:var(--muted);margin-top:3px;">
-              ${inq.email}
-              ${linked?'<span style="background:rgba(168,224,168,0.15);color:#6ad08a;border:1px solid rgba(168,224,168,0.25);font-size:0.6rem;padding:1px 7px;border-radius:20px;margin-left:8px;">Portal account</span>':'<span style="background:var(--card);color:var(--muted);border:1px solid var(--border);font-size:0.6rem;padding:1px 7px;border-radius:20px;margin-left:8px;">No account</span>'}
-              · ${new Date(inq.submitted_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <select onchange="updateStatus(${inq.inquiry_id}, this.value)" onclick="e=>e.stopPropagation()" style="font-size:0.72rem;padding:5px 10px;background:var(--card);border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;">
-              ${STATUS_OPTS.map(o=>`<option value="${o.value}" ${o.value===status?'selected':''}>${o.label}</option>`).join('')}
-            </select>
-            <span style="color:var(--muted);font-size:0.8rem;" id="client-chev-${inq.inquiry_id}">▾</span>
-          </div>
-        </div>
-        <div id="client-body-${inq.inquiry_id}" style="display:none;">
-          <div style="display:flex;gap:0;border-bottom:1px solid var(--border);">
-            <div class="ptab active" onclick="switchClientTab(${inq.inquiry_id},'msgs',this)" style="padding:10px 18px;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid var(--lavender);color:var(--lavender);margin-bottom:-1px;">Messages</div>
-            <div class="ptab" onclick="switchClientTab(${inq.inquiry_id},'files',this)" style="padding:10px 18px;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;">Files</div>
-            <div class="ptab" onclick="switchClientTab(${inq.inquiry_id},'info',this)" style="padding:10px 18px;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;">Info</div>
-          </div>
-          <div id="cpanel-msgs-${inq.inquiry_id}" style="padding:20px 24px;">
-            <div id="cmsgs-${inq.inquiry_id}" style="display:flex;flex-direction:column;gap:10px;max-height:300px;overflow-y:auto;margin-bottom:14px;"><p style="font-size:0.82rem;color:var(--muted)">Loading...</p></div>
-            <div style="display:flex;gap:10px;">
-              <textarea id="cmsg-input-${inq.inquiry_id}" style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:2px;padding:9px 12px;font-family:'Jost',sans-serif;font-size:0.84rem;resize:none;outline:none;min-height:52px;color:var(--text);" placeholder="Send a message to ${inq.name}..."></textarea>
-              <button class="btn btn-pri btn-sm" onclick="adminSendMsg(${inq.inquiry_id})">Send</button>
-            </div>
-          </div>
-          <div id="cpanel-files-${inq.inquiry_id}" style="display:none;padding:20px 24px;">
-            <div id="cfiles-${inq.inquiry_id}" style="margin-bottom:16px;"><p style="font-size:0.82rem;color:var(--muted)">Loading...</p></div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:16px;">
-              <div style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Share a File</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-                <div class="field" style="margin:0;"><label>File Name</label><input id="cfile-name-${inq.inquiry_id}" placeholder="e.g. Final Illustration.png" style="background:var(--bg2);border:1px solid var(--border);padding:8px 11px;color:var(--text);font-family:'Jost',sans-serif;font-size:0.82rem;border-radius:2px;outline:none;width:100%;"></div>
-                <div class="field" style="margin:0;"><label>Type</label>
-                  <select id="cfile-type-${inq.inquiry_id}" style="background:var(--bg2);border:1px solid var(--border);padding:8px 11px;color:var(--text);font-family:'Jost',sans-serif;font-size:0.82rem;border-radius:2px;outline:none;width:100%;">
-                    <option value="deliverable">Deliverable</option>
-                    <option value="invoice">Invoice</option>
-                    <option value="reference">Reference</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field" style="margin:0 0 10px;"><label>File URL</label><input id="cfile-url-${inq.inquiry_id}" placeholder="Google Drive, Dropbox, or any direct link" style="background:var(--bg2);border:1px solid var(--border);padding:8px 11px;color:var(--text);font-family:'Jost',sans-serif;font-size:0.82rem;border-radius:2px;outline:none;width:100%;"></div>
-              <button class="btn btn-pri btn-sm" onclick="adminAddFile(${inq.inquiry_id})">Share File</button>
-            </div>
-          </div>
-          <div id="cpanel-info-${inq.inquiry_id}" style="display:none;padding:20px 24px;">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.84rem;">
-              <div><span style="color:var(--muted);">Name: </span>${inq.name}</div>
-              <div><span style="color:var(--muted);">Email: </span>${inq.email}</div>
-              <div><span style="color:var(--muted);">Service: </span>${inq.service_interest||'N/A'}</div>
-              <div><span style="color:var(--muted);">Budget: </span>${inq.budget_range||'N/A'}</div>
-              <div><span style="color:var(--muted);">Timeline: </span>${inq.timeline||'N/A'}</div>
-              <div><span style="color:var(--muted);">Portal: </span>${linked?'Has account':'No account yet'}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function toggleClient(id) {
-  const body = document.getElementById('client-body-' + id);
-  const chev = document.getElementById('client-chev-' + id);
-  if (openClients.has(id)) {
-    openClients.delete(id);
-    body.style.display = 'none';
-    chev.textContent = '▾';
-  } else {
-    openClients.add(id);
-    body.style.display = 'block';
-    chev.textContent = '▴';
-    adminLoadMsgs(id);
-    adminLoadFiles(id);
-  }
-}
-
-function switchClientTab(id, tab, el) {
-  ['msgs','files','info'].forEach(t => {
-    const p = document.getElementById('cpanel-' + t + '-' + id);
-    if (p) p.style.display = 'none';
-  });
-  const panel = document.getElementById('cpanel-' + tab + '-' + id);
-  if (panel) panel.style.display = 'block';
-  // Reset tab styling
-  const body = document.getElementById('client-body-' + id);
-  body.querySelectorAll('.ptab').forEach(t => { t.style.color='var(--muted)'; t.style.borderBottomColor='transparent'; });
-  el.style.color = 'var(--lavender)'; el.style.borderBottomColor = 'var(--lavender)';
-  if (tab === 'msgs')  adminLoadMsgs(id);
-  if (tab === 'files') adminLoadFiles(id);
-}
-
-async function adminLoadMsgs(id) {
-  const wrap = document.getElementById('cmsgs-' + id);
-  const r = await fetch('/api/portal/messages?inquiry_id=' + id, { headers:{'X-Session-Token':SESSION} });
-  const d = await r.json();
-  const msgs = d.messages || [];
-  if (!msgs.length) { wrap.innerHTML='<p style="font-size:0.82rem;color:var(--muted)">No messages yet.</p>'; return; }
-  wrap.innerHTML = msgs.map(m=>`
-    <div style="max-width:85%;${m.sender_type==='admin'?'align-self:flex-end;margin-left:auto;':''}">
-      <div style="padding:9px 13px;border-radius:4px;font-size:0.84rem;line-height:1.6;${m.sender_type==='admin'?'background:var(--lavender);color:#fff;':'background:var(--card);border:1px solid var(--border);color:var(--text);'}">${m.content}</div>
-      <div style="font-size:0.64rem;color:var(--muted);margin-top:3px;${m.sender_type==='admin'?'text-align:right;':''}">${m.sender_name} · ${new Date(m.created_at).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>
-    </div>`).join('');
-  wrap.scrollTop = wrap.scrollHeight;
-}
-
-async function adminSendMsg(id) {
-  const inp = document.getElementById('cmsg-input-' + id);
-  const content = inp.value.trim();
-  if (!content) return;
-  inp.value = '';
-  await fetch('/api/portal/messages', { method:'POST', headers:{'Content-Type':'application/json','X-Session-Token':SESSION}, body:JSON.stringify({ inquiry_id:id, content }) });
-  adminLoadMsgs(id);
-}
-
-async function updateStatus(id, status) {
-  await fetch('/api/portal/status', { method:'PUT', headers:{'Content-Type':'application/json','X-Session-Token':SESSION}, body:JSON.stringify({ inquiry_id:id, status }) });
-  toast('✦ Status updated');
-}
-
-async function adminLoadFiles(id) {
-  const wrap = document.getElementById('cfiles-' + id);
-  const r = await fetch('/api/portal/files?inquiry_id=' + id, { headers:{'X-Session-Token':SESSION} });
-  const d = await r.json();
-  const files = d.files || [];
-  const icons = { deliverable:'🎁', invoice:'🧾', reference:'📎' };
-  if (!files.length) { wrap.innerHTML='<p style="font-size:0.82rem;color:var(--muted)">No files shared yet.</p>'; return; }
-  wrap.innerHTML = files.map(f=>`
-    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
-      <span style="font-size:1.2rem;">${icons[f.file_type]||'📄'}</span>
-      <div style="flex:1;"><div style="font-size:0.84rem;color:var(--text);">${f.name}</div><div style="font-size:0.68rem;color:var(--muted);">${f.file_type}</div></div>
-      <a href="${f.url}" target="_blank" class="btn btn-ghost btn-sm">View →</a>
-      <button class="btn btn-danger btn-sm" onclick="adminDelFile(${f.id},${id})">✕</button>
-    </div>`).join('');
-}
-
-async function adminAddFile(id) {
-  const name = document.getElementById('cfile-name-' + id).value.trim();
-  const url  = document.getElementById('cfile-url-' + id).value.trim();
-  const type = document.getElementById('cfile-type-' + id).value;
-  if (!name || !url) { toast('File name and URL are required.'); return; }
-  await fetch('/api/portal/files', { method:'POST', headers:{'Content-Type':'application/json','X-Session-Token':SESSION}, body:JSON.stringify({ inquiry_id:id, name, url, file_type:type }) });
-  document.getElementById('cfile-name-' + id).value = '';
-  document.getElementById('cfile-url-' + id).value = '';
-  toast('✦ File shared');
-  adminLoadFiles(id);
-}
-
-async function adminDelFile(fileId, inquiryId) {
-  await fetch('/api/portal/files?id=' + fileId, { method:'DELETE', headers:{'X-Session-Token':SESSION} });
-  toast('File removed');
-  adminLoadFiles(inquiryId);
-}
-
-// ── SOCIAL ALERTS ──
-const PLATFORM_META = {
-  twitch:    { label:'Twitch',       icon:'🟣', color:'#9146ff', webhook:true,  hint:'Find broadcaster ID at twitch.tv — go to twitchapps.com/tmi or use Twitch API' },
-  youtube:   { label:'YouTube',      icon:'📹', color:'#ff0000', webhook:true,  hint:'Get Channel ID from your YouTube channel URL (starts with UC...)' },
-  twitter:   { label:'Twitter / X',  icon:'🐦', color:'#1da1f2', webhook:false, hint:'Get User ID from tweeterid.com or the Twitter API' },
-  instagram: { label:'Instagram',    icon:'📸', color:'#e1306c', webhook:false, hint:'Get User ID from the Instagram Graph API or instagramUserId.com' },
-  tiktok:    { label:'TikTok',       icon:'🎵', color:'#010101', webhook:false, hint:'TikTok uses your public username only — no ID needed' },
-};
-
-let ALL_ALERTS = [];
-let PENDING_ALERT_ID = null;
-
-async function loadSocial() {
-  const d = await api('social-alerts?guild_id=' + GUILD);
-  ALL_ALERTS = d.alerts || [];
-  renderAlerts();
-}
-
-function renderAlerts() {
-  const wrap = document.getElementById('sa-platforms');
-  if (!ALL_ALERTS.length) {
-    wrap.innerHTML = '<p style="font-size:0.82rem;color:var(--muted)">No social alerts configured yet. Click "+ Add Alert" to get started.</p>';
-    return;
-  }
-  // Group by platform
-  const grouped = {};
-  ALL_ALERTS.forEach(a => { (grouped[a.platform] = grouped[a.platform] || []).push(a); });
-  wrap.innerHTML = Object.entries(grouped).map(([platform, alerts]) => {
-    const m = PLATFORM_META[platform] || { label: platform, icon: '📡', color: '#c4b0f5' };
-    return `
-      <div class="panel">
-        <div class="panel-head" style="border-left:3px solid ${m.color};">
-          <span class="panel-title">${m.icon} ${m.label}</span>
-          <span style="font-size:0.72rem;color:var(--muted);">${alerts.length} alert${alerts.length!==1?'s':''}</span>
-        </div>
-        <div class="panel-body" style="display:flex;flex-direction:column;gap:12px;">
-          ${alerts.map(a => `
-            <div style="background:rgba(196,176,245,0.04);border:1px solid var(--border);border-radius:4px;padding:16px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-                <div>
-                  <div style="font-size:0.88rem;color:var(--text);font-weight:500;">@${a.target_username||a.target_id||'Unknown'}</div>
-                  <div style="font-size:0.7rem;color:var(--muted);margin-top:3px;">Channel: ${a.discord_channel_id}${a.custom_message?' · Custom message set':''}</div>
-                  ${a.last_post_id?`<div style="font-size:0.65rem;color:var(--muted);margin-top:2px;font-family:monospace;">Last seen: ${a.last_post_id.slice(0,20)}...</div>`:''}
-                </div>
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <label class="toggle"><input type="checkbox" ${a.enabled?'checked':''} onchange="toggleAlert(${a.id},this.checked)"><span class="toggle-track"></span></label>
-                  <button class="btn btn-danger btn-sm" onclick="delAlert(${a.id})">Remove</button>
-                </div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function showAddAlert() {
-  document.getElementById('alert-form').style.display = 'block';
-  updateAlertForm();
-  document.getElementById('alert-form').scrollIntoView({ behavior: 'smooth' });
-}
-function hideAddAlert() { document.getElementById('alert-form').style.display = 'none'; PENDING_ALERT_ID = null; }
-
-function updateAlertForm() {
-  const platform = document.getElementById('sa-platform').value;
-  const m = PLATFORM_META[platform] || {};
-  document.getElementById('sa-id-hint').textContent = m.hint || '';
-  document.getElementById('sa-id-label').textContent = platform === 'tiktok' ? 'Username only (no ID needed)' : 'Platform User / Channel ID';
-  const sw = document.getElementById('sa-subscribe-wrap');
-  const sn = document.getElementById('sa-subscribe-note');
-  if (m.webhook) {
-    sw.style.display = 'block';
-    sn.textContent = platform === 'twitch'
-      ? 'After saving, click "Subscribe Webhook" to register with Twitch EventSub. Make sure TWITCH_CLIENT_ID, TWITCH_ACCESS_TOKEN, and TWITCH_SECRET are set in your Cloudflare env vars.'
-      : 'After saving, click "Subscribe Webhook" to register with YouTube WebSub. This makes YouTube notify your site instantly when a new video is uploaded.';
-  } else {
-    sw.style.display = 'none';
-  }
-}
-
-async function saveAlert() {
-  const platform = document.getElementById('sa-platform').value;
-  const username = document.getElementById('sa-username').value.trim().replace('@','');
-  const target_id = document.getElementById('sa-id').value.trim();
-  const channel = document.getElementById('sa-channel').value.trim();
-  const webhook = document.getElementById('sa-webhook').value.trim();
-  const msg = document.getElementById('sa-msg').value.trim();
-  const preview = document.getElementById('sa-preview').checked;
-
-  if (!channel) { toast('Discord Channel ID is required.'); return; }
-  if (!username && !target_id) { toast('Username or platform ID is required.'); return; }
-
-  const d = await api('social-alerts', 'POST', {
-    guild_id: GUILD, platform, target_username: username || null,
-    target_id: target_id || null, discord_channel_id: channel,
-    discord_webhook_url: webhook || null, custom_message: msg || null,
-    include_preview: preview,
-  });
-
-  PENDING_ALERT_ID = d.id;
-  toast('✦ Alert saved');
-
-  const m = PLATFORM_META[platform] || {};
-  if (m.webhook) {
-    toast('✦ Alert saved — now click "Subscribe Webhook" to activate it.');
-  } else {
-    hideAddAlert();
-    loadSocial();
-  }
-}
-
-async function subscribeWebhook() {
-  const platform = document.getElementById('sa-platform').value;
-  const id = document.getElementById('sa-id').value.trim();
-  if (!id) { toast('Enter the platform ID first.'); return; }
-
-  const btn = document.getElementById('sa-subscribe-btn');
-  btn.textContent = 'Subscribing...';
-  btn.disabled = true;
-
-  try {
-    if (platform === 'youtube') {
-      const d = await api('social-alerts/subscribe-youtube', 'POST', { channel_id: id });
-      toast(d.ok ? '✦ YouTube WebSub subscription sent!' : 'Subscription failed — check your site URL in wrangler.toml');
-    } else if (platform === 'twitch') {
-      const d = await api('social-alerts/subscribe-twitch', 'POST', { broadcaster_id: id });
-      toast(d.ok ? '✦ Twitch EventSub subscription created!' : 'Subscription failed — check TWITCH env vars in Cloudflare');
-    }
-  } catch(e) {
-    toast('Error: ' + e.message);
-  }
-
-  btn.textContent = 'Subscribe Webhook';
-  btn.disabled = false;
-  hideAddAlert();
-  loadSocial();
-}
-
-async function toggleAlert(id, enabled) {
-  const alert = ALL_ALERTS.find(a => a.id === id);
-  if (!alert) return;
-  await api('social-alerts', 'PUT', { ...alert, id, enabled });
-  loadSocial();
-}
-
-async function delAlert(id) {
-  await api('social-alerts?id=' + id, 'DELETE');
-  toast('Alert removed');
-  loadSocial();
-}
-
-// ── START ──
-init();
 </script>
 </body>
 </html>
