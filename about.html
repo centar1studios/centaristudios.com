@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Ajay Hunter</title>
+<link rel="stylesheet" href="site.css">
+<script>
+(async()=>{
+  try{
+    const r=await fetch("/api/theme");
+    if(!r.ok) return;
+    const t=await r.json();
+    const root=document.documentElement.style;
+    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">AH</div>
+      <div class="logo-text-wrap"><div class="name">Ajay Hunter</div><div class="sub">Digital Artist</div></div>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
+    </nav>
+  </div>
+</header>
 
+<div class="page-hero">
+  <div class="site-container">
+    <span class="eyebrow">Meet the Artist</span>
+    <h1 style="margin-top:0.4rem;">About Ajay</h1>
+  </div>
+</div>
+
+<div class="site-container" style="padding-top:4rem; padding-bottom:4rem;">
+  <div style="display:flex; flex-direction:column; gap:4rem;">
+
+    <!-- Bio + photo -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start;">
+      <!-- Photo placeholder -->
+      <div style="background:linear-gradient(135deg,var(--lavender-pale),var(--periwinkle-pale)); aspect-ratio:4/5; max-width:480px; width:100%; display:flex; align-items:center; justify-content:center; border:1px solid var(--lavender-light);">
+        <div style="text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:5rem; font-weight:300; color:var(--lavender); opacity:0.25;">AH</div>
+          <p style="font-size:0.7rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-top:0.5rem;">Ajay Hunter</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <span class="section-line"></span>
+        <h2>Digital Art & Design<br><em>with Soul</em></h2>
+        <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:1rem;">
+          <p>Hi, I'm Ajay — a freelance digital artist based online, specialising in character art, illustration, and graphic design. I've been drawing for as long as I can remember, and turning that love into something I can share with others has been one of the best decisions I've ever made.</p>
+          <p>Every commission I take on is treated like a little world of its own. Whether it's your original character, a scene from your story, or a graphic for your brand, I put real time and heart into understanding what you want — and then making it better than you imagined.</p>
+          <p>Off-screen, you'll find me at the library (it's my favourite place), wearing something from the 1950s, reading fantasy novels, and being supervised by Starla, my black and white cat who has very strong opinions about my workspace.</p>
+        </div>
+        <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:0.75rem;">
+          <a href="contact.html" class="btn btn-primary">Work With Me</a>
+          <a href="portfolio.html" class="btn btn-outline">See My Work</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Values -->
+    <div class="reveal">
+      <span class="eyebrow">What I Believe In</span>
+      <h2 style="margin-top:0.4rem; margin-bottom:2rem;">My Values</h2>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem;">
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:28px; height:2px; background:var(--lavender); margin-bottom:1rem;"></div>
+          <h3>Intentional Art</h3>
+          <p style="margin-top:0.6rem; font-size:0.875rem;">Every line has a reason. I don't rush. I don't mass-produce. I make things that feel considered and personal.</p>
+        </div>
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:28px; height:2px; background:var(--periwinkle); margin-bottom:1rem;"></div>
+          <h3>Client-First Process</h3>
+          <p style="margin-top:0.6rem; font-size:0.875rem;">You know your character better than anyone. I'm here to listen, understand, and translate your vision into something real.</p>
+        </div>
+        <div class="card" style="padding:1.75rem;">
+          <div style="width:28px; height:2px; background:var(--lilac); margin-bottom:1rem;"></div>
+          <h3>Safe & Welcoming</h3>
+          <p style="margin-top:0.6rem; font-size:0.875rem;">This is a space where everyone is welcome. I'm particularly happy to work on diverse characters, queer stories, and creative worlds.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="reveal" style="background:var(--lavender-pale); border:1px solid var(--lavender-light); padding:2.5rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+        <div>
+          <span class="eyebrow">Expertise</span>
+          <h2 style="margin-top:0.4rem;">Skills & Craft</h2>
+          <p style="margin-top:0.75rem; max-width:360px;">Years of practice across character art, illustration, and design — always growing, always learning something new.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; align-content:start;">
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Character Art</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">OC Illustration</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Portrait Art</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Scene Illustration</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Logo Design</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Emotes & Badges</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Stream Assets</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Graphic Design</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Typography</div>
+          <div style="background:rgba(255,255,255,0.7); border:1px solid var(--lavender-light); padding:0.55rem 0.85rem; font-size:0.78rem; font-weight:500; color:var(--ink);">Color Theory</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="reveal" style="text-align:center; padding:2rem 0;">
+      <span class="eyebrow" style="display:block; margin-bottom:0.5rem;">Currently Accepting New Commissions</span>
+      <h2>Interested in working together?</h2>
+      <p style="margin-top:0.75rem; max-width:360px; margin-left:auto; margin-right:auto;">I'd love to hear about your project. Let's get the conversation started.</p>
+      <a href="contact.html" class="btn btn-lavender" style="margin-top:1.5rem;">Send an Inquiry</a>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div>
+      <div class="footer-name">Ajay Hunter</div>
+      <div class="footer-tag">Digital Artist & Illustrator</div>
+      <p class="footer-bio">Character art, digital illustration, and graphic design made with warmth and intention.</p>
+    </div>
+    <div>
+      <div class="footer-head">Navigation</div>
+      <div class="footer-links">
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="about.html" class="footer-link">About Ajay</a>
+        <a href="portfolio.html" class="footer-link">Portfolio</a>
+        <a href="services.html" class="footer-link">Services</a>
+        <a href="contact.html" class="footer-link">Inquiries</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-head">Connect</div>
+      <div class="footer-links">
+        <a href="https://github.com/centarl1studios" target="_blank" class="footer-link">GitHub</a>
+        <a href="#" class="footer-link">Discord</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ajay Hunter — All rights reserved.</span>
+    <a href="login.html">Admin</a>
+  </div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold:0.1});
+reveals.forEach(el => obs.observe(el));
+</script>
+<script>
+// Show "My Portal" link if logged in
+if (localStorage.getItem('client_token')) {
+  const el = document.getElementById('portal-link');
+  if (el) el.style.display = 'inline';
+}
+</script>
+</body>
+</html>
