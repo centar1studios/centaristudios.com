@@ -1,9 +1,24 @@
-{
-  "d1_databases": [
-    {
-      "binding": "portfolio_db",
-      "database_name": "portfolio-db",
-      "database_id": "c449dd8a-ef41-40c4-a9c4-18d01c8814ed"
-    }
-  ]
-}
+name = "ajay-portfolio"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "public"
+ 
+[[d1_databases]]
+binding = "DB"
+database_name = "portfolio-db"
+database_id = "REPLACE_WITH_YOUR_DB_ID"
+ 
+[vars]
+# Shared secret between bot and dashboard
+API_SECRET = "REPLACE_WITH_A_STRONG_SECRET"
+ 
+# Discord OAuth2 — from discord.com/developers/applications
+DISCORD_CLIENT_ID     = "REPLACE_WITH_CLIENT_ID"
+DISCORD_CLIENT_SECRET = "REPLACE_WITH_CLIENT_SECRET"
+ 
+# Your Cloudflare Pages URL (no trailing slash)
+SITE_URL = "https://your-project.pages.dev"
+ 
+# Twitch EventSub — from dev.twitch.tv/console
+TWITCH_CLIENT_ID     = "REPLACE_WITH_TWITCH_CLIENT_ID"
+TWITCH_ACCESS_TOKEN  = "REPLACE_WITH_TWITCH_APP_ACCESS_TOKEN"
+TWITCH_SECRET        = "REPLACE_WITH_A_RANDOM_SECRET_STRING"
