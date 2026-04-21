@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portal — Ajay Hunter</title>
+<link rel="stylesheet" href="site.css">
+<script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
+<style>
+body { background:var(--cream); }
+.portal-header { background:#fff; border-bottom:1px solid var(--border); padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
+.portal-header .logo { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--ink); }
+.portal-header .user-info { display:flex; align-items:center; gap:12px; font-size:0.82rem; color:var(--muted); }
+.signout-btn { font-size:0.7rem; padding:6px 14px; background:none; border:1px solid var(--border); border-radius:2px; cursor:pointer; font-family:'Jost',sans-serif; color:var(--muted); transition:all 0.2s; }
+.signout-btn:hover { border-color:var(--lavender); color:var(--lavender); }
+
+.portal-wrap { max-width:1000px; margin:0 auto; padding:2.5rem 2rem; }
+.portal-greeting { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; color:var(--ink); margin-bottom:0.3rem; }
+.portal-sub { font-size:0.84rem; color:var(--muted); margin-bottom:2.5rem; }
+
+/* Status badge */
+.status-badge { font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; padding:3px 10px; border-radius:20px; font-weight:500; }
+.s-inquiry    { background:var(--lavender-pale); color:var(--lavender); border:1px solid var(--lavender-light); }
+.s-in_review  { background:#fff8e6; color:#b07d00; border:1px solid #f0d070; }
+.s-in_progress{ background:#e8f5e8; color:#2d7a2d; border:1px solid #a0d0a0; }
+.s-revisions  { background:#fff0e8; color:#c06020; border:1px solid #f0b080; }
+.s-complete   { background:#e8f0fe; color:#3050c0; border:1px solid #90b0f0; }
+.s-archived   { background:var(--cream); color:var(--muted); border:1px solid var(--border); }
+
+/* Project card */
+.project-card { background:#fff; border:1px solid var(--border); border-radius:4px; margin-bottom:16px; overflow:hidden; transition:box-shadow 0.2s; }
+.project-card:hover { box-shadow:0 4px 20px rgba(100,80,180,0.08); }
+.project-header { padding:20px 24px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.project-name { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:300; color:var(--ink); }
+.project-meta { font-size:0.74rem; color:var(--muted); margin-top:3px; }
+.project-body { display:none; border-top:1px solid var(--border); }
+.project-body.open { display:block; }
+
+/* Tabs inside project */
+.ptabs { display:flex; border-bottom:1px solid var(--border); }
+.ptab { padding:10px 20px; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.2s; }
+.ptab.active { color:var(--lavender); border-bottom-color:var(--lavender); }
+.ppanel { display:none; padding:20px 24px; }
+.ppanel.active { display:block; }
+
+/* Status tracker */
+.status-track { display:flex; align-items:center; gap:0; margin:16px 0; overflow-x:auto; }
+.status-step { display:flex; flex-direction:column; align-items:center; flex:1; min-width:80px; }
+.step-dot { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:var(--muted); z-index:1; position:relative; transition:all 0.3s; }
+.step-dot.done  { background:var(--lavender); border-color:var(--lavender); color:#fff; }
+.step-dot.current { border-color:var(--lavender); color:var(--lavender); }
+.step-line { flex:1; height:2px; background:var(--border); margin-top:-14px; }
+.step-line.done { background:var(--lavender); }
+.step-label { font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-top:6px; text-align:center; }
+.step-label.active { color:var(--lavender); font-weight:500; }
+
+/* Messages */
+.msg-thread { display:flex; flex-direction:column; gap:12px; max-height:400px; overflow-y:auto; padding-bottom:12px; }
+.msg-bubble { max-width:80%; }
+.msg-bubble.client { align-self:flex-end; }
+.msg-bubble.admin  { align-self:flex-start; }
+.msg-content { padding:10px 14px; border-radius:4px; font-size:0.86rem; line-height:1.6; }
+.msg-bubble.client .msg-content { background:var(--lavender); color:#fff; border-radius:4px 4px 0 4px; }
+.msg-bubble.admin  .msg-content { background:var(--cream); color:var(--ink); border:1px solid var(--border); border-radius:4px 4px 4px 0; }
+.msg-meta { font-size:0.66rem; color:var(--muted); margin-top:3px; }
+.msg-bubble.client .msg-meta { text-align:right; }
+.msg-compose { display:flex; gap:10px; margin-top:16px; }
+.msg-compose textarea { flex:1; background:var(--cream); border:1px solid var(--border); border-radius:2px; padding:10px 12px; font-family:'Jost',sans-serif; font-size:0.86rem; resize:none; outline:none; min-height:56px; color:var(--ink); }
+.msg-compose textarea:focus { border-color:var(--lavender); }
+
+/* Files */
+.file-row { display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--border); }
+.file-row:last-child { border-bottom:none; }
+.file-icon { font-size:1.4rem; flex-shrink:0; }
+.file-name { font-size:0.88rem; color:var(--ink); font-weight:400; }
+.file-type { font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:2px; }
+.file-date { font-size:0.7rem; color:var(--muted); margin-left:auto; white-space:nowrap; }
+.download-btn { font-size:0.68rem; padding:5px 14px; background:var(--lavender); color:#fff; border-radius:2px; white-space:nowrap; flex-shrink:0; transition:all 0.2s; }
+.download-btn:hover { background:#6a4aad; }
+
+.empty-state { text-align:center; padding:3rem 1rem; color:var(--muted); font-size:0.88rem; }
+</style>
+</head>
+<body>
+
+<header class="portal-header">
+  <a href="index.html" class="logo">Ajay Hunter</a>
+  <div class="user-info">
+    <span id="user-greeting">Loading...</span>
+    <button class="signout-btn" onclick="signOut()">Sign out</button>
+  </div>
+</header>
+
+<div class="portal-wrap">
+  <div class="portal-greeting" id="greeting">Welcome back</div>
+  <p class="portal-sub">Here's everything about your projects with me. Message me directly, download your files, and track where things are at.</p>
+
+  <div id="projects-list">
+    <div class="empty-state">Loading your projects...</div>
+  </div>
+</div>
+
+<script>
+const API = '/api';
+let CLIENT_TOKEN = '';
+let CLIENT_NAME  = '';
+
+const STATUS_STEPS = ['inquiry','in_review','in_progress','revisions','complete'];
+const STATUS_LABELS = { inquiry:'Inquiry', in_review:'In Review', in_progress:'In Progress', revisions:'Revisions', complete:'Complete' };
+const STATUS_ICONS  = { inquiry:'📬', in_review:'🔍', in_progress:'🎨', revisions:'✏️', complete:'✅' };
+const FILE_ICONS    = { deliverable:'🎁', invoice:'🧾', reference:'📎' };
+
+async function init() {
+  CLIENT_TOKEN = localStorage.getItem('client_token') || '';
+  CLIENT_NAME  = localStorage.getItem('client_name') || '';
+  if (!CLIENT_TOKEN) { location.href = 'login.html'; return; }
+
+  // Verify session
+  const me = await capi('auth/client-me');
+  if (me.error) { localStorage.removeItem('client_token'); location.href = 'login.html'; return; }
+
+  CLIENT_NAME = me.name;
+  localStorage.setItem('client_name', me.name);
+  document.getElementById('user-greeting').textContent = me.name;
+  document.getElementById('greeting').textContent = `Welcome back, ${me.name.split(' ')[0]}.`;
+
+  loadProjects();
+}
+
+function signOut() {
+  fetch('/api/auth/client-signout', { method:'POST', headers:{'X-Client-Token': CLIENT_TOKEN} });
+  localStorage.removeItem('client_token');
+  localStorage.removeItem('client_name');
+  location.href = 'index.html';
+}
+
+async function capi(path, method='GET', body=null) {
+  const opts = { method, headers: { 'Content-Type':'application/json', 'X-Client-Token': CLIENT_TOKEN } };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(`${API}/${path}`, opts);
+  return r.json();
+}
+
+async function loadProjects() {
+  const d = await capi('portal/inquiries');
+  const inquiries = d.inquiries || [];
+  const wrap = document.getElementById('projects-list');
+
+  if (!inquiries.length) {
+    wrap.innerHTML = `
+      <div class="empty-state">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--ink);opacity:0.35;margin-bottom:12px;">No projects yet.</div>
+        <p>Once you submit an inquiry, your project will appear here.</p>
+        <a href="contact.html" class="btn btn-lavender btn-sm" style="margin-top:16px;display:inline-block;">Start an Inquiry</a>
+      </div>`;
+    return;
+  }
+
+  wrap.innerHTML = inquiries.map(inq => {
+    const statusClass = 's-' + (inq.project_status || 'inquiry');
+    const statusLabel = STATUS_LABELS[inq.project_status] || 'Inquiry';
+    const unreadBadge = inq.unread_messages > 0
+      ? `<span style="background:var(--lavender);color:#fff;font-size:0.6rem;border-radius:20px;padding:2px 7px;margin-left:8px;">${inq.unread_messages} new</span>` : '';
+    return `
+      <div class="project-card" id="proj-${inq.inquiry_id}">
+        <div class="project-header" onclick="toggleProject(${inq.inquiry_id})">
+          <div>
+            <div class="project-name">${inq.service_interest || 'Commission'}</div>
+            <div class="project-meta">Submitted ${new Date(inq.submitted_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="status-badge ${statusClass}">${statusLabel}</span>
+            ${unreadBadge}
+            <span style="color:var(--muted);font-size:0.8rem;" id="proj-chevron-${inq.inquiry_id}">▾</span>
+          </div>
+        </div>
+        <div class="project-body" id="proj-body-${inq.inquiry_id}">
+          <div class="ptabs">
+            <div class="ptab active" onclick="switchPTab(${inq.inquiry_id},'status',this)">Status</div>
+            <div class="ptab" onclick="switchPTab(${inq.inquiry_id},'messages',this)">Messages</div>
+            <div class="ptab" onclick="switchPTab(${inq.inquiry_id},'files',this)">Files</div>
+          </div>
+          <div class="ppanel active" id="pp-status-${inq.inquiry_id}">
+            ${renderStatusTrack(inq.project_status)}
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+              <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Project Details</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.84rem;">
+                <div><span style="color:var(--muted);">Service: </span>${inq.service_interest||'Not specified'}</div>
+                <div><span style="color:var(--muted);">Budget: </span>${inq.budget_range||'Not specified'}</div>
+                <div><span style="color:var(--muted);">Timeline: </span>${inq.timeline||'Not specified'}</div>
+                <div><span style="color:var(--muted);">Inquiry status: </span>${inq.status||'new'}</div>
+              </div>
+            </div>
+          </div>
+          <div class="ppanel" id="pp-messages-${inq.inquiry_id}">
+            <div class="msg-thread" id="msgs-${inq.inquiry_id}">
+              <div class="empty-state" style="padding:1.5rem;">Loading messages...</div>
+            </div>
+            <div class="msg-compose">
+              <textarea id="msg-input-${inq.inquiry_id}" placeholder="Type a message to Ajay..." rows="2"></textarea>
+              <button class="btn btn-lavender btn-sm" onclick="sendMsg(${inq.inquiry_id})">Send</button>
+            </div>
+          </div>
+          <div class="ppanel" id="pp-files-${inq.inquiry_id}">
+            <div id="files-${inq.inquiry_id}">
+              <div class="empty-state" style="padding:1.5rem;">Loading files...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderStatusTrack(current) {
+  const currentIdx = STATUS_STEPS.indexOf(current || 'inquiry');
+  let html = '<div class="status-track">';
+  STATUS_STEPS.forEach((step, i) => {
+    const done    = i < currentIdx;
+    const active  = i === currentIdx;
+    const dotClass = done ? 'done' : (active ? 'current' : '');
+    const lblClass = active ? 'active' : '';
+    html += `<div class="status-step">
+      <div class="step-dot ${dotClass}">${done ? '✓' : STATUS_ICONS[step]}</div>
+      <div class="step-label ${lblClass}">${STATUS_LABELS[step]}</div>
+    </div>`;
+    if (i < STATUS_STEPS.length - 1) {
+      html += `<div class="step-line ${done ? 'done' : ''}"></div>`;
+    }
+  });
+  html += '</div>';
+  return html;
+}
+
+const openProjects = new Set();
+
+function toggleProject(id) {
+  const body = document.getElementById('proj-body-' + id);
+  const chev = document.getElementById('proj-chevron-' + id);
+  if (openProjects.has(id)) {
+    openProjects.delete(id);
+    body.classList.remove('open');
+    chev.textContent = '▾';
+  } else {
+    openProjects.add(id);
+    body.classList.add('open');
+    chev.textContent = '▴';
+    loadMessages(id);
+    loadFiles(id);
+  }
+}
+
+function switchPTab(id, tab, el) {
+  const wrap = document.getElementById('proj-' + id);
+  wrap.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  wrap.querySelectorAll('.ppanel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('pp-' + tab + '-' + id).classList.add('active');
+  if (tab === 'messages') loadMessages(id);
+  if (tab === 'files')    loadFiles(id);
+}
+
+async function loadMessages(id) {
+  const d = await capi('portal/messages?inquiry_id=' + id);
+  const msgs = d.messages || [];
+  const wrap = document.getElementById('msgs-' + id);
+
+  if (!msgs.length) {
+    wrap.innerHTML = '<div class="empty-state" style="padding:1.5rem;">No messages yet. Say hello!</div>';
+    return;
+  }
+
+  wrap.innerHTML = msgs.map(m => `
+    <div class="msg-bubble ${m.sender_type}">
+      <div class="msg-content">${escHtml(m.content)}</div>
+      <div class="msg-meta">${m.sender_name || (m.sender_type === 'admin' ? 'Ajay' : 'You')} · ${new Date(m.created_at).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>
+    </div>
+  `).join('');
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+async function sendMsg(id) {
+  const inp = document.getElementById('msg-input-' + id);
+  const content = inp.value.trim();
+  if (!content) return;
+  inp.value = '';
+  await capi('portal/messages', 'POST', { inquiry_id: id, content });
+  loadMessages(id);
+}
+
+async function loadFiles(id) {
+  const d = await capi('portal/files?inquiry_id=' + id);
+  const files = d.files || [];
+  const wrap = document.getElementById('files-' + id);
+
+  if (!files.length) {
+    wrap.innerHTML = '<div class="empty-state" style="padding:1.5rem;">No files yet. Ajay will share deliverables, invoices, and references here.</div>';
+    return;
+  }
+
+  wrap.innerHTML = files.map(f => `
+    <div class="file-row">
+      <span class="file-icon">${FILE_ICONS[f.file_type] || '📄'}</span>
+      <div>
+        <div class="file-name">${escHtml(f.name)}</div>
+        <div class="file-type">${f.file_type || 'file'}</div>
+      </div>
+      <span class="file-date">${new Date(f.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</span>
+      <a href="${escHtml(f.url)}" target="_blank" class="download-btn">Download →</a>
+    </div>
+  `).join('');
+}
+
+function escHtml(str) {
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+</body>
+</html>
