@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Ajay Hunter</title>
+<link rel="stylesheet" href="site.css">
+<script>
+(async()=>{
+  try{
+    const r=await fetch("/api/theme");
+    if(!r.ok) return;
+    const t=await r.json();
+    const root=document.documentElement.style;
+    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">AH</div>
+      <div class="logo-text-wrap"><div class="name">Ajay Hunter</div><div class="sub">Digital Artist</div></div>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="portfolio.html" class="nav-link active">Portfolio</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="site-container">
+    <span class="eyebrow">Creative Work</span>
+    <h1 style="margin-top:0.4rem;">Portfolio</h1>
+    <p style="margin-top:0.75rem; max-width:500px;">A selection of character art, illustration, and design work. Every piece here was made for a real person with a real story behind it.</p>
+  </div>
+</div>
+
+<div class="site-container" style="padding-top:3rem; padding-bottom:4rem;">
+
+  <!-- Category filter -->
+  <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:2.5rem;">
+    <button onclick="filterWork('all')" class="filter-btn active btn btn-sm" data-cat="all" style="background:var(--lavender); color:#fff; border:1px solid var(--lavender);">All</button>
+    <button onclick="filterWork('character')" class="filter-btn btn btn-sm btn-outline" data-cat="character">Character Art</button>
+    <button onclick="filterWork('illustration')" class="filter-btn btn btn-sm btn-outline" data-cat="illustration">Illustration</button>
+    <button onclick="filterWork('design')" class="filter-btn btn btn-sm btn-outline" data-cat="design">Graphic Design</button>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:2rem;" id="portfolio-grid">
+
+    <article class="card reveal" data-cat="character">
+      <div class="img-zoom" style="aspect-ratio:16/7; background:linear-gradient(135deg,var(--lavender-pale),var(--periwinkle-pale)); display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:6rem; font-weight:300; color:var(--lavender); opacity:0.18;">AH</span>
+      </div>
+      <div class="card-body">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+          <span class="eyebrow" style="margin-bottom:0;">Character Art</span>
+          <span style="font-size:0.75rem; color:var(--muted);">2025</span>
+        </div>
+        <h3 style="margin-top:0.4rem;">Your First Project</h3>
+        <p style="margin-top:0.5rem; font-size:0.875rem;">Upload your work from the dashboard and it will appear here beautifully displayed for clients to browse.</p>
+        <span style="display:inline-block; margin-top:0.75rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">View Project →</span>
+      </div>
+    </article>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+      <article class="card reveal" data-cat="illustration">
+        <div class="img-zoom" style="aspect-ratio:4/3; background:linear-gradient(135deg,var(--periwinkle-pale),var(--lavender-pale)); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--periwinkle); opacity:0.25;">02</span>
+        </div>
+        <div class="card-body">
+          <span class="eyebrow" style="margin-bottom:0.4rem;">Illustration</span>
+          <h3 style="margin-top:0;">Coming Soon</h3>
+          <p style="margin-top:0.5rem; font-size:0.875rem;">This spot is waiting for your next piece.</p>
+        </div>
+      </article>
+      <article class="card reveal" data-cat="design">
+        <div class="img-zoom" style="aspect-ratio:4/3; background:linear-gradient(135deg,#f0eaff,var(--periwinkle-pale)); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--lilac); opacity:0.25;">03</span>
+        </div>
+        <div class="card-body">
+          <span class="eyebrow" style="margin-bottom:0.4rem;">Graphic Design</span>
+          <h3 style="margin-top:0;">Coming Soon</h3>
+          <p style="margin-top:0.5rem; font-size:0.875rem;">Upload your design work to fill this in.</p>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+<div style="background:var(--ink); padding:4rem 0;">
+  <div class="site-container" style="text-align:center;">
+    <h2 style="color:var(--ivory);">Like what you see?</h2>
+    <p style="color:rgba(244,240,255,0.55); margin-top:0.75rem;">Let's talk about your project.</p>
+    <a href="contact.html" class="btn btn-lavender" style="margin-top:1.5rem;">Start an Inquiry</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div>
+      <div class="footer-name">Ajay Hunter</div>
+      <div class="footer-tag">Digital Artist & Illustrator</div>
+      <p class="footer-bio">Character art, digital illustration, and graphic design made with warmth and intention.</p>
+    </div>
+    <div>
+      <div class="footer-head">Navigation</div>
+      <div class="footer-links">
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="about.html" class="footer-link">About Ajay</a>
+        <a href="portfolio.html" class="footer-link">Portfolio</a>
+        <a href="services.html" class="footer-link">Services</a>
+        <a href="contact.html" class="footer-link">Inquiries</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-head">Connect</div>
+      <div class="footer-links">
+        <a href="https://github.com/centarl1studios" target="_blank" class="footer-link">GitHub</a>
+        <a href="#" class="footer-link">Discord</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ajay Hunter — All rights reserved.</span>
+    <a href="login.html">Admin</a>
+  </div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold:0.1});
+reveals.forEach(el => obs.observe(el));
+
+function filterWork(cat) {
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    const active = btn.dataset.cat === cat;
+    btn.style.background = active ? 'var(--lavender)' : 'transparent';
+    btn.style.color = active ? '#fff' : 'var(--lavender)';
+    btn.style.borderColor = active ? 'var(--lavender)' : 'var(--lavender-light)';
+  });
+  document.querySelectorAll('#portfolio-grid article, #portfolio-grid div[style]').forEach(el => {
+    const elCat = el.dataset && el.dataset.cat;
+    if (elCat) el.style.display = (cat === 'all' || cat === elCat) ? '' : 'none';
+  });
+}
+</script>
+<script>
+// Show "My Portal" link if logged in
+if (localStorage.getItem('client_token')) {
+  const el = document.getElementById('portal-link');
+  if (el) el.style.display = 'inline';
+}
+</script>
+</body>
+</html>
