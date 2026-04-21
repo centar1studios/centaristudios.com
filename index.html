@@ -3,232 +3,306 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ajay Hunter — Digital Artist & Illustrator</title>
-<meta name="description" content="Character art, digital illustration, and graphic design by Ajay Hunter.">
+<title>Ajay Hunter — Digital Artist</title>
+<meta name="description" content="Digital artist, illustrator, and creator of the Dei Discord bot.">
 <link rel="stylesheet" href="site.css">
-<script>
-(async()=>{
-  try{
-    const r=await fetch("/api/theme");
-    if(!r.ok) return;
-    const t=await r.json();
-    const root=document.documentElement.style;
-    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
-  }catch(e){}
-})();
-</script>
+<script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<canvas id="stars"></canvas>
+
+<!-- NAV -->
 <header class="site-header">
   <div class="inner">
     <a href="index.html" class="site-logo">
-      <div class="logo-mark">AH</div>
+      <div class="logo-mark">✕</div>
       <div class="logo-text-wrap">
         <div class="name">Ajay Hunter</div>
         <div class="sub">Digital Artist</div>
       </div>
     </a>
     <nav class="site-nav">
-      <a href="index.html" class="nav-link active">Home</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="portfolio.html" class="nav-link">Portfolio</a>
-      <a href="services.html" class="nav-link">Services</a>
-      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
-      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
+      <a href="about.html" class="nav-link">About Me</a>
+      <a href="portfolio.html" class="nav-link">Art Portfolio</a>
+      <a href="commissions.html" class="nav-link">Commissions</a>
+      <a href="lore.html" class="nav-link">Lore Drops</a>
+      <a href="tos.html" class="nav-link">TOS</a>
+      <a href="portal.html" class="nav-link" id="portal-link" style="display:none;">My Portal</a>
+      <a href="login.html" class="btn btn-primary btn-sm">Login</a>
     </nav>
   </div>
 </header>
 
-<section style="background:var(--cream); border-bottom:1px solid var(--border); padding:5rem 0;">
-  <div class="site-container">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;">
-      <div class="fade-up">
-        <span class="eyebrow">Character Art & Digital Illustration</span>
-        <h1 style="margin-top:0.5rem;">Art that brings<br><em>characters to life.</em></h1>
-        <p style="margin-top:1.25rem; max-width:440px; font-size:1rem;">I'm Ajay — a freelance digital artist specialising in character art, illustration, and graphic design. I bring warmth and intention to every piece.</p>
-        <div class="fade-up-2" style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:0.75rem;">
-          <a href="portfolio.html" class="btn btn-primary">View My Work</a>
-          <a href="contact.html" class="btn btn-outline">Start a Project</a>
+<!-- HERO -->
+<section style="min-height:90vh; display:flex; align-items:center; padding:6rem 0; position:relative; z-index:1;">
+  <div class="site-container" style="width:100%;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;">
+
+      <div>
+        <span class="eyebrow fade-up">Digital Artist & Illustrator</span>
+        <h1 class="fade-up-2" style="margin-top:0.75rem; margin-bottom:1.25rem;">
+          Hello,<br>I'm <em>Ajay.</em>
+        </h1>
+        <p class="fade-up-2" style="font-size:1rem; max-width:440px; margin-bottom:0.75rem;">
+          I'm a 20-year-old digital artist who loves bringing characters and stories to life. You might also know me as Dei — or from the Dei Discord bot! She/they · Bisexual · LGBT ally 🏳️‍🌈
+        </p>
+        <p class="fade-up-2" style="font-size:0.88rem; max-width:400px; color:var(--dim); margin-bottom:2rem;">
+          Aspiring Youth Librarian · Cat mum to Starla · Currently accepting commissions
+        </p>
+        <div class="fade-up-3" style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-bottom:2rem;">
+          <a href="portfolio.html" class="btn btn-primary">View My Art</a>
+          <a href="commissions.html" class="btn btn-outline">Commission Me</a>
+        </div>
+        <!-- Social icons -->
+        <div class="social-icons fade-up-3">
+          <a href="#" class="social-icon" title="TikTok">🎵</a>
+          <a href="#" class="social-icon" title="Instagram">📸</a>
+          <a href="#" class="social-icon" title="Twitter/X">𝕏</a>
+          <a href="#" class="social-icon" title="YouTube">▶</a>
+          <a href="#" class="social-icon" title="Twitch">🟣</a>
+          <a href="#" class="social-icon" title="Discord">💬</a>
         </div>
       </div>
-      <div class="fade-up-3" style="display:flex; justify-content:center;">
-        <div style="position:relative; width:300px; height:300px;">
-          <div style="position:absolute; inset:0; border-radius:60% 40% 55% 45% / 45% 55% 40% 60%; background:linear-gradient(135deg, var(--lavender-pale), var(--periwinkle-pale));"></div>
-          <div style="position:absolute; inset:24px; border-radius:50%; background:var(--ivory); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif; font-size:3.2rem; font-weight:300; color:var(--lavender); opacity:0.4;">AH</span>
+
+      <!-- Avatar placeholder -->
+      <div style="display:flex; justify-content:center;">
+        <div style="position:relative; width:340px; height:340px;">
+          <div style="position:absolute; inset:0; border-radius:60% 40% 55% 45% / 45% 55% 40% 60%; background:linear-gradient(135deg,rgba(196,176,245,0.15),rgba(168,191,240,0.1)); border:1px solid var(--border);"></div>
+          <div style="position:absolute; inset:24px; border-radius:50%; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+            <span style="font-size:3rem;">✕</span>
+            <span style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--dim);">Ajay Hunter</span>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
+<!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    <span>Character Art</span><span style="opacity:0.4">·</span>
-    <span>Digital Illustration</span><span style="opacity:0.4">·</span>
-    <span>Graphic Design</span><span style="opacity:0.4">·</span>
-    <span>OC Commissions</span><span style="opacity:0.4">·</span>
-    <span>Portrait Art</span><span style="opacity:0.4">·</span>
-    <span>Stream Assets</span><span style="opacity:0.4">·</span>
-    <span>Emotes & Badges</span><span style="opacity:0.4">·</span>
-    <span>Brand Graphics</span><span style="opacity:0.4">·</span>
+    <span>Character Art</span><span style="opacity:0.3;">·</span>
+    <span>Digital Illustration</span><span style="opacity:0.3;">·</span>
+    <span>Graphic Design</span><span style="opacity:0.3;">·</span>
+    <span>OC Commissions</span><span style="opacity:0.3;">·</span>
+    <span>Dei Bot Creator</span><span style="opacity:0.3;">·</span>
+    <span>Lore & Worldbuilding</span><span style="opacity:0.3;">·</span>
+    <span>Stream Assets</span><span style="opacity:0.3;">·</span>
+    <span>Emotes & Badges</span><span style="opacity:0.3;">·</span>
   </div>
 </div>
 
-<section style="background:var(--ivory); padding:5rem 0;">
+<!-- FEATURED ART -->
+<section style="padding:6rem 0; position:relative; z-index:1;">
   <div class="site-container">
-    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2.5rem;">
-      <div><span class="eyebrow">Selected Work</span><h2 style="margin-top:0.3rem;">Featured Projects</h2></div>
-      <a href="portfolio.html" class="btn btn-outline btn-sm">View All Work</a>
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <span class="eyebrow">Selected Work</span>
+        <h2 style="margin-top:0.3rem;">Featured Art</h2>
+      </div>
+      <a href="portfolio.html" class="btn btn-outline btn-sm">View All →</a>
     </div>
-    <div style="display:flex; flex-direction:column; gap:1.5rem;">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.25rem;">
       <article class="card reveal">
-        <a href="portfolio.html" style="display:block;">
-          <div class="img-zoom" style="aspect-ratio:16/7; background:linear-gradient(135deg,var(--lavender-pale),var(--periwinkle-pale)); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif; font-size:6rem; font-weight:300; color:var(--lavender); opacity:0.18;">AH</span>
-          </div>
-          <div class="card-body">
-            <span class="eyebrow" style="margin-bottom:0.4rem;">Character Art</span>
-            <h3 style="margin-top:0;">Your Work Here</h3>
-            <p style="margin-top:0.5rem; font-size:0.875rem;">Add your first project from the dashboard and it will appear here, beautifully displayed.</p>
-            <span style="display:inline-block; margin-top:0.75rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">View Project →</span>
-          </div>
-        </a>
+        <div class="img-zoom" style="aspect-ratio:1/1; background:linear-gradient(135deg,rgba(196,176,245,0.1),rgba(168,191,240,0.05)); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--lavender); opacity:0.2;">01</span>
+        </div>
+        <div class="card-body">
+          <span class="eyebrow" style="margin-bottom:0.3rem;">Character Art</span>
+          <h3 style="margin-top:0; font-size:1.1rem;">Your Art Here</h3>
+          <p style="font-size:0.8rem; margin-top:0.3rem;">Add your first piece from the dashboard.</p>
+        </div>
       </article>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
-        <article class="card reveal">
-          <div class="img-zoom" style="aspect-ratio:4/3; background:linear-gradient(135deg,var(--periwinkle-pale),var(--lavender-pale)); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--periwinkle); opacity:0.25;">02</span>
-          </div>
-          <div class="card-body">
-            <span class="eyebrow" style="margin-bottom:0.4rem;">Illustration</span>
-            <h3 style="margin-top:0;">Coming Soon</h3>
-            <p style="margin-top:0.5rem; font-size:0.875rem;">Your next project will live here.</p>
-          </div>
-        </article>
-        <article class="card reveal">
-          <div class="img-zoom" style="aspect-ratio:4/3; background:linear-gradient(135deg,#f0eaff,var(--periwinkle-pale)); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--lilac); opacity:0.25;">03</span>
-          </div>
-          <div class="card-body">
-            <span class="eyebrow" style="margin-bottom:0.4rem;">Graphic Design</span>
-            <h3 style="margin-top:0;">Coming Soon</h3>
-            <p style="margin-top:0.5rem; font-size:0.875rem;">Upload your work to start building your portfolio.</p>
-          </div>
-        </article>
-      </div>
+      <article class="card reveal">
+        <div class="img-zoom" style="aspect-ratio:1/1; background:linear-gradient(135deg,rgba(168,191,240,0.08),rgba(196,176,245,0.05)); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--periwinkle); opacity:0.2;">02</span>
+        </div>
+        <div class="card-body">
+          <span class="eyebrow" style="margin-bottom:0.3rem;">Illustration</span>
+          <h3 style="margin-top:0; font-size:1.1rem;">Coming Soon</h3>
+          <p style="font-size:0.8rem; margin-top:0.3rem;">Upload your work to fill this in.</p>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="img-zoom" style="aspect-ratio:1/1; background:linear-gradient(135deg,rgba(221,200,255,0.08),rgba(168,191,240,0.05)); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--lilac); opacity:0.2;">03</span>
+        </div>
+        <div class="card-body">
+          <span class="eyebrow" style="margin-bottom:0.3rem;">Graphic Design</span>
+          <h3 style="margin-top:0; font-size:1.1rem;">Coming Soon</h3>
+          <p style="font-size:0.8rem; margin-top:0.3rem;">More pieces on the way!</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<section style="background:var(--lavender-pale); border-top:1px solid var(--lavender-light); border-bottom:1px solid var(--lavender-light); padding:5rem 0;">
+<!-- ABOUT SNIPPET -->
+<section style="padding:6rem 0; background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); position:relative; z-index:1;">
   <div class="site-container">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;">
       <div class="reveal">
-        <span class="eyebrow">About Ajay</span>
-        <h2 style="margin-top:0.4rem;">Art made with<br><em>heart and intention.</em></h2>
-      </div>
-      <div class="reveal">
+        <span class="eyebrow">About Me</span>
+        <h2 style="margin-top:0.4rem; margin-bottom:1.5rem;">Art made with<br><em>heart & intention.</em></h2>
         <span class="section-line"></span>
-        <p>I'm a freelance digital artist who loves bringing characters and stories to life through illustration and design. Every piece I create carries a little piece of the person it's made for.</p>
-        <p style="margin-top:0.75rem;">When I'm not drawing, you'll probably find me at the library, surrounded by fantasy novels, a vintage dress, and a very opinionated cat named Starla.</p>
-        <a href="about.html" class="btn btn-primary" style="margin-top:1.5rem;">More About Me</a>
+        <p style="margin-bottom:0.75rem;">Hi! I'm Ajay — a digital artist who loves bringing characters and stories to life. Every commission I take on is treated with real care and attention.</p>
+        <p style="margin-bottom:0.75rem;">When I'm not drawing you'll find me at the library, reading fantasy novels, or being supervised by my cat Starla.</p>
+        <p style="margin-bottom:1.5rem; color:var(--dim); font-size:0.85rem;">She/they · Bisexual · LGBT ally · Aspiring Youth Librarian</p>
+        <a href="about.html" class="btn btn-outline">More About Me →</a>
+      </div>
+      <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--lavender); line-height:1;">✦</div>
+          <div style="font-size:0.78rem; font-weight:500; color:var(--text); margin-top:0.75rem;">Character Art</div>
+          <div style="font-size:0.72rem; color:var(--dim); margin-top:0.3rem;">OCs, fanart, portraits</div>
+        </div>
+        <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--periwinkle); line-height:1;">◈</div>
+          <div style="font-size:0.78rem; font-weight:500; color:var(--text); margin-top:0.75rem;">Illustration</div>
+          <div style="font-size:0.72rem; color:var(--dim); margin-top:0.3rem;">Scenes, concepts, stories</div>
+        </div>
+        <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--lilac); line-height:1;">◻</div>
+          <div style="font-size:0.78rem; font-weight:500; color:var(--text); margin-top:0.75rem;">Graphic Design</div>
+          <div style="font-size:0.72rem; color:var(--dim); margin-top:0.3rem;">Logos, emotes, assets</div>
+        </div>
+        <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--mist); line-height:1;">⊹</div>
+          <div style="font-size:0.78rem; font-weight:500; color:var(--text); margin-top:0.75rem;">Dei Bot</div>
+          <div style="font-size:0.72rem; color:var(--dim); margin-top:0.3rem;">Discord bot creator</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section style="background:var(--ivory); padding:5rem 0;">
+<!-- LORE TEASER -->
+<section style="padding:6rem 0; position:relative; z-index:1;">
   <div class="site-container">
-    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2.5rem;">
-      <div><span class="eyebrow">What I Offer</span><h2 style="margin-top:0.3rem;">Services</h2></div>
-      <a href="services.html" class="btn btn-outline btn-sm">All Services</a>
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <span class="eyebrow">Worldbuilding</span>
+        <h2 style="margin-top:0.3rem;">Lore Drops</h2>
+      </div>
+      <a href="lore.html" class="btn btn-outline btn-sm">All Lore →</a>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem;">
-      <article class="card reveal" style="padding:1.75rem;">
-        <span class="section-line"></span>
-        <h3>Character Art</h3>
-        <p style="margin-top:0.6rem; font-size:0.875rem;">Original character portraits, OC illustrations, and reference sheets. Fully custom and made with care.</p>
-        <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.25rem 0.7rem; font-size:0.75rem; color:var(--muted);">Starting at £30</span>
-        </div>
-        <a href="contact.html?service=Character+Art" style="display:inline-block; margin-top:1rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">Inquire →</a>
-      </article>
-      <article class="card reveal" style="padding:1.75rem;">
-        <span class="section-line" style="background:var(--periwinkle);"></span>
-        <h3>Digital Illustration</h3>
-        <p style="margin-top:0.6rem; font-size:0.875rem;">Scene illustrations, story pieces, and concept work. Detailed, atmospheric, and entirely yours.</p>
-        <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.25rem 0.7rem; font-size:0.75rem; color:var(--muted);">Starting at £50</span>
-        </div>
-        <a href="contact.html?service=Digital+Illustration" style="display:inline-block; margin-top:1rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">Inquire →</a>
-      </article>
-      <article class="card reveal" style="padding:1.75rem;">
-        <span class="section-line" style="background:var(--lilac);"></span>
-        <h3>Graphic Design</h3>
-        <p style="margin-top:0.6rem; font-size:0.875rem;">Logos, emotes, stream assets, and brand graphics. Clean, cohesive design that feels like you.</p>
-        <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.25rem 0.7rem; font-size:0.75rem; color:var(--muted);">Starting at £20</span>
-        </div>
-        <a href="contact.html?service=Graphic+Design" style="display:inline-block; margin-top:1rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">Inquire →</a>
-      </article>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.25rem;">
+      <div class="lore-card reveal">
+        <span class="lore-tag">Character</span>
+        <div class="lore-title">Who is Dei?</div>
+        <p class="lore-text">Deivon Talvyrvei — an alien woman from Vaelun, chosen by the goddess Kaelyn, living quietly on Earth.</p>
+        <a href="lore.html" style="display:inline-block; margin-top:1rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--lavender);">Read More →</a>
+      </div>
+      <div class="lore-card reveal">
+        <span class="lore-tag">World</span>
+        <div class="lore-title">Vaelun</div>
+        <p class="lore-text">A world orbiting Alpha Centauri, home to the Cenzha'Kae — beings who absorb Oura, the energy of life itself.</p>
+        <a href="lore.html" style="display:inline-block; margin-top:1rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--lavender);">Read More →</a>
+      </div>
+      <div class="lore-card reveal">
+        <span class="lore-tag">Mystery</span>
+        <div class="lore-title">Jaesyn</div>
+        <p class="lore-text">Dei's twin brother — Cenzha'Mali, chosen by Nasir. He disappeared on Earth. Nobody knows where he went.</p>
+        <a href="lore.html" style="display:inline-block; margin-top:1rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--lavender);">Read More →</a>
+      </div>
     </div>
   </div>
 </section>
 
-<section style="background:var(--ink); padding:5rem 0;">
+<!-- CTA -->
+<section style="padding:6rem 0; background:var(--bg2); border-top:1px solid var(--border); position:relative; z-index:1;">
   <div class="site-container" style="text-align:center;">
-    <span class="eyebrow" style="color:var(--lilac);">Ready to Start?</span>
-    <h2 style="color:var(--ivory); margin-top:0.5rem; max-width:480px; margin-left:auto; margin-right:auto;">Let's make something<br><em style="color:var(--lavender);">beautiful together.</em></h2>
-    <p style="color:rgba(244,240,255,0.5); margin-top:1rem; max-width:360px; margin-left:auto; margin-right:auto;">I take on a limited number of commissions each month so every client gets my full attention.</p>
-    <a href="contact.html" class="btn btn-lavender" style="margin-top:2rem;">Send an Inquiry</a>
+    <span class="eyebrow" style="justify-content:center; display:flex; margin-bottom:0.75rem;">Currently Accepting Commissions</span>
+    <h2 style="margin-bottom:1rem;">Let's make something<br><em>beautiful together.</em></h2>
+    <p style="max-width:380px; margin:0 auto 2rem; font-size:0.9rem;">I keep my queue small so every client gets real attention and care. Send me a message and let's chat!</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="commissions.html" class="btn btn-primary">Commission Me</a>
+      <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+    </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="inner">
     <div>
       <div class="footer-name">Ajay Hunter</div>
       <div class="footer-tag">Digital Artist & Illustrator</div>
-      <p class="footer-bio">Character art, digital illustration, and graphic design made with warmth and intention.</p>
-    </div>
-    <div>
-      <div class="footer-head">Navigation</div>
-      <div class="footer-links">
-        <a href="index.html" class="footer-link">Home</a>
-        <a href="about.html" class="footer-link">About Ajay</a>
-        <a href="portfolio.html" class="footer-link">Portfolio</a>
-        <a href="services.html" class="footer-link">Services</a>
-        <a href="contact.html" class="footer-link">Inquiries</a>
+      <p class="footer-bio">Character art, illustration, and graphic design — made with warmth and intention.</p>
+      <div class="social-icons" style="margin-top:1.25rem;">
+        <a href="#" class="social-icon" title="TikTok">🎵</a>
+        <a href="#" class="social-icon" title="Instagram">📸</a>
+        <a href="#" class="social-icon" title="Twitter">𝕏</a>
+        <a href="#" class="social-icon" title="YouTube">▶</a>
+        <a href="#" class="social-icon" title="Twitch">🟣</a>
+        <a href="#" class="social-icon" title="Discord">💬</a>
       </div>
     </div>
     <div>
-      <div class="footer-head">Connect</div>
+      <div class="footer-head">Navigate</div>
       <div class="footer-links">
-        <a href="https://github.com/centarl1studios" target="_blank" class="footer-link">GitHub</a>
-        <a href="#" class="footer-link">Discord</a>
+        <a href="about.html" class="footer-link">About Me</a>
+        <a href="portfolio.html" class="footer-link">Art Portfolio</a>
+        <a href="commissions.html" class="footer-link">Commissions</a>
+        <a href="lore.html" class="footer-link">Lore Drops</a>
+        <a href="contact.html" class="footer-link">Contact</a>
       </div>
-      <a href="contact.html" class="btn btn-lavender btn-sm" style="margin-top:1.25rem; display:inline-block;">Start a Project</a>
+    </div>
+    <div>
+      <div class="footer-head">Legal</div>
+      <div class="footer-links">
+        <a href="tos.html" class="footer-link">Bot TOS</a>
+        <a href="artist-tos.html" class="footer-link">Artist TOS</a>
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-head">Account</div>
+      <div class="footer-links">
+        <a href="portal.html" class="footer-link" id="footer-portal" style="display:none;">My Portal</a>
+        <a href="login.html" class="footer-link" id="footer-login">Login</a>
+        <a href="signup.html" class="footer-link">Sign Up</a>
+        <a href="login.html#admin" class="footer-link">Bot Dashboard</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 Ajay Hunter — All rights reserved.</span>
-    <a href="login.html">Admin</a>
+    <span>© 2025 Ajay Hunter / Centari Studios — All rights reserved.</span>
+    <div style="display:flex; gap:1rem;">
+      <a href="privacy.html">Privacy</a>
+      <a href="tos.html">TOS</a>
+      <a href="login.html">Admin</a>
+    </div>
   </div>
 </footer>
 
 <script>
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold:0.1});
-reveals.forEach(el => obs.observe(el));
-</script>
-<script>
-// Show "My Portal" link if logged in
+// Stars
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resize() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+function initStars() { stars=[]; const n=Math.floor((canvas.width*canvas.height)/7000); for(let i=0;i<n;i++) stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2}); }
+function drawStars(t) { ctx.clearRect(0,0,canvas.width,canvas.height); stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();}); requestAnimationFrame(drawStars); }
+resize(); initStars(); requestAnimationFrame(drawStars);
+window.addEventListener('resize',()=>{resize();initStars();});
+
+// Portal link
 if (localStorage.getItem('client_token')) {
-  const el = document.getElementById('portal-link');
-  if (el) el.style.display = 'inline';
+  document.getElementById('portal-link').style.display = 'inline';
+  document.getElementById('footer-portal').style.display = 'inline';
+  document.getElementById('footer-login').style.display = 'none';
 }
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');}),{threshold:0.1});
+reveals.forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
