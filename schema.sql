@@ -273,3 +273,57 @@ CREATE TABLE IF NOT EXISTS project_files (
 -- Run this separately if table already exists:
 -- ALTER TABLE inquiries ADD COLUMN client_user_id INTEGER DEFAULT NULL;
 -- ALTER TABLE inquiries ADD COLUMN project_status TEXT DEFAULT 'inquiry';
+ 
+-- ── PORTFOLIO ITEMS ──
+CREATE TABLE IF NOT EXISTS portfolio_items (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  title       TEXT    NOT NULL,
+  category    TEXT    NOT NULL DEFAULT 'character', -- character|illustration|design
+  description TEXT,
+  image_url   TEXT    NOT NULL,
+  featured    INTEGER DEFAULT 0,
+  sort_order  INTEGER DEFAULT 0,
+  created_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+ 
+-- ── LORE ENTRIES ──
+CREATE TABLE IF NOT EXISTS lore_entries (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  tag         TEXT    NOT NULL, -- e.g. "Character", "World", "Mystery"
+  title       TEXT    NOT NULL,
+  content     TEXT    NOT NULL,
+  sort_order  INTEGER DEFAULT 0,
+  created_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+ 
+-- ── COMMISSION TYPES ──
+CREATE TABLE IF NOT EXISTS commission_types (
+  id              INTEGER PRIMARY KEY AUTOINCREMENT,
+  number          INTEGER NOT NULL DEFAULT 1,
+  name            TEXT    NOT NULL,
+  description     TEXT,
+  starting_price  TEXT,
+  currency        TEXT    DEFAULT 'GBP',
+  turnaround      TEXT,
+  included_items  TEXT,   -- comma separated list
+  enabled         INTEGER DEFAULT 1,
+  sort_order      INTEGER DEFAULT 0
+);
+ 
+-- ── SITE CONTENT (key/value for editable text) ──
+CREATE TABLE IF NOT EXISTS site_content (
+  key         TEXT    NOT NULL PRIMARY KEY,
+  value       TEXT    NOT NULL,
+  updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+ 
+-- ── COMMISSION STATUS ──
+CREATE TABLE IF NOT EXISTS commission_status (
+  id      INTEGER PRIMARY KEY DEFAULT 1,
+  status  TEXT    NOT NULL DEFAULT 'open', -- open|closed|waitlist
+  message TEXT    DEFAULT 'Currently accepting commissions!'
+);
+ 
+-- Default commission status
+INSERT OR IGNORE INTO commission_status (id, status, message)
+VALUES (1, 'open', 'Currently open - limited slots available!');
