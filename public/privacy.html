@@ -7,23 +7,27 @@
 <link rel="stylesheet" href="site.css">
 <script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
 <style>
-.legal-wrap { max-width:780px; margin:0 auto; padding:4rem 2rem 6rem; }
-.legal-wrap h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,5vw,3.2rem); font-weight:300; color:var(--ink); margin-bottom:0.5rem; }
-.legal-meta { font-size:0.78rem; color:var(--muted); margin-bottom:3rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
-.legal-wrap h2 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--ink); margin:2.5rem 0 0.75rem; }
-.legal-wrap h3 { font-family:'Jost',sans-serif; font-size:0.9rem; font-weight:500; color:var(--ink); letter-spacing:0.05em; margin:1.5rem 0 0.5rem; }
-.legal-wrap p  { font-size:0.92rem; color:var(--muted); line-height:1.8; margin-bottom:1rem; }
+.legal-wrap { max-width:780px; margin:0 auto; padding:4rem 2rem 6rem; position:relative; z-index:1; }
+.legal-wrap h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,5vw,3.2rem); font-weight:300; color:var(--text); margin-bottom:0.5rem; }
+.legal-meta { font-size:0.78rem; color:var(--subtext); margin-bottom:3rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
+.legal-wrap h2 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--text); margin:2.5rem 0 0.75rem; }
+.legal-wrap h3 { font-family:'Jost',sans-serif; font-size:0.9rem; font-weight:500; color:var(--lavender); letter-spacing:0.05em; margin:1.5rem 0 0.5rem; }
+.legal-wrap p  { font-size:0.92rem; color:var(--subtext); line-height:1.8; margin-bottom:1rem; }
 .legal-wrap ul { padding-left:1.5rem; margin-bottom:1rem; }
-.legal-wrap li { font-size:0.92rem; color:var(--muted); line-height:1.8; margin-bottom:0.3rem; }
+.legal-wrap li { font-size:0.92rem; color:var(--subtext); line-height:1.8; margin-bottom:0.3rem; }
 .legal-wrap a  { color:var(--lavender); }
-.callout { background:var(--lavender-pale); border:1px solid var(--lavender-light); border-left:3px solid var(--lavender); padding:1.25rem 1.5rem; border-radius:0 4px 4px 0; margin:1.5rem 0; }
+.callout { background:rgba(196,176,245,0.05); border:1px solid rgba(196,176,245,0.15); border-left:3px solid var(--lavender); padding:1.25rem 1.5rem; border-radius:0 4px 4px 0; margin:1.5rem 0; }
 .callout p { margin:0; font-size:0.88rem; }
 .legal-nav { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:3rem; }
-.legal-nav a { font-size:0.76rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender); border:1px solid var(--lavender-light); padding:6px 16px; border-radius:2px; transition:all 0.2s; }
-.legal-nav a:hover { background:var(--lavender-pale); }
+.legal-nav a { font-size:0.76rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender); border:1px solid rgba(196,176,245,0.2); padding:6px 16px; border-radius:2px; transition:all 0.2s; }
+.legal-nav a:hover { background:rgba(196,176,245,0.08); }
 </style>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<canvas id="stars"></canvas>
 
 <header class="site-header">
   <div class="inner">
@@ -36,7 +40,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="portfolio.html" class="nav-link">Portfolio</a>
       <a href="services.html" class="nav-link">Services</a>
-      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Work With Me</a>
     </nav>
   </div>
 </header>
@@ -107,7 +111,7 @@
   <p>We do not sell, share, or trade your data with any third parties for marketing or commercial purposes.</p>
 
   <h2>5. Data Storage and Security</h2>
-  <p>Bot and website data is stored in a Cloudflare D1 database hosted within Cloudflare's infrastructure. Cloudflare's data centres are located in the European Union and United States. All data is transmitted over HTTPS. Passwords are hashed using PBKDF2-SHA256 with 100,000 iterations - they cannot be reversed.</p>
+  <p>Bot and website data is stored in a Cloudflare D1 database hosted within Cloudflare's infrastructure. All data is transmitted over HTTPS. Passwords are hashed using PBKDF2-SHA256 with 100,000 iterations - they cannot be reversed.</p>
   <p>While we take reasonable precautions to protect your data, no system is completely secure. We cannot guarantee absolute security.</p>
 
   <h2>6. Data Retention</h2>
@@ -120,23 +124,14 @@
   </ul>
 
   <h2>7. Your Rights</h2>
-  <p>You have the right to:</p>
-  <ul>
-    <li>Request a copy of the data we hold about you</li>
-    <li>Request correction of inaccurate data</li>
-    <li>Request deletion of your data</li>
-    <li>Withdraw consent at any time by removing the bot from your server or deleting your account</li>
-  </ul>
-  <p>To exercise any of these rights, contact us via the form on this site. We will respond within 14 days.</p>
+  <p>You have the right to request a copy, correction, or deletion of your data, and to withdraw consent at any time. To exercise any of these rights, contact us via the form on this site. We will respond within 14 days.</p>
 
   <h2>8. Third-Party Services</h2>
-  <p>We use the following third-party services which may process data as part of normal operation:</p>
   <ul>
-    <li><strong>Discord</strong> - the platform the bot operates on. Subject to Discord's own <a href="https://discord.com/privacy" target="_blank">Privacy Policy</a>.</li>
-    <li><strong>Cloudflare</strong> - hosting, DNS, and database services. Subject to <a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Cloudflare's Privacy Policy</a>.</li>
-    <li><strong>DigitalOcean</strong> - server infrastructure for the bot. Subject to <a href="https://www.digitalocean.com/legal/privacy-policy" target="_blank">DigitalOcean's Privacy Policy</a>.</li>
+    <li><strong>Discord</strong> - subject to Discord's own <a href="https://discord.com/privacy" target="_blank">Privacy Policy</a>.</li>
+    <li><strong>Cloudflare</strong> - hosting, DNS, and database. Subject to <a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Cloudflare's Privacy Policy</a>.</li>
+    <li><strong>DigitalOcean</strong> - server infrastructure. Subject to <a href="https://www.digitalocean.com/legal/privacy-policy" target="_blank">DigitalOcean's Privacy Policy</a>.</li>
   </ul>
-  <p>Social media integrations (Twitch, YouTube, Twitter, Instagram, TikTok) are used only to fetch public content for notification purposes. No personal data is shared with these platforms through this bot.</p>
 
   <h2>9. Children's Privacy</h2>
   <p>This service is not intended for use by individuals under the age of 13. We do not knowingly collect personal data from children. If you believe a child has submitted data to us, please contact us immediately and we will delete it.</p>
@@ -178,5 +173,9 @@
   </div>
 </footer>
 
+<script>
+const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
+resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
+</script>
 </body>
 </html>
