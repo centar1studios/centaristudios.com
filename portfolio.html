@@ -3,19 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Ajay Hunter</title>
+<title>Portfolio - Ajay Hunter</title>
 <link rel="stylesheet" href="site.css">
-<script>
-(async()=>{
-  try{
-    const r=await fetch("/api/theme");
-    if(!r.ok) return;
-    const t=await r.json();
-    const root=document.documentElement.style;
-    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
-  }catch(e){}
-})();
-</script>
+
 </head>
 <body>
 <header class="site-header">
@@ -53,7 +43,8 @@
     <button onclick="filterWork('design')" class="filter-btn btn btn-sm btn-outline" data-cat="design">Graphic Design</button>
   </div>
 
-  <div style="display:flex; flex-direction:column; gap:2rem;" id="portfolio-grid">
+  <div id="active-filter" data-cat=""></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;" id="portfolio-grid">
 
     <article class="card reveal" data-cat="character">
       <div class="img-zoom" style="aspect-ratio:16/7; background:linear-gradient(135deg,var(--lavender-pale),var(--periwinkle-pale)); display:flex; align-items:center; justify-content:center;">
@@ -62,10 +53,8 @@
       <div class="card-body">
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
           <span class="eyebrow" style="margin-bottom:0;">Character Art</span>
-          <span style="font-size:0.75rem; color:var(--muted);">2025</span>
+          <h3 style="margin-top:0;">Coming Soon</h3>
         </div>
-        <h3 style="margin-top:0.4rem;">Your First Project</h3>
-        <p style="margin-top:0.5rem; font-size:0.875rem;">Upload your work from the dashboard and it will appear here beautifully displayed for clients to browse.</p>
         <span style="display:inline-block; margin-top:0.75rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">View Project →</span>
       </div>
     </article>
@@ -78,7 +67,6 @@
         <div class="card-body">
           <span class="eyebrow" style="margin-bottom:0.4rem;">Illustration</span>
           <h3 style="margin-top:0;">Coming Soon</h3>
-          <p style="margin-top:0.5rem; font-size:0.875rem;">This spot is waiting for your next piece.</p>
         </div>
       </article>
       <article class="card reveal" data-cat="design">
@@ -88,7 +76,6 @@
         <div class="card-body">
           <span class="eyebrow" style="margin-bottom:0.4rem;">Graphic Design</span>
           <h3 style="margin-top:0;">Coming Soon</h3>
-          <p style="margin-top:0.5rem; font-size:0.875rem;">Upload your design work to fill this in.</p>
         </div>
       </article>
     </div>
@@ -129,36 +116,56 @@
       </div>
     </div>
   </div>
+    <div style="max-width:1100px;margin:0 auto;padding:0 2rem 1rem;display:flex;gap:2rem;flex-wrap:wrap;">
+    <a href="privacy.html" class="footer-link" style="font-size:0.8rem;">Privacy Policy</a>
+    <a href="tos.html" class="footer-link" style="font-size:0.8rem;">Bot TOS</a>
+    <a href="artist-tos.html" class="footer-link" style="font-size:0.8rem;">Artist TOS</a>
+  </div>
   <div class="footer-bottom">
-    <span>© 2025 Ajay Hunter — All rights reserved.</span>
+    <span>© 2026 Ajay Hunter - All rights reserved.</span>
     <a href="login.html">Admin</a>
   </div>
 </footer>
 
-<script>
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold:0.1});
-reveals.forEach(el => obs.observe(el));
 
-function filterWork(cat) {
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    const active = btn.dataset.cat === cat;
-    btn.style.background = active ? 'var(--lavender)' : 'transparent';
-    btn.style.color = active ? '#fff' : 'var(--lavender)';
-    btn.style.borderColor = active ? 'var(--lavender)' : 'var(--lavender-light)';
-  });
-  document.querySelectorAll('#portfolio-grid article, #portfolio-grid div[style]').forEach(el => {
-    const elCat = el.dataset && el.dataset.cat;
-    if (elCat) el.style.display = (cat === 'all' || cat === elCat) ? '' : 'none';
-  });
-}
-</script>
+
 <script>
-// Show "My Portal" link if logged in
-if (localStorage.getItem('client_token')) {
-  const el = document.getElementById('portal-link');
-  if (el) el.style.display = 'inline';
+const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
+resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
+
+async function loadPortfolio() {
+  const cat = document.getElementById('active-filter')?.dataset.cat || '';
+  const url = cat ? `/api/portfolio?category=${cat}` : '/api/portfolio';
+  const d = await fetch(url).then(r=>r.json());
+  const items = d.items || [];
+  const grid = document.getElementById('portfolio-grid');
+  if (!items.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem;"><p style="font-size:0.88rem;color:var(--subtext);">No pieces yet - check back soon!</p></div>';
+    return;
+  }
+  grid.innerHTML = items.map((p,i) => `
+    <article class="card" style="animation:fadeUp 0.6s ${i*0.08}s both;">
+      <div class="img-zoom" style="aspect-ratio:1/1;">
+        <img src="${p.image_url}" alt="${p.title}" loading="lazy">
+      </div>
+      <div class="card-body">
+        <span class="eyebrow" style="margin-bottom:0.3rem;">${p.category}</span>
+        <h3 style="margin-top:0;font-size:1.1rem;">${p.title}</h3>
+        ${p.description?`<p style="font-size:0.8rem;margin-top:0.3rem;">${p.description}</p>`:''}
+      </div>
+    </article>`).join('');
 }
+
+function filterWork(cat, el) {
+  document.querySelectorAll('.filter-btn').forEach(b=>{b.style.background='transparent';b.style.color='var(--lavender)';b.style.borderColor='var(--border)';});
+  el.style.background='var(--lavender)';el.style.color='var(--bg)';el.style.borderColor='var(--lavender)';
+  el.dataset.cat = cat;
+  document.getElementById('active-filter').dataset.cat = cat;
+  loadPortfolio();
+}
+
+if (localStorage.getItem('client_token')) document.getElementById('portal-link').style.display='inline';
+loadPortfolio();
 </script>
 </body>
 </html>
