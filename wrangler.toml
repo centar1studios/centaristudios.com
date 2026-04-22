@@ -5,7 +5,7 @@ pages_build_output_dir = "public"
 [[d1_databases]]
 binding = "DB"
 database_name = "portfolio-db"
-database_id = "your-db-id-here"
+database_id = "c449dd8a-ef41-40c4-a9c4-18d01c8814ed"
 
 [vars]
 SITE_URL = "https://centaristudios.com"
