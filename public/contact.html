@@ -5,19 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact - Ajay Hunter</title>
 <link rel="stylesheet" href="site.css">
-<script>
-(async()=>{
-  try{
-    const r=await fetch("/api/theme");
-    if(!r.ok) return;
-    const t=await r.json();
-    const root=document.documentElement.style;
-    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
-  }catch(e){}
-})();
-</script>
+<script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<canvas id="stars"></canvas>
+
 <header class="site-header">
   <div class="inner">
     <a href="index.html" class="site-logo">
@@ -29,7 +25,8 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="portfolio.html" class="nav-link">Portfolio</a>
       <a href="services.html" class="nav-link">Services</a>
-      <a href="contact.html" class="btn btn-lavender btn-sm active">Work With Me</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--subtext);display:none;">My Portal</a>
     </nav>
   </div>
 </header>
@@ -42,39 +39,35 @@
   </div>
 </div>
 
-<div class="site-container" style="padding-top:4rem; padding-bottom:4rem;">
+<div class="site-container" style="padding-top:4rem; padding-bottom:4rem; position:relative; z-index:1;">
   <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:4rem; align-items:start;">
 
-    <!-- Form -->
     <div>
-      <div id="success-msg" style="display:none; background:var(--periwinkle-pale); border:1px solid var(--periwinkle-light); padding:1.5rem; margin-bottom:2rem;">
-        <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; color:var(--ink); margin-bottom:0.5rem;">Thank you!</div>
+      <div id="success-msg" style="display:none; background:rgba(168,191,240,0.08); border:1px solid rgba(168,191,240,0.2); border-left:3px solid var(--periwinkle); padding:1.5rem; margin-bottom:2rem; border-radius:0 4px 4px 0;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; color:var(--text); margin-bottom:0.5rem;">Thank you!</div>
         <p style="font-size:0.875rem; margin:0;">I'll be in touch within 1-2 days to chat about your project. Looking forward to it.</p>
         <a href="index.html" class="btn btn-primary" style="margin-top:1.25rem; display:inline-block;">Back to Home</a>
       </div>
 
       <form id="inquiry-form" style="display:flex; flex-direction:column; gap:1.5rem;" onsubmit="submitForm(event)">
-
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
           <div>
             <label class="field-label">Your Name <span class="req">*</span></label>
-            <input type="text" name="name" class="input-field" placeholder="Ajay Hunter" required>
+            <input type="text" name="name" class="input-field" placeholder="Your name" required>
           </div>
           <div>
             <label class="field-label">Email Address <span class="req">*</span></label>
             <input type="email" name="email" class="input-field" placeholder="you@example.com" required>
           </div>
         </div>
-
         <div>
           <label class="field-label">Discord Handle</label>
-          <input type="text" name="discord" class="input-field" placeholder="yourusername (optional - useful for quick comms)">
+          <input type="text" name="discord" class="input-field" placeholder="yourusername (optional)">
         </div>
-
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
           <div>
             <label class="field-label">Service I'm Interested In</label>
-            <select name="service" class="input-field" id="service-select">
+            <select name="service_interest" class="input-field" id="service-select">
               <option value="">- Select a service -</option>
               <option value="Character Art">Character Art</option>
               <option value="Digital Illustration">Digital Illustration</option>
@@ -84,7 +77,7 @@
           </div>
           <div>
             <label class="field-label">Estimated Budget</label>
-            <select name="budget" class="input-field">
+            <select name="budget_range" class="input-field">
               <option value="">- Select a range -</option>
               <option>Under £30</option>
               <option>£30 - £60</option>
@@ -95,7 +88,6 @@
             </select>
           </div>
         </div>
-
         <div>
           <label class="field-label">Timeline</label>
           <select name="timeline" class="input-field">
@@ -107,65 +99,46 @@
             <option>Flexible</option>
           </select>
         </div>
-
         <div>
           <label class="field-label">Tell Me About Your Project <span class="req">*</span></label>
-          <textarea name="description" class="input-field" rows="6" placeholder="Describe your character, scene, or design need. References, mood, style - anything that helps me understand your vision. The more detail, the better!" required></textarea>
+          <textarea name="description" class="input-field" rows="6" placeholder="Describe your character, scene, or design need. References, mood, style - anything that helps me understand your vision." required></textarea>
         </div>
-
         <div>
           <label class="field-label">Reference Links or Notes</label>
           <textarea name="references" class="input-field" rows="3" placeholder="Any image links, Pinterest boards, or notes about style/mood (optional)"></textarea>
         </div>
-
-        <button type="submit" class="btn btn-lavender btn-full" style="padding-top:0.85rem; padding-bottom:0.85rem;">Send Inquiry</button>
-        <p style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:-0.5rem;">I review all inquiries personally and respond within 1-2 days.</p>
-
+        <div id="form-err" style="display:none; background:rgba(245,100,100,0.1); border-left:3px solid #f56464; padding:1rem 1.25rem; font-size:0.85rem; color:#ffaaaa; border-radius:0 4px 4px 0;"></div>
+        <button type="submit" class="btn btn-primary btn-full" style="padding-top:0.85rem; padding-bottom:0.85rem;">Send Inquiry</button>
+        <p style="font-size:0.75rem; color:var(--subtext); text-align:center; margin-top:-0.5rem;">I review all inquiries personally and respond within 1-2 days.</p>
       </form>
     </div>
 
-    <!-- Sidebar -->
     <div style="display:flex; flex-direction:column; gap:1.25rem;">
-
-      <div style="background:var(--lavender-pale); border:1px solid var(--lavender-light); padding:1.75rem;">
+      <div style="background:rgba(196,176,245,0.05); border:1px solid rgba(196,176,245,0.15); border-left:3px solid var(--lavender); padding:1.75rem; border-radius:0 4px 4px 0;">
         <span class="section-line"></span>
         <h3>What to Expect</h3>
         <div style="margin-top:1rem; display:flex; flex-direction:column; gap:0.85rem;">
-          <div style="display:flex; align-items:flex-start; gap:0.75rem;">
-            <span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">01</span>
-            <span style="font-size:0.875rem; color:var(--muted);">I review your inquiry within 1-2 days and reply with any questions.</span>
-          </div>
-          <div style="display:flex; align-items:flex-start; gap:0.75rem;">
-            <span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">02</span>
-            <span style="font-size:0.875rem; color:var(--muted);">We align on scope, style, and timeline before any payment is made.</span>
-          </div>
-          <div style="display:flex; align-items:flex-start; gap:0.75rem;">
-            <span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">03</span>
-            <span style="font-size:0.875rem; color:var(--muted);">I send a sketch/WIP for your approval before rendering the final piece.</span>
-          </div>
-          <div style="display:flex; align-items:flex-start; gap:0.75rem;">
-            <span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">04</span>
-            <span style="font-size:0.875rem; color:var(--muted);">Final delivery with all files you need, plus usage rights.</span>
-          </div>
+          <div style="display:flex; align-items:flex-start; gap:0.75rem;"><span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">01</span><span style="font-size:0.875rem;">I review your inquiry within 1-2 days and reply with any questions.</span></div>
+          <div style="display:flex; align-items:flex-start; gap:0.75rem;"><span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">02</span><span style="font-size:0.875rem;">We align on scope, style, and timeline before any payment is made.</span></div>
+          <div style="display:flex; align-items:flex-start; gap:0.75rem;"><span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">03</span><span style="font-size:0.875rem;">I send a sketch/WIP for your approval before rendering the final piece.</span></div>
+          <div style="display:flex; align-items:flex-start; gap:0.75rem;"><span style="font-size:0.7rem; font-weight:500; color:var(--lavender); margin-top:0.15rem; flex-shrink:0;">04</span><span style="font-size:0.875rem;">Final delivery with all files you need, plus usage rights.</span></div>
         </div>
       </div>
-
-      <div style="background:var(--ivory); border:1px solid var(--border); padding:1.75rem;">
+      <div style="background:var(--card); border:1px solid var(--border); padding:1.75rem; border-radius:4px;">
         <h3>Availability</h3>
-        <p style="margin-top:0.5rem; font-size:0.875rem;">I keep my commission queue small so every client gets real attention. If my queue is full, I'll let you know and add you to the waitlist.</p>
+        <p style="margin-top:0.5rem; font-size:0.875rem;">I keep my queue small so every client gets real attention. If I'm full, I'll let you know and add you to the waitlist.</p>
         <p style="margin-top:0.75rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">Currently accepting new projects</p>
       </div>
-
-      <div style="background:var(--periwinkle-pale); border:1px solid var(--periwinkle-light); padding:1.75rem;">
+      <div style="background:rgba(168,191,240,0.05); border:1px solid rgba(168,191,240,0.15); border-left:3px solid var(--periwinkle); padding:1.75rem; border-radius:0 4px 4px 0;">
         <h3>Good to Know</h3>
-        <div style="margin-top:0.75rem; display:flex; flex-direction:column; gap:0.6rem; font-size:0.875rem; color:var(--muted);">
+        <div style="margin-top:0.75rem; display:flex; flex-direction:column; gap:0.6rem; font-size:0.875rem;">
           <p>I'm happy to work on OCs, fanart, queer characters, and diverse representations.</p>
           <p>I don't take on NSFW, hateful content, or real-person work without their consent.</p>
-          <p>Rush orders are possible but sometimes not likely. Just mention your deadline and I'll let you know if I can accommodate.</p>
+          <p>Rush orders are possible - just mention your deadline and I'll let you know.</p>
         </div>
       </div>
-
     </div>
+
   </div>
 </div>
 
@@ -193,11 +166,14 @@
         <a href="#" class="footer-link">Discord</a>
       </div>
     </div>
-  </div>
-    <div style="max-width:1100px;margin:0 auto;padding:0 2rem 1rem;display:flex;gap:2rem;flex-wrap:wrap;">
-    <a href="privacy.html" class="footer-link" style="font-size:0.8rem;">Privacy Policy</a>
-    <a href="tos.html" class="footer-link" style="font-size:0.8rem;">Bot TOS</a>
-    <a href="artist-tos.html" class="footer-link" style="font-size:0.8rem;">Artist TOS</a>
+    <div>
+      <div class="footer-head">Legal</div>
+      <div class="footer-links">
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="tos.html" class="footer-link">Bot TOS</a>
+        <a href="artist-tos.html" class="footer-link">Artist TOS</a>
+      </div>
+    </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Ajay Hunter - All rights reserved.</span>
@@ -206,45 +182,28 @@
 </footer>
 
 <script>
-// Pre-select service from URL param
-const params = new URLSearchParams(location.search);
-const svc = params.get('service');
-if (svc) {
-  const sel = document.getElementById('service-select');
-  [...sel.options].forEach(o => { if(o.value === svc) o.selected = true; });
-}
+const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
+resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
+
+const params=new URLSearchParams(location.search);const svc=params.get('service');
+if(svc){const sel=document.getElementById('service-select');[...sel.options].forEach(o=>{if(o.value===svc)o.selected=true;});}
 
 async function submitForm(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  const data = Object.fromEntries(new FormData(e.target));
+  const btn=e.target.querySelector('button[type=submit]');
+  const errBox=document.getElementById('form-err');
+  errBox.style.display='none';
+  btn.textContent='Sending...'; btn.disabled=true;
+  const data=Object.fromEntries(new FormData(e.target));
   try {
-    const r = await fetch('/api/inquiries', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(data)
-    });
-    if (r.ok) {
-      document.getElementById('inquiry-form').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-    } else {
-      alert('Something went wrong. Please try again.');
-    }
-  } catch(err) {
-    alert('Network error. Please try again.');
-  }
-  btn.textContent = 'Send Inquiry';
-  btn.disabled = false;
+    const r=await fetch('/api/inquiries',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    if(r.ok){document.getElementById('inquiry-form').style.display='none';document.getElementById('success-msg').style.display='block';}
+    else{const d=await r.json().catch(()=>({}));errBox.textContent=d.error||'Something went wrong. Please try again.';errBox.style.display='block';}
+  }catch(err){errBox.textContent='Network error. Please try again.';errBox.style.display='block';}
+  btn.textContent='Send Inquiry'; btn.disabled=false;
 }
-</script>
-<script>
-// Show "My Portal" link if logged in
-if (localStorage.getItem('client_token')) {
-  const el = document.getElementById('portal-link');
-  if (el) el.style.display = 'inline';
-}
+
+if(localStorage.getItem('client_token')){const el=document.getElementById('portal-link');if(el)el.style.display='inline';}
 </script>
 </body>
 </html>
