@@ -1,12 +1,12 @@
 /**
- * Cloudflare Pages Function — /api/[[route]].js
+ * Cloudflare Pages Function - /api/[[route]].js
  *
  * ENV VARS needed in wrangler.toml / Cloudflare dashboard:
- *   API_SECRET          — bot-to-dashboard shared secret
- *   DISCORD_CLIENT_ID   — from Discord Developer Portal
+ *   API_SECRET          - bot-to-dashboard shared secret
+ *   DISCORD_CLIENT_ID   - from Discord Developer Portal
  *   DISCORD_CLIENT_SECRET
- *   SITE_URL            — e.g. https://yoursite.pages.dev
- *   SESSION_SECRET      — any random string for signing sessions
+ *   SITE_URL            - e.g. https://yoursite.pages.dev
+ *   SESSION_SECRET      - any random string for signing sessions
  */
  
 const CORS = {
@@ -279,7 +279,7 @@ async function authCallback(env, url) {
        avatar   = excluded.avatar`
   ).bind(discordUser.id, discordUser.username, discordUser.avatar || '').run();
  
-  // Create session (7 day expiry) — store Discord access token too
+  // Create session (7 day expiry) - store Discord access token too
   const token   = randomToken();
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' ');
   // Add discord_access_token column if schema supports it (safe to ignore error)
@@ -625,7 +625,7 @@ async function postBirthday(env, request) {
 // ─────────────────────────────────────────────
 // SITE THEME (appended)
 // ─────────────────────────────────────────────
-// These are appended — add these route checks to the router above manually,
+// These are appended - add these route checks to the router above manually,
 // or the full route file handles them via the catch-all below.
  
 async function getTheme(env) {
@@ -790,7 +790,7 @@ async function subscribeTwitch(env, request) {
 }
  
 // ─────────────────────────────────────────────
-// PASSWORD HASHING (Web Crypto API — works in Cloudflare Workers)
+// PASSWORD HASHING (Web Crypto API - works in Cloudflare Workers)
 // ─────────────────────────────────────────────
 async function hashPassword(password) {
   const enc = new TextEncoder();
@@ -884,7 +884,7 @@ async function clientMe(request, env) {
 }
  
 // ─────────────────────────────────────────────
-// CLIENT PORTAL — INQUIRIES
+// CLIENT PORTAL - INQUIRIES
 // ─────────────────────────────────────────────
 async function portalInquiries(request, env) {
   const session = await getClientSession(request, env);
@@ -909,7 +909,7 @@ async function portalInquiries(request, env) {
 }
  
 // ─────────────────────────────────────────────
-// CLIENT PORTAL — MESSAGES
+// CLIENT PORTAL - MESSAGES
 // ─────────────────────────────────────────────
 async function portalGetMessages(request, env) {
   const session    = await getClientSession(request, env);
@@ -960,7 +960,7 @@ async function portalSendMessage(request, env) {
 }
  
 // ─────────────────────────────────────────────
-// CLIENT PORTAL — FILES
+// CLIENT PORTAL - FILES
 // ─────────────────────────────────────────────
 async function portalGetFiles(request, env) {
   const session = await getClientSession(request, env);
