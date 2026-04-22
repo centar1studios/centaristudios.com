@@ -91,6 +91,7 @@ function randomToken(len = 48) {
  
 // ── ROUTER ──
 export async function onRequest(context) {
+  try {
   const { request, env } = context;
   const url    = new URL(request.url);
   const path   = url.pathname.replace(/^\/api\//, '').replace(/\/$/, '');
@@ -235,6 +236,13 @@ export async function onRequest(context) {
   if (path === 'content'             && method === 'POST')   return postSiteContent(env, request);
  
   return err('Not found', 404);
+  } catch(e) {
+    console.error('Worker error:', e);
+    return new Response(JSON.stringify({ error: 'Internal server error', details: e.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+  }
 }
  
 // ── DISCORD OAUTH ──
@@ -635,6 +643,7 @@ async function postBirthday(env, request) {
 // or the full route file handles them via the catch-all below.
  
 async function getTheme(env) {
+  if (!env.DB) return json({});
   const { results } = await env.DB.prepare(`SELECT key, value FROM site_theme`).all();
   const theme = {};
   (results||[]).forEach(r => theme[r.key] = r.value);
@@ -832,6 +841,7 @@ async function getClientSession(request, env) {
 // CLIENT AUTH
 // ─────────────────────────────────────────────
 async function clientSignup(env, request) {
+  if (!env.DB) return json({ error: 'Database not configured. Please add DB binding in Cloudflare dashboard.' }, 500);
   const { name, email, password } = await request.json();
   if (!name || !email || !password) return err('name, email, password required');
   if (password.length < 8) return err('Password must be at least 8 characters');
@@ -1042,6 +1052,7 @@ async function adminInquiries(request, env) {
 // PORTFOLIO
 // ─────────────────────────────────────────────
 async function getPortfolio(env, url) {
+  if (!env.DB) return json({ items: [] });
   const featured = url.searchParams.get('featured');
   const category = url.searchParams.get('category');
   let query = `SELECT * FROM portfolio_items`;
@@ -1088,6 +1099,7 @@ async function deletePortfolio(env, url) {
 // LORE
 // ─────────────────────────────────────────────
 async function getLore(env) {
+  if (!env.DB) return json({ entries: [] });
   const { results } = await env.DB.prepare(
     `SELECT * FROM lore_entries ORDER BY sort_order ASC, created_at ASC`
   ).all();
@@ -1127,6 +1139,7 @@ async function deleteLore(env, url) {
 // COMMISSIONS
 // ─────────────────────────────────────────────
 async function getCommissions(env) {
+  if (!env.DB) return json({ types: [], status: { status: 'open', message: 'Currently open!' } });
   const { results } = await env.DB.prepare(
     `SELECT * FROM commission_types ORDER BY sort_order ASC`
   ).all();
@@ -1179,6 +1192,7 @@ async function updateCommissionStatus(env, request) {
 // SITE CONTENT
 // ─────────────────────────────────────────────
 async function getSiteContent(env) {
+  if (!env.DB) return json({});
   const { results } = await env.DB.prepare(`SELECT key, value FROM site_content`).all();
   const content = {};
   (results||[]).forEach(r => content[r.key] = r.value);
