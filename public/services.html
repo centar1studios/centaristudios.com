@@ -5,19 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Services - Ajay Hunter</title>
 <link rel="stylesheet" href="site.css">
-<script>
-(async()=>{
-  try{
-    const r=await fetch("/api/theme");
-    if(!r.ok) return;
-    const t=await r.json();
-    const root=document.documentElement.style;
-    Object.entries(t).forEach(([k,v])=>root.setProperty("--"+k,v));
-  }catch(e){}
-})();
-</script>
+<script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<canvas id="stars"></canvas>
+
 <header class="site-header">
   <div class="inner">
     <a href="index.html" class="site-logo">
@@ -29,8 +25,8 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="portfolio.html" class="nav-link">Portfolio</a>
       <a href="services.html" class="nav-link active">Services</a>
-      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
-      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--subtext);display:none;">My Portal</a>
     </nav>
   </div>
 </header>
@@ -43,13 +39,13 @@
   </div>
 </div>
 
-<div class="site-container" style="padding-top:3.5rem; padding-bottom:4rem;">
+<div class="site-container" style="padding-top:3.5rem; padding-bottom:4rem; position:relative; z-index:1;">
   <div style="display:flex; flex-direction:column; gap:1.5rem;">
 
     <!-- Service 1 -->
-    <article style="display:grid; grid-template-columns:200px 1fr; border:1px solid var(--border); background:#fff; overflow:hidden; transition:transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 32px rgba(80,50,160,0.09)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
-      <div style="background:var(--lavender-pale); border-right:1px solid var(--lavender-light); display:flex; align-items:center; justify-content:center; padding:2rem;">
-        <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--lavender); opacity:0.35; line-height:1;">01</div>
+    <article class="card reveal" style="display:grid; grid-template-columns:180px 1fr; overflow:hidden;">
+      <div style="background:rgba(196,176,245,0.07); border-right:1px solid var(--border); display:flex; align-items:center; justify-content:center; padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--lavender); opacity:0.4; line-height:1;">01</div>
       </div>
       <div style="padding:2rem;">
         <h2 style="font-size:1.75rem;">Character Art</h2>
@@ -57,23 +53,23 @@
         <div style="margin-top:1rem;">
           <div style="font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--lavender); margin-bottom:0.6rem;">What's Included</div>
           <div style="display:flex; flex-direction:column; gap:0.35rem;">
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>Full colour digital illustration</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>1-2 rounds of revisions</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>High-res PNG file</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lavender);">+</span><span>Personal use rights</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lavender);">+</span><span>Full colour digital illustration</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lavender);">+</span><span>1-2 rounds of revisions</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lavender);">+</span><span>High-res PNG file</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lavender);">+</span><span>Personal use rights</span></div>
           </div>
         </div>
         <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem; margin-top:1.25rem;">
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--ink); font-weight:500;">Starting at £30</span>
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--muted);">1-2 weeks turnaround</span>
-          <a href="contact.html?service=Character+Art" class="btn btn-lavender btn-sm">Inquire</a>
+          <span style="background:rgba(196,176,245,0.1); border:1px solid rgba(196,176,245,0.2); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--lavender); font-weight:500; border-radius:2px;">Starting at £30</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--subtext); border-radius:2px;">1-2 weeks turnaround</span>
+          <a href="contact.html?service=Character+Art" class="btn btn-primary btn-sm">Inquire</a>
         </div>
       </div>
     </article>
 
     <!-- Service 2 -->
-    <article style="display:grid; grid-template-columns:200px 1fr; border:1px solid var(--border); background:#fff; overflow:hidden; transition:transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 32px rgba(80,50,160,0.09)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
-      <div style="background:var(--periwinkle-pale); border-right:1px solid var(--periwinkle-light); display:flex; align-items:center; justify-content:center; padding:2rem;">
+    <article class="card reveal" style="display:grid; grid-template-columns:180px 1fr; overflow:hidden;">
+      <div style="background:rgba(168,191,240,0.07); border-right:1px solid var(--border); display:flex; align-items:center; justify-content:center; padding:2rem;">
         <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--periwinkle); opacity:0.4; line-height:1;">02</div>
       </div>
       <div style="padding:2rem;">
@@ -82,23 +78,23 @@
         <div style="margin-top:1rem;">
           <div style="font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--periwinkle); margin-bottom:0.6rem;">What's Included</div>
           <div style="display:flex; flex-direction:column; gap:0.35rem;">
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>Fully rendered scene or composition</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>Sketch approval before rendering</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>2 rounds of revisions</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--periwinkle);">+</span><span>High-res PNG + layered PSD on request</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--periwinkle);">+</span><span>Fully rendered scene or composition</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--periwinkle);">+</span><span>Sketch approval before rendering</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--periwinkle);">+</span><span>2 rounds of revisions</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--periwinkle);">+</span><span>High-res PNG + layered PSD on request</span></div>
           </div>
         </div>
         <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem; margin-top:1.25rem;">
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--ink); font-weight:500;">Starting at £50</span>
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--muted);">2-3 weeks turnaround</span>
-          <a href="contact.html?service=Digital+Illustration" class="btn btn-lavender btn-sm">Inquire</a>
+          <span style="background:rgba(168,191,240,0.1); border:1px solid rgba(168,191,240,0.2); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--periwinkle); font-weight:500; border-radius:2px;">Starting at £50</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--subtext); border-radius:2px;">2-3 weeks turnaround</span>
+          <a href="contact.html?service=Digital+Illustration" class="btn btn-primary btn-sm">Inquire</a>
         </div>
       </div>
     </article>
 
     <!-- Service 3 -->
-    <article style="display:grid; grid-template-columns:200px 1fr; border:1px solid var(--border); background:#fff; overflow:hidden; transition:transform 0.25s, box-shadow 0.25s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 32px rgba(80,50,160,0.09)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
-      <div style="background:#f5f0ff; border-right:1px solid rgba(170,140,220,0.2); display:flex; align-items:center; justify-content:center; padding:2rem;">
+    <article class="card reveal" style="display:grid; grid-template-columns:180px 1fr; overflow:hidden;">
+      <div style="background:rgba(221,200,255,0.07); border-right:1px solid var(--border); display:flex; align-items:center; justify-content:center; padding:2rem;">
         <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--lilac); opacity:0.5; line-height:1;">03</div>
       </div>
       <div style="padding:2rem;">
@@ -107,16 +103,16 @@
         <div style="margin-top:1rem;">
           <div style="font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--lilac); margin-bottom:0.6rem;">What's Included</div>
           <div style="display:flex; flex-direction:column; gap:0.35rem;">
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>Custom designed to your brief</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>Multiple format exports (PNG, SVG where applicable)</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>1-2 rounds of revisions</span></div>
-            <div style="display:flex; gap:0.6rem; font-size:0.875rem; color:var(--muted);"><span style="color:var(--lilac);">+</span><span>Commercial use rights available on request</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lilac);">+</span><span>Custom designed to your brief</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lilac);">+</span><span>Multiple format exports (PNG, SVG where applicable)</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lilac);">+</span><span>1-2 rounds of revisions</span></div>
+            <div style="display:flex; gap:0.6rem; font-size:0.875rem;"><span style="color:var(--lilac);">+</span><span>Commercial use rights available on request</span></div>
           </div>
         </div>
         <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem; margin-top:1.25rem;">
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--ink); font-weight:500;">Starting at £20</span>
-          <span style="background:var(--cream); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--muted);">3-5 days turnaround</span>
-          <a href="contact.html?service=Graphic+Design" class="btn btn-lavender btn-sm">Inquire</a>
+          <span style="background:rgba(221,200,255,0.1); border:1px solid rgba(221,200,255,0.2); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--lilac); font-weight:500; border-radius:2px;">Starting at £20</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:0.3rem 0.8rem; font-size:0.8rem; color:var(--subtext); border-radius:2px;">3-5 days turnaround</span>
+          <a href="contact.html?service=Graphic+Design" class="btn btn-primary btn-sm">Inquire</a>
         </div>
       </div>
     </article>
@@ -125,34 +121,34 @@
 </div>
 
 <!-- Process -->
-<div style="background:var(--ink); padding:4rem 0;">
+<div style="background:rgba(13,10,26,0.8); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:4rem 0; position:relative; z-index:1;">
   <div class="site-container">
     <span class="eyebrow" style="color:var(--lilac);">How It Works</span>
-    <h2 style="color:var(--ivory); margin-top:0.3rem; margin-bottom:2.5rem;">My Process</h2>
+    <h2 style="margin-top:0.3rem; margin-bottom:2.5rem;">My Process</h2>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2rem;">
       <div>
-        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">01</div>
-        <h3 style="color:var(--ivory); font-size:1.1rem;">Inquiry</h3>
-        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">Fill out the contact form with as much or as little as you have. I'll get back to you within 1-2 days.</p>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(196,176,245,0.1); line-height:1; margin-bottom:0.5rem;">01</div>
+        <h3 style="font-size:1.1rem;">Inquiry</h3>
+        <p style="margin-top:0.4rem; font-size:0.875rem;">Fill out the contact form with as much or as little as you have. I'll get back to you within 1-2 days.</p>
       </div>
       <div>
-        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">02</div>
-        <h3 style="color:var(--ivory); font-size:1.1rem;">Discussion</h3>
-        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">We chat about your project - references, mood, details. The more I know, the better the result.</p>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(196,176,245,0.1); line-height:1; margin-bottom:0.5rem;">02</div>
+        <h3 style="font-size:1.1rem;">Discussion</h3>
+        <p style="margin-top:0.4rem; font-size:0.875rem;">We chat about your project - references, mood, details. The more I know, the better the result.</p>
       </div>
       <div>
-        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">03</div>
-        <h3 style="color:var(--ivory); font-size:1.1rem;">Creation</h3>
-        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">I sketch, share for approval, then render. You'll see a WIP before it's fully finished.</p>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(196,176,245,0.1); line-height:1; margin-bottom:0.5rem;">03</div>
+        <h3 style="font-size:1.1rem;">Creation</h3>
+        <p style="margin-top:0.4rem; font-size:0.875rem;">I sketch, share for approval, then render. You'll see a WIP before it's fully finished.</p>
       </div>
       <div>
-        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(244,240,255,0.12); line-height:1; margin-bottom:0.5rem;">04</div>
-        <h3 style="color:var(--ivory); font-size:1.1rem;">Delivery</h3>
-        <p style="color:rgba(244,240,255,0.5); margin-top:0.4rem; font-size:0.875rem;">Final files delivered in full resolution. You'll have everything you need to use and share your piece.</p>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(196,176,245,0.1); line-height:1; margin-bottom:0.5rem;">04</div>
+        <h3 style="font-size:1.1rem;">Delivery</h3>
+        <p style="margin-top:0.4rem; font-size:0.875rem;">Final files delivered in full resolution. You'll have everything you need to use and share your piece.</p>
       </div>
     </div>
-    <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid rgba(244,240,255,0.08); text-align:center;">
-      <a href="contact.html" class="btn btn-lavender">Start Your Project</a>
+    <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); text-align:center;">
+      <a href="contact.html" class="btn btn-primary">Start Your Project</a>
     </div>
   </div>
 </div>
@@ -181,23 +177,26 @@
         <a href="#" class="footer-link">Discord</a>
       </div>
     </div>
-  </div>
-    <div style="max-width:1100px;margin:0 auto;padding:0 2rem 1rem;display:flex;gap:2rem;flex-wrap:wrap;">
-    <a href="privacy.html" class="footer-link" style="font-size:0.8rem;">Privacy Policy</a>
-    <a href="tos.html" class="footer-link" style="font-size:0.8rem;">Bot TOS</a>
-    <a href="artist-tos.html" class="footer-link" style="font-size:0.8rem;">Artist TOS</a>
+    <div>
+      <div class="footer-head">Legal</div>
+      <div class="footer-links">
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="tos.html" class="footer-link">Bot TOS</a>
+        <a href="artist-tos.html" class="footer-link">Artist TOS</a>
+      </div>
+    </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Ajay Hunter - All rights reserved.</span>
     <a href="login.html">Login</a>
   </div>
 </footer>
+
 <script>
-// Show "My Portal" link if logged in
-if (localStorage.getItem('client_token')) {
-  const el = document.getElementById('portal-link');
-  if (el) el.style.display = 'inline';
-}
+const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
+resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
+const reveals=document.querySelectorAll('.reveal');const obs=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');}),{threshold:0.1});reveals.forEach(el=>obs.observe(el));
+if(localStorage.getItem('client_token')){const el=document.getElementById('portal-link');if(el)el.style.display='inline';}
 </script>
 </body>
 </html>
