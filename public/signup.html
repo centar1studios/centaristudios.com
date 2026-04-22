@@ -15,7 +15,7 @@ body { min-height:100vh; display:flex; align-items:center; justify-content:cente
 .auth-card { background:#fff; border:1px solid var(--border); padding:2.5rem; }
 .auth-card h2 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:300; color:var(--ink); margin-bottom:0.4rem; }
 .auth-card p { font-size:0.84rem; color:var(--muted); margin-bottom:1.75rem; }
-.err-box { background:#fef2f2; border:1px solid rgba(200,80,80,0.2); padding:0.9rem 1.1rem; font-size:0.8rem; color:#7f2020; margin-bottom:1.25rem; display:none; }
+.err-box { background:rgba(245,100,100,0.1); border:1px solid rgba(245,100,100,0.3); border-left:3px solid #f56464; padding:1rem 1.25rem; font-size:0.85rem; color:#ffaaaa; margin-bottom:1.25rem; display:none; border-radius:2px; }
 .pw-hint { font-size:0.7rem; color:var(--muted); margin-top:0.3rem; }
 .auth-note { text-align:center; margin-top:1.25rem; font-size:0.8rem; color:var(--muted); }
 .auth-note a { color:var(--lavender); }
@@ -33,7 +33,7 @@ body { min-height:100vh; display:flex; align-items:center; justify-content:cente
 
   <div class="auth-card">
     <h2>Create an account</h2>
-    <p>Sign up to track your commissions, message Ajay, and download your files!</p>
+    <p>Sign up to track your commissions, message Ajay, and download your files - all in one place.</p>
 
     <div class="err-box" id="err-box"></div>
 
@@ -105,16 +105,18 @@ async function doSignup(e) {
     const d = await r.json();
 
     if (!r.ok || d.error) {
-      errBox.textContent = d.error || 'Signup failed. Please try again.';
+      errBox.innerHTML = '<strong>Error:</strong> ' + (d.error || d.details || 'Signup failed. Please try again.');
       errBox.style.display = 'block';
+      errBox.scrollIntoView({behavior:'smooth'});
     } else {
       localStorage.setItem('client_token', d.token);
       localStorage.setItem('client_name', d.name);
       location.href = 'portal.html';
     }
   } catch(err) {
-    errBox.textContent = 'Something went wrong. Please try again.';
+    errBox.innerHTML = '<strong>Error:</strong> ' + (e.message || 'Something went wrong. Please try again.');
     errBox.style.display = 'block';
+    errBox.scrollIntoView({behavior:'smooth'});
   }
 
   btn.textContent = 'Create Account'; btn.disabled = false;
