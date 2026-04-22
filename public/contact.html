@@ -219,12 +219,24 @@ async function submitForm(e) {
   const btn = e.target.querySelector('button[type=submit]');
   btn.textContent = 'Sending...';
   btn.disabled = true;
-
-  // POST to Cloudflare Function (or just show success for now)
-  await new Promise(r => setTimeout(r, 1000));
-
-  document.getElementById('inquiry-form').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
+  const data = Object.fromEntries(new FormData(e.target));
+  try {
+    const r = await fetch('/api/inquiries', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    if (r.ok) {
+      document.getElementById('inquiry-form').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+  } catch(err) {
+    alert('Network error. Please try again.');
+  }
+  btn.textContent = 'Send Inquiry';
+  btn.disabled = false;
 }
 </script>
 <script>
