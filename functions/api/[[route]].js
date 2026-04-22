@@ -99,10 +99,23 @@ export async function onRequest(context) {
   if (method === 'OPTIONS') return new Response(null, { headers: CORS });
  
   // ── AUTH ROUTES (no session required) ──
-  if (path === 'auth/login'    && method === 'GET')  return authLogin(env, url);
-  if (path === 'auth/callback' && method === 'GET')  return authCallback(env, url);
-  if (path === 'auth/logout'   && method === 'POST') return authLogout(request, env);
-  if (path === 'auth/me'       && method === 'GET')  return authMe(request, env);
+  if (path === 'auth/login'          && method === 'GET')  return authLogin(env, url);
+  if (path === 'auth/callback'       && method === 'GET')  return authCallback(env, url);
+  if (path === 'auth/logout'         && method === 'POST') return authLogout(request, env);
+  if (path === 'auth/me'             && method === 'GET')  return authMe(request, env);
+ 
+  // ── CLIENT AUTH (no session required) ──
+  if (path === 'auth/client-signup'  && method === 'POST') return clientSignup(env, request);
+  if (path === 'auth/client-signin'  && method === 'POST') return clientSignin(env, request);
+  if (path === 'auth/client-signout' && method === 'POST') return clientSignout(request, env);
+  if (path === 'auth/client-me'      && method === 'GET')  return clientMe(request, env);
+ 
+  // ── PUBLIC ROUTES (no auth required) ──
+  if (path === 'theme'               && method === 'GET')  return getTheme(env);
+  if (path === 'portfolio'           && method === 'GET')  return getPortfolio(env, url);
+  if (path === 'lore'                && method === 'GET')  return getLore(env);
+  if (path === 'commissions'         && method === 'GET')  return getCommissions(env);
+  if (path === 'content'             && method === 'GET')  return getSiteContent(env);
  
  
  
