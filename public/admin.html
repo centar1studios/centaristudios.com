@@ -948,7 +948,7 @@ let THEME = { bg:'f4f0ff', cream:'ede8f8', lavender:'7c5cbf', periwinkle:'5a7fc0
 async function init() {
   const params = new URLSearchParams(location.search);
   const t = params.get('session');
-  if (t) { SESSION = t; localStorage.setItem('dei_s', t); history.replaceState({},'',' /admin'); }
+  if (t) { SESSION = t; localStorage.setItem('dei_s', t); history.replaceState({}, '', '/admin'); }
   else SESSION = localStorage.getItem('dei_s') || '';
   if (!SESSION) { location.href = '/login.html'; return; }
 
