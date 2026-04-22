@@ -7,24 +7,27 @@
 <link rel="stylesheet" href="site.css">
 <script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
 <style>
-.legal-wrap { max-width:780px; margin:0 auto; padding:4rem 2rem 6rem; }
-.legal-wrap h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,5vw,3.2rem); font-weight:300; color:var(--ink); margin-bottom:0.5rem; }
-.legal-meta { font-size:0.78rem; color:var(--muted); margin-bottom:3rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
-.legal-wrap h2 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--ink); margin:2.5rem 0 0.75rem; }
-.legal-wrap h3 { font-family:'Jost',sans-serif; font-size:0.88rem; font-weight:500; color:var(--ink); letter-spacing:0.05em; text-transform:uppercase; margin:1.5rem 0 0.5rem; }
-.legal-wrap p  { font-size:0.92rem; color:var(--muted); line-height:1.8; margin-bottom:1rem; }
+.legal-wrap { max-width:780px; margin:0 auto; padding:4rem 2rem 6rem; position:relative; z-index:1; }
+.legal-wrap h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,5vw,3.2rem); font-weight:300; color:var(--text); margin-bottom:0.5rem; }
+.legal-meta { font-size:0.78rem; color:var(--subtext); margin-bottom:3rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
+.legal-wrap h2 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--text); margin:2.5rem 0 0.75rem; }
+.legal-wrap h3 { font-family:'Jost',sans-serif; font-size:0.88rem; font-weight:500; color:var(--lavender); letter-spacing:0.05em; text-transform:uppercase; margin:1.5rem 0 0.5rem; }
+.legal-wrap p  { font-size:0.92rem; color:var(--subtext); line-height:1.8; margin-bottom:1rem; }
 .legal-wrap ul { padding-left:1.5rem; margin-bottom:1rem; }
-.legal-wrap li { font-size:0.92rem; color:var(--muted); line-height:1.8; margin-bottom:0.35rem; }
+.legal-wrap li { font-size:0.92rem; color:var(--subtext); line-height:1.8; margin-bottom:0.35rem; }
 .legal-wrap a  { color:var(--lavender); }
-.callout { background:var(--lavender-pale); border:1px solid var(--lavender-light); border-left:3px solid var(--lavender); padding:1.25rem 1.5rem; border-radius:0 4px 4px 0; margin:1.5rem 0; }
+.callout { background:rgba(196,176,245,0.05); border:1px solid rgba(196,176,245,0.15); border-left:3px solid var(--lavender); padding:1.25rem 1.5rem; border-radius:0 4px 4px 0; margin:1.5rem 0; }
 .callout p { margin:0; font-size:0.88rem; }
 .legal-nav { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:3rem; }
-.legal-nav a { font-size:0.76rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender); border:1px solid var(--lavender-light); padding:6px 16px; border-radius:2px; transition:all 0.2s; }
-.legal-nav a:hover { background:var(--lavender-pale); }
-.section-num { font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--lavender); margin-right:0.5rem; }
+.legal-nav a { font-size:0.76rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender); border:1px solid rgba(196,176,245,0.2); padding:6px 16px; border-radius:2px; transition:all 0.2s; }
+.legal-nav a:hover { background:rgba(196,176,245,0.08); }
 </style>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<canvas id="stars"></canvas>
 
 <header class="site-header">
   <div class="inner">
@@ -37,7 +40,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="portfolio.html" class="nav-link">Portfolio</a>
       <a href="services.html" class="nav-link">Services</a>
-      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Work With Me</a>
     </nav>
   </div>
 </header>
@@ -54,83 +57,50 @@
   </div>
 
   <div class="callout">
-    <p>By adding Dei Talvyrvei to your Discord server or interacting with it in any server, you agree to these Terms of Service in full. If you do not agree, please remove the bot from your server and discontinue use. These terms apply to all server administrators, moderators, and regular members who interact with Dei.</p>
+    <p>By adding Dei Talvyrvei to your Discord server or interacting with it in any server, you agree to these Terms of Service in full. If you do not agree, please remove the bot from your server and discontinue use.</p>
   </div>
 
   <h2>1. About Dei</h2>
   <p>Dei (full name: Deivon Talvyrvei) is a Discord bot created and operated by Ajay Hunter. Dei provides moderation tools, server management features, engagement systems, and a conversational character experience for Discord communities. Use of the bot is provided free of charge at this time, subject to these terms.</p>
 
   <h2>2. Eligibility</h2>
-  <p>By using Dei, you confirm that:</p>
-  <ul>
-    <li>You are at least 13 years of age, or the minimum age required by Discord's Terms of Service in your country.</li>
-    <li>You have the legal authority to agree to these terms on behalf of yourself and, if applicable, your server.</li>
-    <li>Your use of the bot complies with Discord's own <a href="https://discord.com/terms" target="_blank">Terms of Service</a> and <a href="https://discord.com/guidelines" target="_blank">Community Guidelines</a>.</li>
-  </ul>
+  <p>By using Dei, you confirm that you are at least 13 years of age, have the legal authority to agree to these terms, and that your use of the bot complies with Discord's own <a href="https://discord.com/terms" target="_blank">Terms of Service</a> and <a href="https://discord.com/guidelines" target="_blank">Community Guidelines</a>.</p>
 
   <h2>3. Permitted Use</h2>
-  <p>Dei is designed to help server administrators build safer, more engaging communities. Permitted uses include:</p>
-  <ul>
-    <li>Moderating server members (warnings, kicks, bans, timeouts)</li>
-    <li>Setting up welcome messages, reaction roles, and channel configurations</li>
-    <li>Running birthday announcements, giveaways, and engagement features</li>
-    <li>Enabling vent channel support with crisis resources</li>
-    <li>Configuring and customising Dei's response library via the dashboard</li>
-  </ul>
+  <p>Permitted uses include: moderating server members, setting up welcome messages and reaction roles, running birthday announcements and giveaways, enabling vent channel support with crisis resources, and configuring Dei's response library via the dashboard.</p>
 
   <h2>4. Prohibited Use</h2>
-  <p>You must not use Dei to:</p>
-  <ul>
-    <li>Harass, threaten, or harm any individual or group</li>
-    <li>Distribute hate speech, discriminatory content, or illegal material</li>
-    <li>Attempt to exploit, abuse, or reverse-engineer the bot</li>
-    <li>Interfere with the bot's normal operation or attempt to cause it to malfunction</li>
-    <li>Use the bot's moderation tools to unjustly target or discriminate against users</li>
-    <li>Automate or script interactions with the bot beyond its intended functionality</li>
-    <li>Use the bot in servers that violate Discord's Terms of Service or Community Guidelines</li>
-    <li>Attempt to extract, copy, or replicate the bot's code, response library, or database without permission</li>
-  </ul>
-  <p>Violation of these prohibitions may result in immediate removal of bot access without notice.</p>
+  <p>You must not use Dei to harass, threaten, or harm individuals; distribute hate speech or illegal material; attempt to exploit or reverse-engineer the bot; use moderation tools to unjustly target users; or attempt to extract the bot's code or database without permission. Violation may result in immediate removal of bot access.</p>
 
   <h2>5. Server Administrator Responsibilities</h2>
-  <p>By adding Dei to your server, you as the server owner or administrator accept responsibility for:</p>
-  <ul>
-    <li>How the bot is configured and used within your community</li>
-    <li>Ensuring members are informed that a bot is present and may log moderation actions</li>
-    <li>Keeping your server's use of the bot in line with these terms and Discord's guidelines</li>
-    <li>Any custom response rules, filters, or configurations you set up via the dashboard</li>
-  </ul>
-  <p>You must not grant dashboard access to individuals who may misuse it. You are responsible for all actions taken by anyone with access to your server's dashboard.</p>
+  <p>By adding Dei to your server, you accept responsibility for how the bot is configured and used, ensuring members are informed that moderation actions may be logged, and for any custom configurations you set up via the dashboard.</p>
 
   <h2>6. Vent Channel & Crisis Features</h2>
-  <p>Dei includes a vent channel feature with crisis keyword detection that provides mental health resources. This feature is intended to offer a compassionate, supportive response - it is <strong>not a substitute for professional mental health support</strong>. Dei is not a licensed counsellor or crisis service. If you or someone you know is in immediate danger, please contact emergency services or a professional crisis line in your country.</p>
-  <p>By enabling the vent channel feature, server administrators acknowledge this distinction and take responsibility for ensuring their community members understand it.</p>
+  <p>Dei includes a vent channel feature with crisis keyword detection that provides mental health resources. This feature is <strong>not a substitute for professional mental health support</strong>. Dei is not a licensed counsellor or crisis service. If someone is in immediate danger, please contact emergency services or a professional crisis line.</p>
 
   <h2>7. Moderation Features & Fairness</h2>
-  <p>Dei's moderation tools (warnings, bans, kicks, timeouts, automod) are provided to help maintain safe communities. These tools must be used fairly and in good faith. We reserve the right to revoke bot access from servers that demonstrably misuse moderation features to harm, target, or discriminate against users.</p>
+  <p>Dei's moderation tools must be used fairly and in good faith. We reserve the right to revoke bot access from servers that misuse moderation features to harm, target, or discriminate against users.</p>
 
   <h2>8. Data and Privacy</h2>
-  <p>Dei collects and stores limited data as described in our <a href="privacy.html">Privacy Policy</a>. By using the bot, you consent to this data collection on behalf of yourself and, by adding the bot, on behalf of your server members. You are responsible for informing your server members that moderation actions, warnings, and certain user data may be stored.</p>
+  <p>Dei collects and stores limited data as described in our <a href="privacy.html">Privacy Policy</a>. By using the bot, you consent to this data collection. You are responsible for informing your server members that moderation actions and certain user data may be stored.</p>
 
   <h2>9. Service Availability</h2>
-  <p>Dei is provided on an "as is" and "as available" basis. We do not guarantee that the bot will be available at all times, error-free, or uninterrupted. We reserve the right to modify, suspend, or discontinue the bot or any of its features at any time, with or without notice.</p>
-  <p>We are not liable for any losses or damages arising from bot downtime, data loss, or changes to functionality.</p>
+  <p>Dei is provided on an "as is" and "as available" basis. We do not guarantee that the bot will be available at all times, error-free, or uninterrupted. We reserve the right to modify, suspend, or discontinue the bot at any time, with or without notice.</p>
 
   <h2>10. Disclaimer of Warranties</h2>
-  <p>To the fullest extent permitted by law, Dei is provided without warranty of any kind, express or implied. We do not warrant that the bot will meet your requirements, that it will be secure or free from errors, or that any defects will be corrected. Your use of the bot is entirely at your own risk.</p>
+  <p>To the fullest extent permitted by law, Dei is provided without warranty of any kind. Your use of the bot is entirely at your own risk.</p>
 
   <h2>11. Limitation of Liability</h2>
-  <p>Ajay Hunter shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use Dei, even if we have been advised of the possibility of such damages. Our total liability in any circumstances is limited to zero, as Dei is provided free of charge.</p>
+  <p>Ajay Hunter shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use Dei. Our total liability in any circumstances is limited to zero, as Dei is provided free of charge.</p>
 
   <h2>12. Termination</h2>
-  <p>You may stop using Dei at any time by removing it from your server. We reserve the right to terminate or restrict access to Dei for any server or user that violates these terms, without notice and without liability.</p>
-  <p>Upon removal, we will retain stored data (warnings, logs, etc.) for a reasonable period before deletion, unless you request immediate removal via the contact form.</p>
+  <p>You may stop using Dei at any time by removing it from your server. We reserve the right to terminate or restrict access for any server or user that violates these terms, without notice.</p>
 
   <h2>13. Changes to These Terms</h2>
-  <p>We may update these terms from time to time. Continued use of the bot after changes are published constitutes acceptance of the updated terms. The date at the top of this page reflects the most recent revision.</p>
+  <p>We may update these terms from time to time. Continued use of the bot after changes are published constitutes acceptance of the updated terms.</p>
 
   <h2>14. Governing Law</h2>
-  <p>These terms are governed by the laws of the United States of America (USA). Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts of the USA.</p>
+  <p>These terms are governed by the laws of the United States of America.</p>
 
   <h2>15. Contact</h2>
   <p>If you have questions about these terms, would like to report a violation, or need to request data deletion, please use the <a href="contact.html">contact form</a> on this site. We aim to respond within 14 days.</p>
@@ -166,5 +136,9 @@
   </div>
 </footer>
 
+<script>
+const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
+resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
+</script>
 </body>
 </html>
