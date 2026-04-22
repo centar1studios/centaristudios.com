@@ -209,6 +209,12 @@ body { --ink:#0d0a1a; --ink2:#1a1530; --ivory:#f4f0ff; --cream:#ede8f8; --text:#
     <span class="sb-section">Social Alerts</span>
     <div class="sb-link" onclick="showPage('social',this)"><span class="sb-icon">📡</span> Social Alerts</div>
 
+    <span class="sb-section">Website Content</span>
+    <div class="sb-link" onclick="showPage('portfolio-mgr',this)"><span class="sb-icon">🖼️</span> Portfolio</div>
+    <div class="sb-link" onclick="showPage('lore-mgr',this)"><span class="sb-icon">📖</span> Lore Drops</div>
+    <div class="sb-link" onclick="showPage('commission-mgr',this)"><span class="sb-icon">🎨</span> Commissions</div>
+    <div class="sb-link" onclick="showPage('content-mgr',this)"><span class="sb-icon">✏️</span> Site Content</div>
+
     <span class="sb-section">Site</span>
     <div class="sb-link" onclick="showPage('theme',this)"><span class="sb-icon">🎨</span> Theme Editor</div>
   </nav>
@@ -230,9 +236,9 @@ body { --ink:#0d0a1a; --ink2:#1a1530; --ivory:#f4f0ff; --cream:#ede8f8; --text:#
       <button class="btn btn-ghost btn-sm" onclick="loadAll()">↺ Refresh</button>
     </div>
     <div class="g3" style="margin-bottom:20px;">
-      <div class="stat"><span class="stat-label">Members</span><div class="stat-value" id="s-members">—</div></div>
-      <div class="stat"><span class="stat-label">Actions Today</span><div class="stat-value" id="s-actions">—</div></div>
-      <div class="stat"><span class="stat-label">Total Warnings</span><div class="stat-value" id="s-warnings">—</div></div>
+      <div class="stat"><span class="stat-label">Members</span><div class="stat-value" id="s-members">-</div></div>
+      <div class="stat"><span class="stat-label">Actions Today</span><div class="stat-value" id="s-actions">-</div></div>
+      <div class="stat"><span class="stat-label">Total Warnings</span><div class="stat-value" id="s-warnings">-</div></div>
     </div>
     <div class="g2">
       <div class="panel">
@@ -270,10 +276,10 @@ body { --ink:#0d0a1a; --ink2:#1a1530; --ivory:#f4f0ff; --cream:#ede8f8; --text:#
           <div class="field">
             <label>Response Style</label>
             <select id="d-style">
-              <option value="default">Default — dry, warm, complicated</option>
-              <option value="warm">Warmer — more openly caring</option>
-              <option value="distant">Distant — more reserved and quiet</option>
-              <option value="humorous">Humorous — dryer, more observational</option>
+              <option value="default">Default - dry, warm, complicated</option>
+              <option value="warm">Warmer - more openly caring</option>
+              <option value="distant">Distant - more reserved and quiet</option>
+              <option value="humorous">Humorous - dryer, more observational</option>
             </select>
           </div>
           <div class="field"><label>Personality Notes</label><textarea id="d-notes" placeholder="Extra context for this server..."></textarea></div>
@@ -605,7 +611,7 @@ body { --ink:#0d0a1a; --ink2:#1a1530; --ivory:#f4f0ff; --cream:#ede8f8; --text:#
   <!-- CLIENT PORTAL (admin view) -->
   <div class="page" id="page-clients" style="display:none;">
     <div class="pg-head">
-      <div><h1>Client Portal</h1><p class="sub">Manage client projects — update status, send messages, share files.</p></div>
+      <div><h1>Client Portal</h1><p class="sub">Manage client projects - update status, send messages, share files.</p></div>
       <button class="btn btn-ghost btn-sm" onclick="loadClients()">↺ Refresh</button>
     </div>
 
@@ -660,16 +666,190 @@ body { --ink:#0d0a1a; --ink2:#1a1530; --ivory:#f4f0ff; --cream:#ede8f8; --text:#
       <div style="font-size:0.7rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--periwinkle);margin-bottom:10px;">API Keys Required</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:0.76rem;">
         <div><span style="color:var(--lavender);">Twitch</span><br><span style="color:var(--muted);">Client ID + Secret + TWITCH_SECRET env var. <a href="https://dev.twitch.tv/console" target="_blank" style="color:var(--periwinkle);">dev.twitch.tv</a></span></div>
-        <div><span style="color:var(--lavender);">YouTube</span><br><span style="color:var(--muted);">Only the Channel ID needed — free, no key required.</span></div>
-        <div><span style="color:var(--lavender);">Twitter / X</span><br><span style="color:var(--muted);">Bearer Token — free tier works. <a href="https://developer.twitter.com" target="_blank" style="color:var(--periwinkle);">developer.twitter.com</a></span></div>
+        <div><span style="color:var(--lavender);">YouTube</span><br><span style="color:var(--muted);">Only the Channel ID needed - free, no key required.</span></div>
+        <div><span style="color:var(--lavender);">Twitter / X</span><br><span style="color:var(--muted);">Bearer Token - free tier works. <a href="https://developer.twitter.com" target="_blank" style="color:var(--periwinkle);">developer.twitter.com</a></span></div>
         <div><span style="color:var(--lavender);">Instagram</span><br><span style="color:var(--muted);">Graph API token via Facebook developer account. <a href="https://developers.facebook.com" target="_blank" style="color:var(--periwinkle);">developers.facebook.com</a></span></div>
-        <div><span style="color:var(--lavender);">TikTok</span><br><span style="color:var(--muted);">No official API. Uses public RSS feed — may be unreliable.</span></div>
+        <div><span style="color:var(--lavender);">TikTok</span><br><span style="color:var(--muted);">No official API. Uses public RSS feed - may be unreliable.</span></div>
         <div><span style="color:var(--lavender);">Discord Webhook URL</span><br><span style="color:var(--muted);">Channel Settings > Integrations > Webhooks. Required for Twitch + YouTube.</span></div>
       </div>
     </div>
     <div id="sa-platforms"></div>
   </div>
 
+
+  <!-- PORTFOLIO MANAGER -->
+  <div class="page" id="page-portfolio-mgr" style="display:none;">
+    <div class="pg-head">
+      <div><h1>Portfolio Manager</h1><p class="sub">Add and manage your art pieces. They appear live on your portfolio page instantly.</p></div>
+      <button class="btn btn-pri btn-sm" onclick="showPortfolioForm()">+ Add Piece</button>
+    </div>
+    <div class="panel" id="portfolio-form" style="display:none;margin-bottom:20px;">
+      <div class="panel-head"><span class="panel-title" id="pf-title">Add Art Piece</span><button class="btn btn-ghost btn-sm" onclick="hidePortfolioForm()">Cancel</button></div>
+      <div class="panel-body">
+        <input type="hidden" id="pf-id">
+        <div class="g2">
+          <div>
+            <div class="field"><label>Title</label><input id="pf-name" placeholder="e.g. Starla Portrait"></div>
+            <div class="field"><label>Category</label>
+              <select id="pf-cat">
+                <option value="character">Character Art</option>
+                <option value="illustration">Illustration</option>
+                <option value="design">Graphic Design</option>
+              </select>
+            </div>
+            <div class="field"><label>Description</label><textarea id="pf-desc" style="min-height:80px;"></textarea></div>
+            <div class="field" style="flex-direction:row;align-items:center;gap:12px;">
+              <label class="toggle"><input type="checkbox" id="pf-featured"><span class="toggle-track"></span></label>
+              <span style="font-size:0.82rem;color:var(--muted);">Feature on homepage</span>
+            </div>
+          </div>
+          <div>
+            <div class="field"><label>Image URL</label><input id="pf-img" placeholder="https://...your image link..." oninput="updPortPrev()"></div>
+            <p style="font-size:0.72rem;color:var(--muted);margin-top:-10px;margin-bottom:14px;">Upload to Imgur, Discord CDN, or Google Drive (shared link) and paste the direct image URL here.</p>
+            <div id="pf-prev" style="aspect-ratio:1/1;background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;max-width:260px;">
+              <span style="color:var(--muted);font-size:0.8rem;">Preview will appear here</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px;">
+          <button class="btn btn-pri btn-sm" onclick="savePortfolio()">Save Piece</button>
+          <button class="btn btn-ghost btn-sm" onclick="hidePortfolioForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+      <select id="port-cat-filter" style="font-size:0.76rem;padding:7px 10px;background:var(--card);border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:'Jost',sans-serif;" onchange="renderPortfolio()">
+        <option value="">All categories</option>
+        <option value="character">Character Art</option>
+        <option value="illustration">Illustration</option>
+        <option value="design">Graphic Design</option>
+      </select>
+      <span id="port-count" style="font-size:0.75rem;color:var(--muted);align-self:center;margin-left:auto;"></span>
+    </div>
+    <div id="portfolio-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;"></div>
+  </div>
+
+  <!-- LORE MANAGER -->
+  <div class="page" id="page-lore-mgr" style="display:none;">
+    <div class="pg-head">
+      <div><h1>Lore Drops</h1><p class="sub">Manage your lore entries. Changes appear on your site instantly.</p></div>
+      <button class="btn btn-pri btn-sm" onclick="showLoreForm()">+ Add Entry</button>
+    </div>
+    <div class="panel" id="lore-form" style="display:none;margin-bottom:20px;">
+      <div class="panel-head"><span class="panel-title" id="lf-title">New Lore Entry</span><button class="btn btn-ghost btn-sm" onclick="hideLoreForm()">Cancel</button></div>
+      <div class="panel-body">
+        <input type="hidden" id="lf-id">
+        <div class="g2">
+          <div>
+            <div class="field"><label>Tag / Category</label><input id="lf-tag" placeholder="e.g. Character, World, Mystery"></div>
+            <div class="field"><label>Title</label><input id="lf-title-inp" placeholder="e.g. Who is Dei?"></div>
+          </div>
+          <div>
+            <div class="field"><label>Content</label><textarea id="lf-content" style="min-height:120px;" placeholder="Write your lore entry here..."></textarea></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px;">
+          <button class="btn btn-pri btn-sm" onclick="saveLore()">Save Entry</button>
+          <button class="btn btn-ghost btn-sm" onclick="hideLoreForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="lore-list"></div>
+  </div>
+
+  <!-- COMMISSION MANAGER -->
+  <div class="page" id="page-commission-mgr" style="display:none;">
+    <div class="pg-head">
+      <div><h1>Commission Manager</h1><p class="sub">Edit your commission types, prices, and open/closed status.</p></div>
+      <button class="btn btn-pri btn-sm" onclick="showCommForm()">+ Add Type</button>
+    </div>
+
+    <!-- Status banner -->
+    <div class="panel" style="margin-bottom:20px;">
+      <div class="panel-head"><span class="panel-title">Commission Status</span><button class="btn btn-pri btn-sm" onclick="saveCommStatus()">Save</button></div>
+      <div class="panel-body">
+        <div class="g2">
+          <div class="field"><label>Status</label>
+            <select id="comm-status">
+              <option value="open">✅ Open - accepting commissions</option>
+              <option value="waitlist">⏳ Waitlist - can join queue</option>
+              <option value="closed">❌ Closed - not accepting</option>
+            </select>
+          </div>
+          <div class="field"><label>Status Message</label><input id="comm-status-msg" placeholder="e.g. Currently open - limited slots!"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add type form -->
+    <div class="panel" id="comm-form" style="display:none;margin-bottom:20px;">
+      <div class="panel-head"><span class="panel-title">Commission Type</span><button class="btn btn-ghost btn-sm" onclick="hideCommForm()">Cancel</button></div>
+      <div class="panel-body">
+        <input type="hidden" id="cf-id">
+        <div class="g2">
+          <div>
+            <div class="field"><label>Name</label><input id="cf-name" placeholder="e.g. Character Art"></div>
+            <div class="field"><label>Description</label><textarea id="cf-desc" style="min-height:80px;"></textarea></div>
+            <div class="field"><label>Starting Price</label><input id="cf-price" placeholder="e.g. £30"></div>
+            <div class="field"><label>Turnaround</label><input id="cf-turnaround" placeholder="e.g. 1-2 weeks"></div>
+          </div>
+          <div>
+            <div class="field"><label>What's Included (comma separated)</label><textarea id="cf-included" style="min-height:100px;" placeholder="Full colour illustration, 1-2 revisions, High-res PNG"></textarea></div>
+            <div class="field" style="flex-direction:row;align-items:center;gap:12px;">
+              <label class="toggle"><input type="checkbox" id="cf-enabled" checked><span class="toggle-track"></span></label>
+              <span style="font-size:0.82rem;color:var(--muted);">Enabled / visible on site</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px;">
+          <button class="btn btn-pri btn-sm" onclick="saveCommType()">Save Type</button>
+          <button class="btn btn-ghost btn-sm" onclick="hideCommForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="comm-types-list"></div>
+  </div>
+
+  <!-- SITE CONTENT EDITOR -->
+  <div class="page" id="page-content-mgr" style="display:none;">
+    <div class="pg-head">
+      <div><h1>Site Content</h1><p class="sub">Edit your bio, about text, and other site copy. Changes appear instantly.</p></div>
+      <button class="btn btn-pri btn-sm" onclick="saveSiteContent()">Save All Changes</button>
+    </div>
+    <div class="g2">
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">About & Bio</span></div>
+        <div class="panel-body">
+          <div class="field"><label>Short Bio (homepage tagline)</label><input id="sc-bio-short" placeholder="e.g. Digital artist who loves bringing characters to life."></div>
+          <div class="field"><label>Full Bio (about page)</label><textarea id="sc-bio-full" style="min-height:140px;" placeholder="Your full about me text..."></textarea></div>
+          <div class="field"><label>Hero Headline</label><input id="sc-hero" placeholder="e.g. Hello, I'm Ajay."></div>
+          <div class="field"><label>Pronouns</label><input id="sc-pronouns" placeholder="e.g. She/they"></div>
+          <div class="field"><label>Identities (shown on homepage)</label><input id="sc-identity" placeholder="e.g. Bisexual · LGBT ally"></div>
+          <div class="field"><label>Fun fact / extra line</label><input id="sc-fun" placeholder="e.g. Aspiring Youth Librarian · Cat mum to Starla"></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel" style="margin-bottom:20px;">
+          <div class="panel-head"><span class="panel-title">Social Media Links</span></div>
+          <div class="panel-body">
+            <div class="field"><label>TikTok URL</label><input id="sc-tiktok" placeholder="https://tiktok.com/@yourhandle"></div>
+            <div class="field"><label>Instagram URL</label><input id="sc-instagram" placeholder="https://instagram.com/yourhandle"></div>
+            <div class="field"><label>Twitter / X URL</label><input id="sc-twitter" placeholder="https://twitter.com/yourhandle"></div>
+            <div class="field"><label>YouTube URL</label><input id="sc-youtube" placeholder="https://youtube.com/@yourchannel"></div>
+            <div class="field"><label>Twitch URL</label><input id="sc-twitch" placeholder="https://twitch.tv/yourhandle"></div>
+            <div class="field"><label>Discord Server Invite</label><input id="sc-discord" placeholder="https://discord.gg/yourserver"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Will / Won't Draw</span></div>
+          <div class="panel-body">
+            <div class="field"><label>Will Draw (one per line)</label><textarea id="sc-will" style="min-height:120px;" placeholder="Original characters&#10;Fan art&#10;Anthro characters"></textarea></div>
+            <div class="field"><label>Won't Draw (one per line)</label><textarea id="sc-wont" style="min-height:100px;" placeholder="NSFW content&#10;Real people without consent"></textarea></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- THEME EDITOR -->
   <div class="page" id="page-theme" style="display:none;">
@@ -737,7 +917,7 @@ body { --ink:#0d0a1a; --ink2:#1a1530; --ivory:#f4f0ff; --cream:#ede8f8; --text:#
               <div class="prev-hero" id="pv-hero" style="background:#ede8f8;">
                 <span id="pv-eye" style="font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:#7c5cbf;display:block;margin-bottom:8px;">Character Art</span>
                 <div id="pv-h1" style="font-size:1.6rem;font-weight:300;line-height:1.2;color:#1a1530;margin-bottom:8px;">Art that brings <em id="pv-em" style="font-style:italic;color:#a98bd6;">characters to life.</em></div>
-                <p id="pv-p" style="font-size:0.85rem;color:#6b5f90;">I'm Ajay — a freelance digital artist.</p>
+                <p id="pv-p" style="font-size:0.85rem;color:#6b5f90;">I'm Ajay - a freelance digital artist.</p>
                 <div style="margin-top:14px;display:flex;gap:10px;">
                   <span class="prev-btn" id="pv-pri" style="background:#7c5cbf;color:#fff;">View My Work</span>
                   <span class="prev-btn" id="pv-out" style="background:transparent;color:#7c5cbf;border:1px solid rgba(124,92,191,0.3);">Start a Project</span>
@@ -787,7 +967,7 @@ async function init() {
     document.getElementById('g-icon').textContent = '!';
     document.getElementById('g-icon').style.background = 'rgba(245,128,128,0.1)';
     document.getElementById('g-icon').style.color = '#f58080';
-    document.getElementById('overview-sub').textContent = 'No servers found — add the bot to your server first.';
+    document.getElementById('overview-sub').textContent = 'No servers found - add the bot to your server first.';
     document.getElementById('ov-logs').innerHTML = '<div style="text-align:center;padding:2rem;"><p style="font-size:0.84rem;color:var(--text);margin-bottom:8px;font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;font-weight:300;">No servers found</p><p style="font-size:0.8rem;color:var(--muted);margin-bottom:16px;">Add the Dei bot to your Discord server, then refresh this page.</p><a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_CLIENT_ID&permissions=8&scope=bot%20applications.commands" target="_blank" class="btn btn-pri btn-sm">Add Dei to Your Server</a></div>';
   } else {
     guilds.forEach(g => {
@@ -838,16 +1018,16 @@ function switchGuild(gid) {
 
 async function loadAll() {
   if (!GUILD) return;
-  await Promise.all([loadStats(), loadLogs(), loadChannels(), loadWarnings(), loadBirthdays(), loadRR(), loadFilters(), loadEmbeds(), loadDei(), loadRules(), loadGiveaways(), loadAnnouncements(), loadLevelConfig(), loadSocial()]);
+  await Promise.all([loadStats(), loadLogs(), loadChannels(), loadWarnings(), loadBirthdays(), loadRR(), loadFilters(), loadEmbeds(), loadDei(), loadRules(), loadGiveaways(), loadAnnouncements(), loadLevelConfig(), loadSocial(), loadPortfolioMgr(), loadLoreMgr(), loadCommMgr(), loadSiteContent()]);
   toast('✦ Server data loaded');
 }
 
 // ── STATS ──
 async function loadStats() {
   const d = await api(`stats?guild_id=${GUILD}`);
-  document.getElementById('s-members').textContent  = d.member_count  ?? '—';
-  document.getElementById('s-actions').textContent  = d.actions_today ?? '—';
-  document.getElementById('s-warnings').textContent = d.total_warnings ?? '—';
+  document.getElementById('s-members').textContent  = d.member_count  ?? '-';
+  document.getElementById('s-actions').textContent  = d.actions_today ?? '-';
+  document.getElementById('s-warnings').textContent = d.total_warnings ?? '-';
 }
 
 // ── LOGS ──
@@ -860,7 +1040,7 @@ async function loadLogs() {
     <div class="log-row">
       <span class="log-icon">${icons[l.action]||icons.Default}</span>
       <div class="log-body">
-        <div class="log-action">${l.action}${l.target?` — <span style="color:var(--lavender)">${l.target}</span>`:''}</div>
+        <div class="log-action">${l.action}${l.target?` - <span style="color:var(--lavender)">${l.target}</span>`:''}</div>
         <div class="log-meta">by ${l.moderator}${l.reason?` · ${l.reason}`:''}</div>
       </div>
       <div class="log-time">${(l.created_at||'').slice(0,16).replace('T',' ')}</div>
@@ -1063,7 +1243,7 @@ async function saveTheme() {
   const fonts = { hfont: document.getElementById('t-hfont').value, bfont: document.getElementById('t-bfont').value };
   THEME.hfont = fonts.hfont; THEME.bfont = fonts.bfont;
   await api('theme','POST', THEME);
-  toast('✦ Theme saved — changes will appear on your site within seconds');
+  toast('✦ Theme saved - changes will appear on your site within seconds');
 }
 
 function resetTheme() {
@@ -1098,7 +1278,7 @@ const openClients = new Set();
 
 async function loadClients() {
   // Get all inquiries with client info
-  const d = await api('warnings?guild_id=' + GUILD); // placeholder — we use a direct fetch
+  const d = await api('warnings?guild_id=' + GUILD); // placeholder - we use a direct fetch
   // Actually fetch inquiries differently since they're not in the bot API
   // We query via admin session against inquiries table
   try {
@@ -1129,7 +1309,7 @@ function renderClients() {
       <div class="panel" style="border-left:3px solid ${col};">
         <div class="panel-head" style="cursor:pointer;" onclick="toggleClient(${inq.inquiry_id})">
           <div>
-            <span class="panel-title">${inq.name} — ${inq.service_interest||'Commission'}</span>
+            <span class="panel-title">${inq.name} - ${inq.service_interest||'Commission'}</span>
             <div style="font-size:0.72rem;color:var(--muted);margin-top:3px;">
               ${inq.email}
               ${linked?'<span style="background:rgba(168,224,168,0.15);color:#6ad08a;border:1px solid rgba(168,224,168,0.25);font-size:0.6rem;padding:1px 7px;border-radius:20px;margin-left:8px;">Portal account</span>':'<span style="background:var(--card);color:var(--muted);border:1px solid var(--border);font-size:0.6rem;padding:1px 7px;border-radius:20px;margin-left:8px;">No account</span>'}
@@ -1283,13 +1463,224 @@ async function adminDelFile(fileId, inquiryId) {
   adminLoadFiles(inquiryId);
 }
 
+
+// ── PORTFOLIO MANAGER ──
+let ALL_PORTFOLIO = [];
+
+async function loadPortfolioMgr() {
+  const d = await api('portfolio');
+  ALL_PORTFOLIO = d.items || [];
+  renderPortfolio();
+  // Load commission status too
+  loadCommMgr();
+  loadSiteContent();
+}
+
+function renderPortfolio() {
+  const cat = document.getElementById('port-cat-filter').value;
+  let items = ALL_PORTFOLIO;
+  if (cat) items = items.filter(i => i.category === cat);
+  document.getElementById('port-count').textContent = `${items.length} piece${items.length!==1?'s':''}`;
+  const grid = document.getElementById('portfolio-grid');
+  if (!items.length) { grid.innerHTML = '<p style="font-size:0.82rem;color:var(--muted);grid-column:1/-1;">No art pieces yet. Click "+ Add Piece" to get started!</p>'; return; }
+  grid.innerHTML = items.map(p => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--border-lit)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="aspect-ratio:1/1;overflow:hidden;background:var(--bg3);">
+        <img src="${p.image_url}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+      </div>
+      <div style="padding:12px;">
+        <div style="font-size:0.84rem;color:var(--text);font-weight:400;margin-bottom:2px;">${p.title}</div>
+        <div style="font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);margin-bottom:8px;">${p.category}${p.featured?' · ⭐ Featured':''}</div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-ghost btn-sm" onclick="editPortfolio(${p.id})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="delPortfolio(${p.id})">✕</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function showPortfolioForm() { document.getElementById('pf-id').value=''; document.getElementById('pf-title').textContent='Add Art Piece'; document.getElementById('pf-name').value=''; document.getElementById('pf-cat').value='character'; document.getElementById('pf-desc').value=''; document.getElementById('pf-img').value=''; document.getElementById('pf-featured').checked=false; document.getElementById('pf-prev').innerHTML='<span style="color:var(--muted);font-size:0.8rem;">Preview will appear here</span>'; document.getElementById('portfolio-form').style.display='block'; document.getElementById('portfolio-form').scrollIntoView({behavior:'smooth'}); }
+function hidePortfolioForm() { document.getElementById('portfolio-form').style.display='none'; }
+
+function editPortfolio(id) {
+  const p = ALL_PORTFOLIO.find(x=>x.id===id); if(!p) return;
+  document.getElementById('pf-id').value=id;
+  document.getElementById('pf-title').textContent='Edit Art Piece';
+  document.getElementById('pf-name').value=p.title||'';
+  document.getElementById('pf-cat').value=p.category||'character';
+  document.getElementById('pf-desc').value=p.description||'';
+  document.getElementById('pf-img').value=p.image_url||'';
+  document.getElementById('pf-featured').checked=!!p.featured;
+  updPortPrev();
+  document.getElementById('portfolio-form').style.display='block';
+  document.getElementById('portfolio-form').scrollIntoView({behavior:'smooth'});
+}
+
+function updPortPrev() {
+  const url = document.getElementById('pf-img').value.trim();
+  const prev = document.getElementById('pf-prev');
+  if (url) { prev.innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=color:var(--muted);font-size:0.8rem>Could not load image</span>'">`; }
+  else { prev.innerHTML='<span style="color:var(--muted);font-size:0.8rem;">Preview will appear here</span>'; }
+}
+
+async function savePortfolio() {
+  const id = document.getElementById('pf-id').value;
+  const payload = { title:document.getElementById('pf-name').value.trim(), category:document.getElementById('pf-cat').value, description:document.getElementById('pf-desc').value.trim(), image_url:document.getElementById('pf-img').value.trim(), featured:document.getElementById('pf-featured').checked };
+  if (!payload.title || !payload.image_url) { toast('Title and image URL are required.'); return; }
+  if (id) { await api('portfolio','PUT',{id:parseInt(id),...payload}); toast('✦ Piece updated'); }
+  else { await api('portfolio','POST',payload); toast('✦ Piece added'); }
+  hidePortfolioForm(); loadPortfolioMgr();
+}
+
+async function delPortfolio(id) { await api(`portfolio?id=${id}`,'DELETE'); toast('Removed'); loadPortfolioMgr(); }
+
+// ── LORE MANAGER ──
+let ALL_LORE = [];
+
+async function loadLoreMgr() {
+  const d = await api('lore');
+  ALL_LORE = d.entries || [];
+  renderLore();
+}
+
+function renderLore() {
+  const wrap = document.getElementById('lore-list');
+  if (!ALL_LORE.length) { wrap.innerHTML='<p style="font-size:0.82rem;color:var(--muted)">No lore entries yet. Click "+ Add Entry" to get started!</p>'; return; }
+  wrap.innerHTML = ALL_LORE.map(l => `
+    <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--lavender);border-radius:0 4px 4px 0;padding:18px;margin-bottom:10px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--border-lit)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="display:flex;align-items:start;justify-content:space-between;gap:12px;">
+        <div style="flex:1;">
+          <div style="font-size:0.64rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--lavender);margin-bottom:4px;">${l.tag}</div>
+          <div style="font-size:0.96rem;font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--text);margin-bottom:6px;">${l.title}</div>
+          <div style="font-size:0.82rem;color:var(--muted);line-height:1.6;">${l.content.slice(0,150)}${l.content.length>150?'...':''}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button class="btn btn-ghost btn-sm" onclick="editLore(${l.id})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="delLore(${l.id})">✕</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function showLoreForm() { document.getElementById('lf-id').value=''; document.getElementById('lf-title').textContent='New Lore Entry'; document.getElementById('lf-tag').value=''; document.getElementById('lf-title-inp').value=''; document.getElementById('lf-content').value=''; document.getElementById('lore-form').style.display='block'; document.getElementById('lore-form').scrollIntoView({behavior:'smooth'}); }
+function hideLoreForm() { document.getElementById('lore-form').style.display='none'; }
+
+function editLore(id) {
+  const l = ALL_LORE.find(x=>x.id===id); if(!l) return;
+  document.getElementById('lf-id').value=id;
+  document.getElementById('lf-title').textContent='Edit Lore Entry';
+  document.getElementById('lf-tag').value=l.tag||'';
+  document.getElementById('lf-title-inp').value=l.title||'';
+  document.getElementById('lf-content').value=l.content||'';
+  document.getElementById('lore-form').style.display='block';
+  document.getElementById('lore-form').scrollIntoView({behavior:'smooth'});
+}
+
+async function saveLore() {
+  const id = document.getElementById('lf-id').value;
+  const tag = document.getElementById('lf-tag').value.trim();
+  const title = document.getElementById('lf-title-inp').value.trim();
+  const content = document.getElementById('lf-content').value.trim();
+  if (!tag||!title||!content) { toast('All fields required.'); return; }
+  if (id) { await api('lore','PUT',{id:parseInt(id),tag,title,content}); toast('✦ Entry updated'); }
+  else { await api('lore','POST',{tag,title,content}); toast('✦ Entry added'); }
+  hideLoreForm(); loadLoreMgr();
+}
+
+async function delLore(id) { await api(`lore?id=${id}`,'DELETE'); toast('Removed'); loadLoreMgr(); }
+
+// ── COMMISSION MANAGER ──
+let ALL_COMM_TYPES = [];
+
+async function loadCommMgr() {
+  const d = await api('commissions');
+  ALL_COMM_TYPES = d.types || [];
+  const status = d.status || {};
+  if (document.getElementById('comm-status')) {
+    document.getElementById('comm-status').value = status.status || 'open';
+    document.getElementById('comm-status-msg').value = status.message || '';
+  }
+  renderCommTypes();
+}
+
+function renderCommTypes() {
+  const wrap = document.getElementById('comm-types-list');
+  if (!ALL_COMM_TYPES.length) { wrap.innerHTML='<p style="font-size:0.82rem;color:var(--muted)">No commission types yet. Click "+ Add Type" to get started!</p>'; return; }
+  wrap.innerHTML = ALL_COMM_TYPES.map(c => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:18px;margin-bottom:10px;${!c.enabled?'opacity:0.5':''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:0.96rem;font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--text);margin-bottom:4px;">${c.name}</div>
+          <div style="font-size:0.76rem;color:var(--muted);">${c.starting_price||''}${c.turnaround?' · '+c.turnaround:''}${!c.enabled?' · <span style="color:var(--dim);">disabled</span>':''}</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-ghost btn-sm" onclick="editCommType(${c.id})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="delCommType(${c.id})">✕</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function showCommForm() { document.getElementById('cf-id').value=''; document.getElementById('cf-name').value=''; document.getElementById('cf-desc').value=''; document.getElementById('cf-price').value=''; document.getElementById('cf-turnaround').value=''; document.getElementById('cf-included').value=''; document.getElementById('cf-enabled').checked=true; document.getElementById('comm-form').style.display='block'; document.getElementById('comm-form').scrollIntoView({behavior:'smooth'}); }
+function hideCommForm() { document.getElementById('comm-form').style.display='none'; }
+
+function editCommType(id) {
+  const c = ALL_COMM_TYPES.find(x=>x.id===id); if(!c) return;
+  document.getElementById('cf-id').value=id;
+  document.getElementById('cf-name').value=c.name||'';
+  document.getElementById('cf-desc').value=c.description||'';
+  document.getElementById('cf-price').value=c.starting_price||'';
+  document.getElementById('cf-turnaround').value=c.turnaround||'';
+  document.getElementById('cf-included').value=c.included_items||'';
+  document.getElementById('cf-enabled').checked=!!c.enabled;
+  document.getElementById('comm-form').style.display='block';
+  document.getElementById('comm-form').scrollIntoView({behavior:'smooth'});
+}
+
+async function saveCommType() {
+  const id = document.getElementById('cf-id').value;
+  const payload = { name:document.getElementById('cf-name').value.trim(), description:document.getElementById('cf-desc').value.trim(), starting_price:document.getElementById('cf-price').value.trim(), turnaround:document.getElementById('cf-turnaround').value.trim(), included_items:document.getElementById('cf-included').value.trim(), enabled:document.getElementById('cf-enabled').checked };
+  if (!payload.name) { toast('Name is required.'); return; }
+  if (id) { await api('commissions','PUT',{id:parseInt(id),...payload}); toast('✦ Updated'); }
+  else { await api('commissions','POST',payload); toast('✦ Added'); }
+  hideCommForm(); loadCommMgr();
+}
+
+async function delCommType(id) { await api(`commissions?id=${id}`,'DELETE'); toast('Removed'); loadCommMgr(); }
+
+async function saveCommStatus() {
+  await api('commissions/status','PUT',{ status:document.getElementById('comm-status').value, message:document.getElementById('comm-status-msg').value.trim() });
+  toast('✦ Status updated');
+}
+
+// ── SITE CONTENT ──
+async function loadSiteContent() {
+  const d = await api('content');
+  const fields = ['bio-short','bio-full','hero','pronouns','identity','fun','tiktok','instagram','twitter','youtube','twitch','discord','will','wont'];
+  fields.forEach(f => {
+    const el = document.getElementById('sc-' + f);
+    if (el && d[f]) el.value = d[f];
+  });
+}
+
+async function saveSiteContent() {
+  const data = {};
+  const fields = ['bio-short','bio-full','hero','pronouns','identity','fun','tiktok','instagram','twitter','youtube','twitch','discord','will','wont'];
+  fields.forEach(f => {
+    const el = document.getElementById('sc-' + f);
+    if (el) data[f] = el.value.trim();
+  });
+  await api('content','POST', data);
+  toast('✦ Site content saved - changes are live!');
+}
+
 // ── SOCIAL ALERTS ──
 const PLATFORM_META = {
-  twitch:    { label:'Twitch',       icon:'🟣', color:'#9146ff', webhook:true,  hint:'Find broadcaster ID at twitch.tv — go to twitchapps.com/tmi or use Twitch API' },
+  twitch:    { label:'Twitch',       icon:'🟣', color:'#9146ff', webhook:true,  hint:'Find broadcaster ID at twitch.tv - go to twitchapps.com/tmi or use Twitch API' },
   youtube:   { label:'YouTube',      icon:'📹', color:'#ff0000', webhook:true,  hint:'Get Channel ID from your YouTube channel URL (starts with UC...)' },
   twitter:   { label:'Twitter / X',  icon:'🐦', color:'#1da1f2', webhook:false, hint:'Get User ID from tweeterid.com or the Twitter API' },
   instagram: { label:'Instagram',    icon:'📸', color:'#e1306c', webhook:false, hint:'Get User ID from the Instagram Graph API or instagramUserId.com' },
-  tiktok:    { label:'TikTok',       icon:'🎵', color:'#010101', webhook:false, hint:'TikTok uses your public username only — no ID needed' },
+  tiktok:    { label:'TikTok',       icon:'🎵', color:'#010101', webhook:false, hint:'TikTok uses your public username only - no ID needed' },
 };
 
 let ALL_ALERTS = [];
@@ -1388,7 +1779,7 @@ async function saveAlert() {
 
   const m = PLATFORM_META[platform] || {};
   if (m.webhook) {
-    toast('✦ Alert saved — now click "Subscribe Webhook" to activate it.');
+    toast('✦ Alert saved - now click "Subscribe Webhook" to activate it.');
   } else {
     hideAddAlert();
     loadSocial();
@@ -1407,10 +1798,10 @@ async function subscribeWebhook() {
   try {
     if (platform === 'youtube') {
       const d = await api('social-alerts/subscribe-youtube', 'POST', { channel_id: id });
-      toast(d.ok ? '✦ YouTube WebSub subscription sent!' : 'Subscription failed — check your site URL in wrangler.toml');
+      toast(d.ok ? '✦ YouTube WebSub subscription sent!' : 'Subscription failed - check your site URL in wrangler.toml');
     } else if (platform === 'twitch') {
       const d = await api('social-alerts/subscribe-twitch', 'POST', { broadcaster_id: id });
-      toast(d.ok ? '✦ Twitch EventSub subscription created!' : 'Subscription failed — check TWITCH env vars in Cloudflare');
+      toast(d.ok ? '✦ Twitch EventSub subscription created!' : 'Subscription failed - check TWITCH env vars in Cloudflare');
     }
   } catch(e) {
     toast('Error: ' + e.message);
