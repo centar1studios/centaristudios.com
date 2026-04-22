@@ -6,8 +6,6 @@
  *   TWITCH_SECRET  — the secret you set when creating the EventSub subscription
  */
  
-import { createHmac } from 'crypto';
- 
 const TWITCH_MESSAGE_ID               = 'twitch-eventsub-message-id';
 const TWITCH_MESSAGE_RETRY            = 'twitch-eventsub-message-retry';
 const TWITCH_MESSAGE_TYPE             = 'twitch-eventsub-message-type';
