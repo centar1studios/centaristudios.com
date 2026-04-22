@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In - Ajay Hunter</title>
+<link rel="stylesheet" href="site.css">
+<script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
+<style>
+body { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--cream); padding:2rem 1rem; }
+.auth-wrap { width:100%; max-width:420px; }
+.auth-logo { text-align:center; margin-bottom:2rem; }
+.auth-logo .name { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--ink); }
+.auth-logo .sub  { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+.auth-card { background:#fff; border:1px solid var(--border); padding:2.5rem; }
+.auth-tabs { display:flex; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+.auth-tab  { flex:1; text-align:center; padding:0.75rem; font-size:0.74rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.2s; }
+.auth-tab.active { color:var(--lavender); border-bottom-color:var(--lavender); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+.err-box { background:#fef2f2; border:1px solid rgba(200,80,80,0.2); padding:0.9rem 1.1rem; font-size:0.8rem; color:#7f2020; margin-bottom:1.25rem; display:none; }
+.discord-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:0.85rem 1.5rem; background:#5865F2; color:#fff; font-family:'Jost',sans-serif; font-size:0.85rem; font-weight:500; border-radius:2px; transition:all 0.25s; }
+.discord-btn:hover { background:#4752c4; transform:translateY(-1px); box-shadow:0 6px 20px rgba(88,101,242,0.35); }
+.discord-btn svg { width:20px; height:20px; fill:currentColor; flex-shrink:0; }
+.divider { display:flex; align-items:center; gap:12px; margin:1.5rem 0; color:var(--muted); font-size:0.72rem; }
+.divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--border); }
+.auth-note { text-align:center; margin-top:1.25rem; font-size:0.8rem; color:var(--muted); }
+.auth-note a { color:var(--lavender); }
+</style>
+</head>
+<body>
+
+<div class="auth-wrap">
+  <div class="auth-logo">
+    <a href="index.html">
+      <div class="name">Ajay Hunter</div>
+      <div class="sub">Digital Artist</div>
+    </a>
+  </div>
+
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="switchTab('client',this)">Client Login</div>
+      <div class="auth-tab" onclick="switchTab('admin',this)">Admin</div>
+    </div>
+
+    <!-- CLIENT LOGIN -->
+    <div class="tab-panel active" id="tab-client">
+      <div class="err-box" id="client-err"></div>
+      <form onsubmit="clientLogin(event)" style="display:flex;flex-direction:column;gap:1rem;">
+        <div>
+          <label class="field-label">Email Address</label>
+          <input type="email" id="cl-email" class="input-field" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label class="field-label">Password</label>
+          <input type="password" id="cl-pass" class="input-field" placeholder="Your password" required>
+        </div>
+        <button type="submit" class="btn btn-lavender btn-full" id="cl-btn">Sign In</button>
+      </form>
+      <div class="auth-note">
+        Don't have an account? <a href="signup.html">Sign up</a><br>
+        <a href="index.html" style="color:var(--muted);">← Back to site</a>
+      </div>
+    </div>
+
+    <!-- ADMIN LOGIN -->
+    <div class="tab-panel" id="tab-admin">
+      <p style="font-size:0.84rem;color:var(--muted);margin-bottom:1.5rem;text-align:center;">Admin access is for Ajay only :> Sign in with Discord to access the bot dashboard.</p>
+      <a href="/api/auth/login" class="discord-btn">
+        <svg viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+        Continue with Discord
+      </a>
+      <div class="auth-note"><a href="index.html" style="color:var(--muted);">← Back to site</a></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(name, el) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// Show error from Discord redirect
+const params = new URLSearchParams(location.search);
+if (params.get('error')) {
+  switchTab('admin', document.querySelectorAll('.auth-tab')[1]);
+}
+
+async function clientLogin(e) {
+  e.preventDefault();
+  const btn = document.getElementById('cl-btn');
+  const errBox = document.getElementById('client-err');
+  errBox.style.display = 'none';
+  btn.textContent = 'Signing in...'; btn.disabled = true;
+
+  try {
+    const r = await fetch('/api/auth/client-signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: document.getElementById('cl-email').value,
+        password: document.getElementById('cl-pass').value,
+      }),
+    });
+    const d = await r.json();
+    if (!r.ok || d.error) {
+      errBox.textContent = d.error || 'Login failed. Please try again.';
+      errBox.style.display = 'block';
+    } else {
+      localStorage.setItem('client_token', d.token);
+      localStorage.setItem('client_name', d.name);
+      location.href = 'portal.html';
+    }
+  } catch(err) {
+    errBox.textContent = 'Something went wrong. Please try again.';
+    errBox.style.display = 'block';
+  }
+  btn.textContent = 'Sign In'; btn.disabled = false;
+}
+</script>
+</body>
+</html>
