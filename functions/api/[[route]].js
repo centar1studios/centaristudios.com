@@ -98,83 +98,22 @@ export async function onRequest(context) {
  
   if (method === 'OPTIONS') return new Response(null, { headers: CORS });
  
-  // ── AUTH ROUTES (no session required) ──
+  // ── PUBLIC ROUTES (no auth required) ──
   if (path === 'auth/login'          && method === 'GET')  return authLogin(env, url);
   if (path === 'auth/callback'       && method === 'GET')  return authCallback(env, url);
   if (path === 'auth/logout'         && method === 'POST') return authLogout(request, env);
   if (path === 'auth/me'             && method === 'GET')  return authMe(request, env);
- 
-  // ── CLIENT AUTH (no session required) ──
   if (path === 'auth/client-signup'  && method === 'POST') return clientSignup(env, request);
   if (path === 'auth/client-signin'  && method === 'POST') return clientSignin(env, request);
   if (path === 'auth/client-signout' && method === 'POST') return clientSignout(request, env);
   if (path === 'auth/client-me'      && method === 'GET')  return clientMe(request, env);
- 
-  // ── PUBLIC ROUTES (no auth required) ──
   if (path === 'theme'               && method === 'GET')  return getTheme(env);
   if (path === 'portfolio'           && method === 'GET')  return getPortfolio(env, url);
   if (path === 'lore'                && method === 'GET')  return getLore(env);
   if (path === 'commissions'         && method === 'GET')  return getCommissions(env);
   if (path === 'content'             && method === 'GET')  return getSiteContent(env);
  
- 
- 
-  // ── PORTFOLIO ──
-  if (path === 'portfolio'              && method === 'GET')    return getPortfolio(env, url);
-  if (path === 'portfolio'              && method === 'POST')   return postPortfolio(env, request);
-  if (path === 'portfolio'              && method === 'PUT')    return putPortfolio(env, request);
-  if (path === 'portfolio'              && method === 'DELETE') return deletePortfolio(env, url);
-  // ── LORE ──
-  if (path === 'lore'                   && method === 'GET')    return getLore(env);
-  if (path === 'lore'                   && method === 'POST')   return postLore(env, request);
-  if (path === 'lore'                   && method === 'PUT')    return putLore(env, request);
-  if (path === 'lore'                   && method === 'DELETE') return deleteLore(env, url);
-  // ── COMMISSIONS ──
-  if (path === 'commissions'            && method === 'GET')    return getCommissions(env);
-  if (path === 'commissions'            && method === 'POST')   return postCommission(env, request);
-  if (path === 'commissions'            && method === 'PUT')    return putCommission(env, request);
-  if (path === 'commissions'            && method === 'DELETE') return deleteCommission(env, url);
-  if (path === 'commissions/status'     && method === 'PUT')    return updateCommissionStatus(env, request);
-  // ── SITE CONTENT ──
-  if (path === 'content'                && method === 'GET')    return getSiteContent(env);
-  if (path === 'content'                && method === 'POST')   return postSiteContent(env, request);
- 
-  // ── CLIENT AUTH ──
-  if (path === 'auth/client-signup'  && method === 'POST') return clientSignup(env, request);
-  if (path === 'auth/client-signin'  && method === 'POST') return clientSignin(env, request);
-  if (path === 'auth/client-signout' && method === 'POST') return clientSignout(request, env);
-  if (path === 'auth/client-me'      && method === 'GET')  return clientMe(request, env);
-  // ── CLIENT PORTAL ──
-  if (path === 'portal/inquiries'    && method === 'GET')  return portalInquiries(request, env);
-  if (path === 'portal/messages'     && method === 'GET')  return portalGetMessages(request, env);
-  if (path === 'portal/messages'     && method === 'POST') return portalSendMessage(request, env);
-  if (path === 'portal/files'        && method === 'GET')  return portalGetFiles(request, env);
-  if (path === 'portal/files'        && method === 'POST') return portalAddFile(request, env);
-  if (path === 'portal/files'        && method === 'DELETE') return portalDeleteFile(env, url);
-  if (path === 'portal/status'       && method === 'PUT')  return updateProjectStatus(request, env);
-  if (path === 'portal/admin-inquiries' && method === 'GET') return adminInquiries(request, env);
- 
-  // ── PORTFOLIO ──
-  if (path === 'portfolio'          && method === 'GET')    return getPortfolio(env, url);
-  if (path === 'portfolio'          && method === 'POST')   return postPortfolio(env, request);
-  if (path === 'portfolio'          && method === 'PUT')    return putPortfolio(env, request);
-  if (path === 'portfolio'          && method === 'DELETE') return deletePortfolio(env, url);
-  // ── LORE ──
-  if (path === 'lore'               && method === 'GET')    return getLore(env);
-  if (path === 'lore'               && method === 'POST')   return postLore(env, request);
-  if (path === 'lore'               && method === 'PUT')    return putLore(env, request);
-  if (path === 'lore'               && method === 'DELETE') return deleteLore(env, url);
-  // ── COMMISSIONS CMS ──
-  if (path === 'commissions'        && method === 'GET')    return getCommissions(env);
-  if (path === 'commissions'        && method === 'POST')   return postCommission(env, request);
-  if (path === 'commissions'        && method === 'PUT')    return putCommission(env, request);
-  if (path === 'commissions'        && method === 'DELETE') return deleteCommission(env, url);
-  if (path === 'commissions/status' && method === 'PUT')    return updateCommissionStatus(env, request);
-  // ── SITE CONTENT ──
-  if (path === 'content'            && method === 'GET')    return getSiteContent(env);
-  if (path === 'content'            && method === 'POST')   return postSiteContent(env, request);
- 
-  // ── GUILD REGISTRATION (bot posts this when joining a server) ──
+  // ── GUILD REGISTRATION (bot only) ──
   if (path === 'guilds/register' && method === 'POST') {
     if (!isBotRequest(request, env)) return err('Unauthorized', 401);
     return registerGuild(request, env);
@@ -184,7 +123,6 @@ export async function onRequest(context) {
   const auth = await requireAuth(request, env);
   if (!auth) return err('Unauthorized', 401);
  
-  // Guild-scoped permission check for non-bot requests
   const guild_id = url.searchParams.get('guild_id') ||
     (method !== 'GET' ? (await request.clone().json().catch(() => ({}))).guild_id : null);
  
@@ -193,53 +131,108 @@ export async function onRequest(context) {
     if (!owns) return err('Forbidden: you do not manage this guild', 403);
   }
  
-  // ── ROUTE TABLE ──
+  // ── GUILDS ──
   if (path === 'guilds'              && method === 'GET')    return getUserGuilds(auth, env, request);
+ 
+  // ── DEI CONFIG ──
   if (path === 'dei-config'          && method === 'GET')    return getDeiConfig(env, url);
   if (path === 'dei-config'          && method === 'POST')   return postDeiConfig(env, request);
+ 
+  // ── RESPONSES ──
   if (path === 'responses'           && method === 'GET')    return getResponses(env, url);
   if (path === 'responses'           && method === 'POST')   return postResponse(env, request);
   if (path === 'responses'           && method === 'PUT')    return putResponse(env, request);
   if (path === 'responses'           && method === 'DELETE') return deleteResponse(env, url);
+ 
+  // ── LOGS & STATS ──
   if (path === 'logs'                && method === 'GET')    return getLogs(env, url);
   if (path === 'logs'                && method === 'POST')   return postLog(env, request);
   if (path === 'stats'               && method === 'GET')    return getStats(env, url);
   if (path === 'stats'               && method === 'POST')   return postStats(env, request);
+ 
+  // ── CHANNELS ──
   if (path === 'channels'            && method === 'GET')    return getChannels(env, url);
   if (path === 'channels'            && method === 'POST')   return postChannels(env, request);
+ 
+  // ── WARNINGS ──
   if (path === 'warnings'            && method === 'GET')    return getWarnings(env, url);
   if (path === 'warnings'            && method === 'POST')   return postWarning(env, request);
   if (path === 'warnings/clear'      && method === 'POST')   return clearWarnings(env, request);
+ 
+  // ── REACTION ROLES ──
   if (path === 'reaction-roles'      && method === 'GET')    return getReactionRoles(env, url);
   if (path === 'reaction-roles'      && method === 'POST')   return postReactionRole(env, request);
   if (path === 'reaction-roles'      && method === 'DELETE') return deleteReactionRole(env, url);
+ 
+  // ── FILTERS ──
   if (path === 'filters'             && method === 'GET')    return getFilters(env, url);
   if (path === 'filters'             && method === 'POST')   return postFilter(env, request);
   if (path === 'filters'             && method === 'DELETE') return deleteFilter(env, url);
+ 
+  // ── EMBEDS ──
   if (path === 'embeds'              && method === 'GET')    return getEmbeds(env, url);
   if (path === 'embeds'              && method === 'POST')   return postEmbed(env, request);
   if (path === 'embeds'              && method === 'DELETE') return deleteEmbed(env, url);
-  if (path === 'birthdays'           && method === 'GET')    return getBirthdays(env, url);
+ 
+  // ── BIRTHDAYS ──
   if (path === 'birthdays'           && method === 'GET')    return getBirthdays(env, url);
   if (path === 'birthdays'           && method === 'POST')   return postBirthday(env, request);
-  if (path === 'theme'               && method === 'GET')    return getTheme(env);
+ 
+  // ── THEME (admin) ──
   if (path === 'theme'               && method === 'POST')   return postTheme(env, request);
+ 
+  // ── LEVELING ──
   if (path === 'level-config'        && method === 'GET')    return getLevelConfig(env, url);
   if (path === 'level-config'        && method === 'POST')   return postLevelConfig(env, request);
   if (path === 'level-roles'         && method === 'POST')   return postLevelRole(env, request);
   if (path === 'level-roles'         && method === 'DELETE') return deleteLevelRole(env, url);
+ 
+  // ── GIVEAWAYS ──
   if (path === 'giveaways'           && method === 'GET')    return getGiveaways(env, url);
   if (path === 'giveaways'           && method === 'POST')   return postGiveaway(env, request);
   if (path === 'giveaways'           && method === 'DELETE') return deleteGiveaway(env, url);
+ 
+  // ── ANNOUNCEMENTS ──
   if (path === 'announcements'       && method === 'GET')    return getAnnouncements(env, url);
   if (path === 'announcements'       && method === 'POST')   return postAnnouncement(env, request);
   if (path === 'announcements'       && method === 'DELETE') return deleteAnnouncement(env, url);
+ 
+  // ── SOCIAL ALERTS ──
   if (path === 'social-alerts'       && method === 'GET')    return getSocialAlerts(env, url);
   if (path === 'social-alerts'       && method === 'POST')   return postSocialAlert(env, request);
   if (path === 'social-alerts'       && method === 'PUT')    return putSocialAlert(env, request);
   if (path === 'social-alerts'       && method === 'DELETE') return deleteSocialAlert(env, url);
   if (path === 'social-alerts/subscribe-youtube' && method === 'POST') return subscribeYoutube(env, request);
   if (path === 'social-alerts/subscribe-twitch'  && method === 'POST') return subscribeTwitch(env, request);
+ 
+  // ── PORTAL ──
+  if (path === 'portal/inquiries'    && method === 'GET')    return portalInquiries(request, env);
+  if (path === 'portal/messages'     && method === 'GET')    return portalGetMessages(request, env);
+  if (path === 'portal/messages'     && method === 'POST')   return portalSendMessage(request, env);
+  if (path === 'portal/files'        && method === 'GET')    return portalGetFiles(request, env);
+  if (path === 'portal/files'        && method === 'POST')   return portalAddFile(request, env);
+  if (path === 'portal/files'        && method === 'DELETE') return portalDeleteFile(env, url);
+  if (path === 'portal/status'       && method === 'PUT')    return updateProjectStatus(request, env);
+  if (path === 'portal/admin-inquiries' && method === 'GET') return adminInquiries(request, env);
+ 
+  // ── PORTFOLIO CMS ──
+  if (path === 'portfolio'           && method === 'POST')   return postPortfolio(env, request);
+  if (path === 'portfolio'           && method === 'PUT')    return putPortfolio(env, request);
+  if (path === 'portfolio'           && method === 'DELETE') return deletePortfolio(env, url);
+ 
+  // ── LORE CMS ──
+  if (path === 'lore'                && method === 'POST')   return postLore(env, request);
+  if (path === 'lore'                && method === 'PUT')    return putLore(env, request);
+  if (path === 'lore'                && method === 'DELETE') return deleteLore(env, url);
+ 
+  // ── COMMISSIONS CMS ──
+  if (path === 'commissions'         && method === 'POST')   return postCommission(env, request);
+  if (path === 'commissions'         && method === 'PUT')    return putCommission(env, request);
+  if (path === 'commissions'         && method === 'DELETE') return deleteCommission(env, url);
+  if (path === 'commissions/status'  && method === 'PUT')    return updateCommissionStatus(env, request);
+ 
+  // ── SITE CONTENT CMS ──
+  if (path === 'content'             && method === 'POST')   return postSiteContent(env, request);
  
   return err('Not found', 404);
 }
