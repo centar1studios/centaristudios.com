@@ -3,32 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In - Ajay Hunter</title>
+<title>Login - Ajay Hunter</title>
 <link rel="stylesheet" href="site.css">
 <script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
 <style>
-body { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--cream); padding:2rem 1rem; }
-.auth-wrap { width:100%; max-width:420px; }
+body { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--bg); padding:2rem 1rem; }
+.auth-wrap { width:100%; max-width:440px; position:relative; z-index:1; }
 .auth-logo { text-align:center; margin-bottom:2rem; }
-.auth-logo .name { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--ink); }
-.auth-logo .sub  { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
-.auth-card { background:#fff; border:1px solid var(--border); padding:2.5rem; }
-.auth-tabs { display:flex; border-bottom:1px solid var(--border); margin-bottom:2rem; }
-.auth-tab  { flex:1; text-align:center; padding:0.75rem; font-size:0.74rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.2s; }
-.auth-tab.active { color:var(--lavender); border-bottom-color:var(--lavender); }
-.tab-panel { display:none; }
-.tab-panel.active { display:block; }
-.err-box { background:#fef2f2; border:1px solid rgba(200,80,80,0.2); padding:0.9rem 1.1rem; font-size:0.8rem; color:#7f2020; margin-bottom:1.25rem; display:none; }
-.discord-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:0.85rem 1.5rem; background:#5865F2; color:#fff; font-family:'Jost',sans-serif; font-size:0.85rem; font-weight:500; border-radius:2px; transition:all 0.25s; }
-.discord-btn:hover { background:#4752c4; transform:translateY(-1px); box-shadow:0 6px 20px rgba(88,101,242,0.35); }
-.discord-btn svg { width:20px; height:20px; fill:currentColor; flex-shrink:0; }
-.divider { display:flex; align-items:center; gap:12px; margin:1.5rem 0; color:var(--muted); font-size:0.72rem; }
-.divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--border); }
-.auth-note { text-align:center; margin-top:1.25rem; font-size:0.8rem; color:var(--muted); }
+.auth-logo .name { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--text); }
+.auth-logo .sub  { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--subtext); margin-top:4px; }
+.auth-card { background:var(--bg2); border:1px solid var(--border); padding:2.5rem; border-radius:4px; }
+.auth-card h2 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:300; color:var(--text); margin-bottom:0.4rem; }
+.auth-card p { font-size:0.84rem; color:var(--subtext); margin-bottom:1.75rem; }
+.err-box { background:rgba(245,100,100,0.1); border:1px solid rgba(245,100,100,0.3); border-left:3px solid #f56464; padding:1rem 1.25rem; font-size:0.85rem; color:#ffaaaa; margin-bottom:1.25rem; display:none; border-radius:2px; }
+.auth-note { text-align:center; margin-top:1.25rem; font-size:0.8rem; color:var(--subtext); }
 .auth-note a { color:var(--lavender); }
+.btn-lavender { background:linear-gradient(135deg,var(--lavender),var(--periwinkle)); color:var(--bg); font-family:'Jost',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; padding:0.85rem 2rem; border:none; cursor:pointer; width:100%; border-radius:2px; transition:all 0.25s; display:block; text-align:center; }
+.btn-lavender:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(196,176,245,0.3); }
+.btn-lavender:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+.btn-discord { background:#5865F2; color:#fff; font-family:'Jost',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; padding:0.85rem 2rem; border:none; cursor:pointer; width:100%; border-radius:2px; transition:all 0.25s; display:flex; align-items:center; justify-content:center; gap:0.5rem; }
+.btn-discord:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(88,101,242,0.4); }
+.tab-bar { display:flex; gap:0; margin-bottom:1.75rem; border:1px solid var(--border); border-radius:2px; overflow:hidden; }
+.tab-btn { flex:1; padding:0.6rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; background:transparent; border:none; color:var(--subtext); cursor:pointer; transition:all 0.2s; }
+.tab-btn.active { background:rgba(196,176,245,0.12); color:var(--lavender); }
+.divider { display:flex; align-items:center; gap:1rem; margin:1.25rem 0; color:var(--dim); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; }
+.divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--border); }
 </style>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<canvas id="stars"></canvas>
 
 <div class="auth-wrap">
   <div class="auth-logo">
@@ -39,87 +45,133 @@ body { min-height:100vh; display:flex; align-items:center; justify-content:cente
   </div>
 
   <div class="auth-card">
-    <div class="auth-tabs">
-      <div class="auth-tab active" onclick="switchTab('client',this)">Client Login</div>
-      <div class="auth-tab" onclick="switchTab('admin',this)">Admin</div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-client" onclick="switchTab('client')">Client Login</button>
+      <button class="tab-btn" id="tab-admin" onclick="switchTab('admin')">Admin / Bot</button>
     </div>
 
+    <div class="err-box" id="err-box"></div>
+
     <!-- CLIENT LOGIN -->
-    <div class="tab-panel active" id="tab-client">
-      <div class="err-box" id="client-err"></div>
-      <form onsubmit="clientLogin(event)" style="display:flex;flex-direction:column;gap:1rem;">
+    <div id="panel-client">
+      <h2>Welcome back</h2>
+      <p>Sign in to track your commissions and files.</p>
+
+      <div style="display:flex;flex-direction:column;gap:1rem;">
         <div>
           <label class="field-label">Email Address</label>
-          <input type="email" id="cl-email" class="input-field" placeholder="you@example.com" required>
+          <input type="email" id="cl-email" class="input-field" placeholder="you@example.com">
         </div>
         <div>
           <label class="field-label">Password</label>
-          <input type="password" id="cl-pass" class="input-field" placeholder="Your password" required>
+          <div style="position:relative;">
+            <input type="password" id="cl-pass" class="input-field" placeholder="Your password" style="padding-right:3.5rem;">
+            <button type="button" onclick="togglePw()" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--subtext);cursor:pointer;padding:0;" id="pw-toggle">Show</button>
+          </div>
         </div>
-        <button type="submit" class="btn btn-lavender btn-full" id="cl-btn">Sign In</button>
-      </form>
+        <button class="btn-lavender" id="login-btn" onclick="doClientLogin()">Sign In</button>
+      </div>
+
       <div class="auth-note">
         Don't have an account? <a href="signup.html">Sign up</a><br>
-        <a href="index.html" style="color:var(--muted);">← Back to site</a>
+        <a href="index.html" style="color:var(--dim);">Back to site</a>
       </div>
     </div>
 
     <!-- ADMIN LOGIN -->
-    <div class="tab-panel" id="tab-admin">
-      <p style="font-size:0.84rem;color:var(--muted);margin-bottom:1.5rem;text-align:center;">Admin access is for Ajay only. Sign in with Discord to access the bot dashboard.</p>
-      <a href="/api/auth/login" class="discord-btn">
-        <svg viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+    <div id="panel-admin" style="display:none;">
+      <h2>Admin Access</h2>
+      <p>Log in with Discord to access the bot dashboard. Only server admins can access this area.</p>
+
+      <button class="btn-discord" onclick="doDiscordLogin()">
+        <svg width="20" height="20" viewBox="0 0 71 55" fill="none"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.7a40 40 0 0 0-1.8 3.7 54 54 0 0 0-16.4 0A39.6 39.6 0 0 0 25.5.7 58.4 58.4 0 0 0 10.9 4.9C1.6 18.7-1 32.2.3 45.5a58.9 58.9 0 0 0 18 9.1 44.5 44.5 0 0 0 3.8-6.2 38.3 38.3 0 0 1-6-2.9l1.4-1.1a41.9 41.9 0 0 0 36 0l1.5 1.1a38.4 38.4 0 0 1-6 2.9 44.4 44.4 0 0 0 3.7 6.2 58.7 58.7 0 0 0 18-9.1C72 30.2 68.1 16.8 60.1 4.9ZM23.7 37.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z" fill="currentColor"/></svg>
         Continue with Discord
-      </a>
-      <div class="auth-note"><a href="index.html" style="color:var(--muted);">← Back to site</a></div>
+      </button>
+
+      <div class="divider">or</div>
+
+      <div class="auth-note">
+        Admin access is only available to Discord server owners and admins where the bot is present.
+        <br><br>
+        <a href="index.html" style="color:var(--dim);">Back to site</a>
+      </div>
     </div>
+
   </div>
 </div>
 
 <script>
-function switchTab(name, el) {
-  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
+const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
+resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
+
+function switchTab(tab) {
+  document.getElementById('panel-client').style.display = tab === 'client' ? 'block' : 'none';
+  document.getElementById('panel-admin').style.display  = tab === 'admin'  ? 'block' : 'none';
+  document.getElementById('tab-client').classList.toggle('active', tab === 'client');
+  document.getElementById('tab-admin').classList.toggle('active', tab === 'admin');
+  document.getElementById('err-box').style.display = 'none';
 }
 
-// Show error from Discord redirect
-const params = new URLSearchParams(location.search);
-if (params.get('error')) {
-  switchTab('admin', document.querySelectorAll('.auth-tab')[1]);
+// Check if redirected to admin tab
+if (window.location.hash === '#admin') switchTab('admin');
+
+function togglePw() {
+  const inp = document.getElementById('cl-pass');
+  const btn = document.getElementById('pw-toggle');
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = 'Hide'; }
+  else { inp.type = 'password'; btn.textContent = 'Show'; }
 }
 
-async function clientLogin(e) {
-  e.preventDefault();
-  const btn = document.getElementById('cl-btn');
-  const errBox = document.getElementById('client-err');
+function showError(msg) {
+  const errBox = document.getElementById('err-box');
+  errBox.innerHTML = '<strong>Error:</strong> ' + msg;
+  errBox.style.display = 'block';
+  errBox.scrollIntoView({behavior:'smooth'});
+}
+
+async function doClientLogin() {
+  const errBox = document.getElementById('err-box');
+  const btn = document.getElementById('login-btn');
   errBox.style.display = 'none';
-  btn.textContent = 'Signing in...'; btn.disabled = true;
+
+  const email = document.getElementById('cl-email').value.trim();
+  const pass  = document.getElementById('cl-pass').value;
+
+  if (!email) { showError('Please enter your email.'); return; }
+  if (!pass)  { showError('Please enter your password.'); return; }
+
+  btn.textContent = 'Signing in...';
+  btn.disabled = true;
 
   try {
     const r = await fetch('/api/auth/client-signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: document.getElementById('cl-email').value,
-        password: document.getElementById('cl-pass').value,
-      }),
+      body: JSON.stringify({ email, password: pass }),
     });
-    const d = await r.json();
+
+    let d = {};
+    try { d = await r.json(); } catch(e) { d = {}; }
+
     if (!r.ok || d.error) {
-      errBox.innerHTML = '<strong>Error:</strong> ' + (d.error || d.details || 'Login failed. Please try again.');
-      errBox.style.display = 'block';
+      showError(d.error || d.details || 'Login failed. Please try again. (Status: ' + r.status + ')');
     } else {
       localStorage.setItem('client_token', d.token);
       localStorage.setItem('client_name', d.name);
       location.href = 'portal.html';
     }
   } catch(err) {
-    errBox.textContent = 'Something went wrong. Please try again.';
-    errBox.style.display = 'block';
+    showError('Network error: ' + (err.message || 'Could not reach the server.'));
   }
-  btn.textContent = 'Sign In'; btn.disabled = false;
+
+  btn.textContent = 'Sign In';
+  btn.disabled = false;
+}
+
+function doDiscordLogin() {
+  window.location.href = '/api/auth/login';
 }
 </script>
 </body>
