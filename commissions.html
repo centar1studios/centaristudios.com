@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commissions - Ajay Hunter</title>
+<link rel="stylesheet" href="site.css">
+
+</head>
+<body>
+<div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+<canvas id="stars"></canvas>
+
+<header class="site-header">
+  <div class="inner">
+    <a href="index.html" class="site-logo">
+      <div class="logo-mark">✕</div>
+      <div class="logo-text-wrap"><div class="name">Ajay Hunter</div><div class="sub">Digital Artist</div></div>
+    </a>
+    <nav class="site-nav">
+      <a href="about.html" class="nav-link">About Me</a>
+      <a href="portfolio.html" class="nav-link">Art Portfolio</a>
+      <a href="commissions.html" class="nav-link active">Commissions</a>
+      <a href="lore.html" class="nav-link">Lore Drops</a>
+      <a href="tos.html" class="nav-link">TOS</a>
+      <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="site-container">
+    <span class="eyebrow">Open for Commissions</span>
+    <h1 style="margin-top:0.4rem;">Commissions</h1>
+    <p style="margin-top:0.75rem; max-width:500px; color:var(--subtext);">Custom art made just for you. I keep my queue small so every commission gets my full attention and care.</p>
+  </div>
+</div>
+
+<div class="site-container" style="padding:4rem 0 6rem; position:relative; z-index:1;">
+
+  <!-- STATUS BANNER -->
+  <div id="comm-status-banner" style="background:rgba(196,176,245,0.06); border:1px solid rgba(196,176,245,0.2); border-left:3px solid var(--lavender); padding:1.25rem 1.5rem; border-radius:0 4px 4px 0; margin-bottom:3rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+    <div>
+      <div style="font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--lavender); margin-bottom:4px;">Commission Status</div>
+      <div style="font-size:1rem; color:var(--text);">✅ Currently Open - limited slots available</div>
+    </div>
+    <a href="contact.html" class="btn btn-primary btn-sm">Request a Commission</a>
+  </div>
+
+  <!-- DYNAMIC TYPES FROM DASHBOARD -->
+  <div id="comm-types-grid" style="display:flex;flex-direction:column;gap:1.25rem;margin-bottom:3rem;"></div>
+
+  <!-- STATIC TYPES (shown if no DB types) -->
+  <span class="eyebrow" style="margin-bottom:1.5rem; display:block;">What I Offer</span>
+  <div style="display:flex; flex-direction:column; gap:1.25rem; margin-bottom:4rem;">
+
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:4px; display:grid; grid-template-columns:160px 1fr; overflow:hidden; transition:border-color 0.25s;" onmouseover="this.style.borderColor='rgba(196,176,245,0.28)'" onmouseout="this.style.borderColor='rgba(196,176,245,0.12)'">
+      <div style="background:rgba(196,176,245,0.06); border-right:1px solid var(--border); display:flex; align-items:center; justify-content:center; padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:var(--lavender); opacity:0.5;">01</div>
+      </div>
+      <div style="padding:2rem;">
+        <h2 style="font-size:1.6rem; margin-bottom:0.5rem;">Character Art</h2>
+        <p style="margin-bottom:1rem;">Original character portraits, OC illustrations, and reference sheets. I take time to understand your character before I start so the result feels like them.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">Starting at £30</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">1-2 weeks</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">Full colour</span>
+        </div>
+        <a href="contact.html?service=Character+Art" class="btn btn-outline btn-sm">Inquire →</a>
+      </div>
+    </div>
+
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:4px; display:grid; grid-template-columns:160px 1fr; overflow:hidden; transition:border-color 0.25s;" onmouseover="this.style.borderColor='rgba(196,176,245,0.28)'" onmouseout="this.style.borderColor='rgba(196,176,245,0.12)'">
+      <div style="background:rgba(168,191,240,0.06); border-right:1px solid var(--border); display:flex; align-items:center; justify-content:center; padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:var(--periwinkle); opacity:0.5;">02</div>
+      </div>
+      <div style="padding:2rem;">
+        <h2 style="font-size:1.6rem; margin-bottom:0.5rem;">Digital Illustration</h2>
+        <p style="margin-bottom:1rem;">Scene illustrations, story pieces, and concept work. I love making pieces that tell a story - quiet moments or something epic, bring me your ideas.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">Starting at £50</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">2-3 weeks</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">Fully rendered</span>
+        </div>
+        <a href="contact.html?service=Digital+Illustration" class="btn btn-outline btn-sm">Inquire →</a>
+      </div>
+    </div>
+
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:4px; display:grid; grid-template-columns:160px 1fr; overflow:hidden; transition:border-color 0.25s;" onmouseover="this.style.borderColor='rgba(196,176,245,0.28)'" onmouseout="this.style.borderColor='rgba(196,176,245,0.12)'">
+      <div style="background:rgba(221,200,255,0.06); border-right:1px solid var(--border); display:flex; align-items:center; justify-content:center; padding:2rem;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:var(--lilac); opacity:0.5;">03</div>
+      </div>
+      <div style="padding:2rem;">
+        <h2 style="font-size:1.6rem; margin-bottom:0.5rem;">Graphic Design</h2>
+        <p style="margin-bottom:1rem;">Logos, stream overlays, emotes, badges, and brand assets. Clean, cohesive design that feels like you - for streamers, creators, and brands.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">Starting at £20</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">3-5 days</span>
+          <span style="background:var(--card); border:1px solid var(--border); padding:3px 12px; font-size:0.75rem; color:var(--subtext);">Multiple formats</span>
+        </div>
+        <a href="contact.html?service=Graphic+Design" class="btn btn-outline btn-sm">Inquire →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- WILL / WON'T -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:4rem;">
+    <div style="background:rgba(168,224,168,0.05); border:1px solid rgba(100,180,100,0.15); border-radius:4px; padding:1.75rem;">
+      <h3 style="color:var(--text); margin-bottom:1rem;">✓ Will draw</h3>
+      <div style="display:flex; flex-direction:column; gap:0.4rem; font-size:0.88rem; color:var(--subtext);">
+        <span>Original characters (OCs)</span>
+        <span>Fan art of fictional characters</span>
+        <span>LGBTQ+ characters and themes</span>
+        <span>Couples and groups (ask first)</span>
+        <span>Mild gore (ask first)</span>
+        <span>Suggestive (ask first)</span>
+        <span>Animals (ask first)</span>
+        <span>Simple Backgrounds</span>
+        <span>Humanoid</span>
+        
+      </div>
+    </div>
+    <div style="background:rgba(245,128,128,0.05); border:1px solid rgba(200,80,80,0.15); border-radius:4px; padding:1.75rem;">
+      <h3 style="color:var(--text); margin-bottom:1rem;">✗ Will not draw</h3>
+      <div style="display:flex; flex-direction:column; gap:0.4rem; font-size:0.88rem; color:var(--subtext);">
+        <span>NSFW / explicit content</span>
+        <span>Real people without consent</span>
+        <span>Hate symbols or discriminatory content</span>
+        <span>Content that harms minors</span>
+        <span>NFTs or AI training data</span>
+        <span>Complex Backgrounds</span>
+        <span>Complex Poses</span>
+        <span>Mecha</span>
+        <span>Furries/Anthros</span>
+        <span>Super Complex Clothing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <span class="eyebrow" style="margin-bottom:1.5rem; display:block;">How It Works</span>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:3rem;">
+    <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--lavender); opacity:0.4; line-height:1; margin-bottom:0.75rem;">01</div>
+      <h3 style="font-size:1rem; margin-bottom:0.4rem;">Inquiry</h3>
+      <p style="font-size:0.82rem;">Fill out the contact form - I'll get back within 1-2 days.</p>
+    </div>
+    <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--lavender); opacity:0.4; line-height:1; margin-bottom:0.75rem;">02</div>
+      <h3 style="font-size:1rem; margin-bottom:0.4rem;">Discussion</h3>
+      <p style="font-size:0.82rem;">We chat about your project, references, and details.(Preferabbly over discord)</p>
+    </div>
+    <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--lavender); opacity:0.4; line-height:1; margin-bottom:0.75rem;">03</div>
+      <h3 style="font-size:1rem; margin-bottom:0.4rem;">Creation</h3>
+      <p style="font-size:0.82rem;">Sketch for approval, then full render with updates.</p>
+    </div>
+    <div style="background:var(--card); border:1px solid var(--border); padding:1.5rem; border-radius:4px;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--lavender); opacity:0.4; line-height:1; margin-bottom:0.75rem;">04</div>
+      <h3 style="font-size:1rem; margin-bottom:0.4rem;">Delivery</h3>
+      <p style="font-size:0.82rem;">Final files delivered in full resolution, ready to use.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <a href="artist-tos.html" style="font-size:0.78rem; color:var(--subtext); border-bottom:1px solid var(--border); padding-bottom:2px; transition:color 0.2s;">Read my full Artist TOS before commissioning →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="inner">
+    <div><div class="footer-name">Ajay Hunter</div><div class="footer-tag">Digital Artist & Illustrator</div></div>
+    <div><div class="footer-head">Navigate</div><div class="footer-links"><a href="about.html" class="footer-link">About Me</a><a href="portfolio.html" class="footer-link">Art Portfolio</a><a href="commissions.html" class="footer-link">Commissions</a><a href="lore.html" class="footer-link">Lore Drops</a></div></div>
+    <div><div class="footer-head">Legal</div><div class="footer-links"><a href="tos.html" class="footer-link">Bot TOS</a><a href="artist-tos.html" class="footer-link">Artist TOS</a><a href="privacy.html" class="footer-link">Privacy</a></div></div>
+    <div><div class="footer-head">Account</div><div class="footer-links"><a href="portal.html" class="footer-link">My Portal</a><a href="login.html" class="footer-link">Login</a><a href="signup.html" class="footer-link">Sign Up</a></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Ajay Hunter / Centari Studios</span><a href="login.html">Login</a></div>
+</footer>
+
+
+<script>
+const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
+resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
+
+async function loadCommissions() {
+  const d = await fetch('/api/commissions').then(r=>r.json());
+  const types = (d.types||[]).filter(t=>t.enabled);
+  const status = d.status || {};
+
+  // Update status banner
+  const banner = document.getElementById('comm-status-banner');
+  if (banner) {
+    const icons = {open:'✅',waitlist:'⏳',closed:'❌'};
+    banner.querySelector('.status-text').textContent = `${icons[status.status]||'✅'} ${status.message||'Currently open!'}`;
+    banner.querySelector('a').style.display = status.status === 'closed' ? 'none' : '';
+  }
+
+  // Render commission types from DB (if any)
+  const grid = document.getElementById('comm-types-grid');
+  if (!grid || !types.length) return;
+
+  const colors = ['var(--lavender)','var(--periwinkle)','var(--lilac)'];
+  grid.innerHTML = types.map((c,i) => {
+    const included = c.included_items ? c.included_items.split(',').map(s=>s.trim()).filter(Boolean) : [];
+    return `
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;display:grid;grid-template-columns:120px 1fr;overflow:hidden;transition:border-color 0.25s;" onmouseover="this.style.borderColor='var(--border-lit)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="background:rgba(196,176,245,0.05);border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:1.5rem;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:${colors[i%3]};opacity:0.5;line-height:1;">${String(i+1).padStart(2,'0')}</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <h2 style="font-size:1.4rem;margin-bottom:0.4rem;">${c.name}</h2>
+          ${c.description?`<p style="margin-bottom:0.75rem;font-size:0.88rem;">${c.description}</p>`:''}
+          ${included.length?`<div style="display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.75rem;">${included.map(item=>`<div style="display:flex;gap:0.5rem;font-size:0.82rem;color:var(--subtext);"><span style="color:var(--lavender);">+</span><span>${item}</span></div>`).join('')}</div>`:''}
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;">
+            ${c.starting_price?`<span style="background:var(--card);border:1px solid var(--border);padding:3px 12px;font-size:0.78rem;color:var(--subtext);">${c.starting_price}</span>`:''}
+            ${c.turnaround?`<span style="background:var(--card);border:1px solid var(--border);padding:3px 12px;font-size:0.78rem;color:var(--subtext);">${c.turnaround}</span>`:''}
+            <a href="contact.html?service=${encodeURIComponent(c.name)}" class="btn btn-outline btn-sm">Inquire →</a>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+loadCommissions();
+</script>
+</body>
+</html>
