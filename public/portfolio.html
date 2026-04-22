@@ -5,9 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio - Ajay Hunter</title>
 <link rel="stylesheet" href="site.css">
-
+<script>(async()=>{try{const r=await fetch("/api/theme");if(!r.ok)return;const t=await r.json();const s=document.documentElement.style;Object.entries(t).forEach(([k,v])=>s.setProperty("--"+k,v));}catch(e){}})();</script>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<canvas id="stars"></canvas>
+
 <header class="site-header">
   <div class="inner">
     <a href="index.html" class="site-logo">
@@ -19,8 +25,8 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="portfolio.html" class="nav-link active">Portfolio</a>
       <a href="services.html" class="nav-link">Services</a>
-      <a href="contact.html" class="btn btn-lavender btn-sm">Work With Me</a>
-      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--muted);display:none;">My Portal</a>
+      <a href="contact.html" class="btn btn-primary btn-sm">Work With Me</a>
+      <a href="portal.html" id="portal-link" style="font-size:0.78rem;color:var(--subtext);display:none;">My Portal</a>
     </nav>
   </div>
 </header>
@@ -33,61 +39,28 @@
   </div>
 </div>
 
-<div class="site-container" style="padding-top:3rem; padding-bottom:4rem;">
+<div class="site-container" style="padding-top:3rem; padding-bottom:4rem; position:relative; z-index:1;">
 
-  <!-- Category filter -->
   <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:2.5rem;">
-    <button onclick="filterWork('all')" class="filter-btn active btn btn-sm" data-cat="all" style="background:var(--lavender); color:#fff; border:1px solid var(--lavender);">All</button>
-    <button onclick="filterWork('character')" class="filter-btn btn btn-sm btn-outline" data-cat="character">Character Art</button>
-    <button onclick="filterWork('illustration')" class="filter-btn btn btn-sm btn-outline" data-cat="illustration">Illustration</button>
-    <button onclick="filterWork('design')" class="filter-btn btn btn-sm btn-outline" data-cat="design">Graphic Design</button>
+    <button onclick="filterWork('all',this)" class="filter-btn active btn btn-sm" style="background:var(--lavender);color:#07050f;border:1px solid var(--lavender);">All</button>
+    <button onclick="filterWork('character',this)" class="filter-btn btn btn-sm btn-outline">Character Art</button>
+    <button onclick="filterWork('illustration',this)" class="filter-btn btn btn-sm btn-outline">Illustration</button>
+    <button onclick="filterWork('design',this)" class="filter-btn btn btn-sm btn-outline">Graphic Design</button>
   </div>
 
-  <div id="active-filter" data-cat=""></div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;" id="portfolio-grid">
-
-    <article class="card reveal" data-cat="character">
-      <div class="img-zoom" style="aspect-ratio:16/7; background:linear-gradient(135deg,var(--lavender-pale),var(--periwinkle-pale)); display:flex; align-items:center; justify-content:center;">
-        <span style="font-family:'Cormorant Garamond',serif; font-size:6rem; font-weight:300; color:var(--lavender); opacity:0.18;">AH</span>
-      </div>
-      <div class="card-body">
-        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
-          <span class="eyebrow" style="margin-bottom:0;">Character Art</span>
-          <h3 style="margin-top:0;">Coming Soon</h3>
-        </div>
-        <span style="display:inline-block; margin-top:0.75rem; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--lavender);">View Project →</span>
-      </div>
-    </article>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
-      <article class="card reveal" data-cat="illustration">
-        <div class="img-zoom" style="aspect-ratio:4/3; background:linear-gradient(135deg,var(--periwinkle-pale),var(--lavender-pale)); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--periwinkle); opacity:0.25;">02</span>
-        </div>
-        <div class="card-body">
-          <span class="eyebrow" style="margin-bottom:0.4rem;">Illustration</span>
-          <h3 style="margin-top:0;">Coming Soon</h3>
-        </div>
-      </article>
-      <article class="card reveal" data-cat="design">
-        <div class="img-zoom" style="aspect-ratio:4/3; background:linear-gradient(135deg,#f0eaff,var(--periwinkle-pale)); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--lilac); opacity:0.25;">03</span>
-        </div>
-        <div class="card-body">
-          <span class="eyebrow" style="margin-bottom:0.4rem;">Graphic Design</span>
-          <h3 style="margin-top:0;">Coming Soon</h3>
-        </div>
-      </article>
+  <div id="portfolio-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;">
+    <div style="grid-column:1/-1;text-align:center;padding:4rem;">
+      <div style="font-size:1.5rem;margin-bottom:0.5rem;">⊹</div>
+      <p style="font-size:0.88rem;color:var(--subtext);">Loading portfolio...</p>
     </div>
-
   </div>
 </div>
 
-<div style="background:var(--ink); padding:4rem 0;">
+<div style="background:rgba(13,10,26,0.8); border-top:1px solid var(--border); padding:4rem 0; position:relative; z-index:1;">
   <div class="site-container" style="text-align:center;">
-    <h2 style="color:var(--ivory);">Like what you see?</h2>
-    <p style="color:rgba(244,240,255,0.55); margin-top:0.75rem;">Let's talk about your project.</p>
-    <a href="contact.html" class="btn btn-lavender" style="margin-top:1.5rem;">Start an Inquiry</a>
+    <h2>Like what you see?</h2>
+    <p style="margin-top:0.75rem;">Let's talk about your project.</p>
+    <a href="contact.html" class="btn btn-primary" style="margin-top:1.5rem;">Start an Inquiry</a>
   </div>
 </div>
 
@@ -115,11 +88,14 @@
         <a href="#" class="footer-link">Discord</a>
       </div>
     </div>
-  </div>
-    <div style="max-width:1100px;margin:0 auto;padding:0 2rem 1rem;display:flex;gap:2rem;flex-wrap:wrap;">
-    <a href="privacy.html" class="footer-link" style="font-size:0.8rem;">Privacy Policy</a>
-    <a href="tos.html" class="footer-link" style="font-size:0.8rem;">Bot TOS</a>
-    <a href="artist-tos.html" class="footer-link" style="font-size:0.8rem;">Artist TOS</a>
+    <div>
+      <div class="footer-head">Legal</div>
+      <div class="footer-links">
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="tos.html" class="footer-link">Bot TOS</a>
+        <a href="artist-tos.html" class="footer-link">Artist TOS</a>
+      </div>
+    </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Ajay Hunter - All rights reserved.</span>
@@ -127,20 +103,19 @@
   </div>
 </footer>
 
-
-
 <script>
 const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');let stars=[];function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}function initStars(){stars=[];const n=Math.floor((canvas.width*canvas.height)/7000);for(let i=0;i<n;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1+0.2,a:Math.random()*0.6+0.1,sp:Math.random()*0.004+0.001,ph:Math.random()*Math.PI*2});}function drawStars(t){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{const a=s.a*(0.5+0.5*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(196,176,245,${a})`;ctx.fill();});requestAnimationFrame(drawStars);}
 resize();initStars();requestAnimationFrame(drawStars);window.addEventListener('resize',()=>{resize();initStars();});
 
+let currentCat = '';
+
 async function loadPortfolio() {
-  const cat = document.getElementById('active-filter')?.dataset.cat || '';
-  const url = cat ? `/api/portfolio?category=${cat}` : '/api/portfolio';
+  const url = currentCat ? `/api/portfolio?category=${currentCat}` : '/api/portfolio';
   const d = await fetch(url).then(r=>r.json());
   const items = d.items || [];
   const grid = document.getElementById('portfolio-grid');
   if (!items.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem;"><p style="font-size:0.88rem;color:var(--subtext);">No pieces yet - check back soon!</p></div>';
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">⊹</div><p style="font-size:0.88rem;color:var(--subtext);">No pieces yet - check back soon!</p></div>';
     return;
   }
   grid.innerHTML = items.map((p,i) => `
@@ -149,7 +124,7 @@ async function loadPortfolio() {
         <img src="${p.image_url}" alt="${p.title}" loading="lazy">
       </div>
       <div class="card-body">
-        <span class="eyebrow" style="margin-bottom:0.3rem;">${p.category}</span>
+        <span class="eyebrow" style="margin-bottom:0.3rem;">${p.category}${p.featured?' · ⭐':''}</span>
         <h3 style="margin-top:0;font-size:1.1rem;">${p.title}</h3>
         ${p.description?`<p style="font-size:0.8rem;margin-top:0.3rem;">${p.description}</p>`:''}
       </div>
@@ -157,14 +132,13 @@ async function loadPortfolio() {
 }
 
 function filterWork(cat, el) {
+  currentCat = cat === 'all' ? '' : cat;
   document.querySelectorAll('.filter-btn').forEach(b=>{b.style.background='transparent';b.style.color='var(--lavender)';b.style.borderColor='var(--border)';});
-  el.style.background='var(--lavender)';el.style.color='var(--bg)';el.style.borderColor='var(--lavender)';
-  el.dataset.cat = cat;
-  document.getElementById('active-filter').dataset.cat = cat;
+  if(el){el.style.background='var(--lavender)';el.style.color='var(--bg)';el.style.borderColor='var(--lavender)';}
   loadPortfolio();
 }
 
-if (localStorage.getItem('client_token')) document.getElementById('portal-link').style.display='inline';
+if(localStorage.getItem('client_token')){document.getElementById('portal-link').style.display='inline';}
 loadPortfolio();
 </script>
 </body>
