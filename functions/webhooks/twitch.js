@@ -3,8 +3,9 @@
  * Handles Twitch EventSub webhook callbacks.
  *
  * Required env vars:
- *   TWITCH_SECRET  — the secret you set when creating the EventSub subscription
+ *   TWITCH_SECRET  - the secret you set when creating the EventSub subscription
  */
+ 
  
 const TWITCH_MESSAGE_ID               = 'twitch-eventsub-message-id';
 const TWITCH_MESSAGE_RETRY            = 'twitch-eventsub-message-retry';
@@ -116,3 +117,4 @@ export async function onRequest(context) {
  
   return new Response('OK', { status: 200 });
 }
+ 
