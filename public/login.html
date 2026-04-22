@@ -108,7 +108,7 @@ async function clientLogin(e) {
     });
     const d = await r.json();
     if (!r.ok || d.error) {
-      errBox.innerHTML = '<strong>Error:</strong> ' + (d.error || d.details || 'Login failed. Please try again.';
+      errBox.innerHTML = '<strong>Error:</strong> ' + (d.error || d.details || 'Login failed. Please try again.');
       errBox.style.display = 'block';
     } else {
       localStorage.setItem('client_token', d.token);
